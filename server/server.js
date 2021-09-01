@@ -18,6 +18,46 @@ app.use(express.static("build"));
 
 //change this to push update 1
 
+
+app.get("/orderdetails1", (req, res) => {
+  axios
+    .get(
+      `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=2500&page=1`,
+      config
+    )
+    .then(function (response) {
+      res.send(response.data);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 let dateNow = moment().subtract(1, "days").format('YYYY-MM-DD')
 let dateThen = moment().subtract(31, "days").format("YYYY-MM-DD");
 
