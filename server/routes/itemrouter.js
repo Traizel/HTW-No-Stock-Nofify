@@ -19,6 +19,8 @@ setInterval(() => {
   dateThen = moment().subtract(30, "days").format("YYYY-MM-DD");
 }, 1000 * 60 * 60 * 24);
 
+// NEED TO FINISH
+
 app.get("/items", (req, res) => {
   axios
     .get(
@@ -26,7 +28,17 @@ app.get("/items", (req, res) => {
       config
     )
     .then(function (response) {
-      res.send(response.data);
+      console.log(response.data);
+      const queryText = `INSERT INTO "item" (first_name, last_name, email, password, role) VALUES ($1, $2, $3, $4, $5) RETURNING id`;
+      pool
+        .query(queryText, [first_name, last_name, email, password, role])
+        .then((result) => {
+          res.send(result);
+        })
+        .catch((error) => {
+          console.log(`Error on item query ${error}`);
+          res.sendStatus(500);
+        });
     })
     .catch(function (error) {
       // handle error

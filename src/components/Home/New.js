@@ -35,53 +35,9 @@ class New extends Component {
     dataSelector: [],
   };
   componentDidMount() {
-    //get all new stock items
+    //get all new stock items with 0 stock
     this.props.dispatch({
       type: "GET_ITEM_LIST",
-    });
-    this.props.dispatch({
-      type: "GET_PROGRESS_LIST",
-    });
-    this.props.dispatch({
-      type: "GET_CUSTOM_ITEM_LIST",
-    });
-    this.props.dispatch({
-      type: "GET_CONFIRM_LIST",
-    });
-    this.props.dispatch({
-      type: "GET_RESPOND_LIST",
-    });
-    this.props.dispatch({
-      type: "GET_COMPLETE_LIST",
-    });
-    //get count of everything
-    this.props.dispatch({
-      type: "GET_ITEM_LIST_COUNT",
-    });
-    this.props.dispatch({
-      type: "GET_CONFIRM_LIST_COUNT",
-    });
-    this.props.dispatch({
-      type: "GET_RESPOND_LIST_COUNT",
-    });
-    this.props.dispatch({
-      type: "GET_APPROVE_LIST_COUNT",
-    });
-    this.props.dispatch({
-      type: "GET_CUSTOM_ITEM_LIST_COUNT",
-    });
-    this.props.dispatch({
-      type: "GET_PROGRESS_LIST_COUNT",
-    });
-    this.props.dispatch({
-      type: "GET_COMPLETE_LIST_COUNT",
-    });
-    //delete from complete table and history table if dates meet cut off dates defined in the server
-    this.props.dispatch({
-      type: "DELETE_COMPLETE_RANGE",
-    });
-    this.props.dispatch({
-      type: "DELETE_HISTORY_RANGE",
     });
   }
 
