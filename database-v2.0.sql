@@ -13,18 +13,10 @@ CREATE TABLE "user" (
 CREATE TABLE "item"
 (
 	"id" serial NOT NULL,
-	"email" varchar(320),
-	"first_name" varchar(255),
-	"last_name" varchar(255),
-	"order_number" varchar(255) NOT NULL,
+	"name" varchar(255),
 	"sku" varchar(255) NOT NULL,
-	"product_length" TEXT,
-	"product_options" TEXT,
-	"qty" DECIMAL,
-	"assigned" VARCHAR(255),
-	"created_at" TEXT,
-	"description" TEXT,
-	"priority" VARCHAR(5) DEFAULT 'low'
+	"inventory_level" INTEGER,
+	"enabled" BOOLEAN DEFAULT 'true',
 );
 
 

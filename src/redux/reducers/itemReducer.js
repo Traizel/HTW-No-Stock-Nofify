@@ -9,17 +9,7 @@ const itemlist = (state = [], action) => {
   }
 };
 
-const detailslist = (state = [], action) => {
-  switch (action.type) {
-    case "SET_DETAILS":
-      return action.payload;
-    default:
-      return state;
-  }
-};
-
 
 export default combineReducers({
   itemlist,
-  detailslist,
 });
