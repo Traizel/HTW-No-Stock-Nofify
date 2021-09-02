@@ -2,6 +2,7 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 const axios = require("axios");
+const moment = require("moment");
 
 let config = {
   //authenticate Big Commerce API
@@ -25,7 +26,7 @@ setInterval(() => {
   dateThen = moment().subtract(30, "days").format("YYYY-MM-DD");
 }, 1000 * 60 * 60 * 24);
 
-app.get("/items", rejectUnauthenticated, (req, res) => {
+router.get("/items", rejectUnauthenticated, (req, res) => {
   axios
     .get(
       `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0`,

@@ -6,11 +6,11 @@ const { RTMClient } = require("@slack/rtm-api");
 const axios = require('axios')
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-const moment = require("moment");
 const express = require("express");
 const bodyParser = require("body-parser");
 const pool = require("./modules/pool");
 const app = express();
+const sessionMiddleware = require("./modules/session-middleware");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

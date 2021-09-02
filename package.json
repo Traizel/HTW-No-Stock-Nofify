@@ -9,6 +9,9 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@sendgrid/mail": "^7.4.0",
+    "@slack/events-api": "^3.0.1",
+    "@slack/rtm-api": "^6.0.0",
+    "@slack/web-api": "^6.4.0",
     "async": "^3.2.0",
     "axios": "^0.19.2",
     "backend": "0.0.0",
@@ -41,6 +44,7 @@
     "redux-logger": "^3.0.6",
     "redux-saga": "^1.0.2",
     "sendmail": "^1.6.1",
+    "slack": "^11.0.2",
     "sweetalert": "^2.1.2",
     "sweetalert2": "^9.17.2",
     "webdriver-manager": "^12.1.7"

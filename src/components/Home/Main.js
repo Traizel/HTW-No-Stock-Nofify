@@ -34,7 +34,7 @@ class Main extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  items: state.rows,
+  items: state.data,
 });
 
 export default connect(mapStateToProps) (Main);
