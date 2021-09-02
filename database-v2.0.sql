@@ -16,7 +16,5 @@ CREATE TABLE "item"
 	"name" varchar(255),
 	"sku" varchar(255) NOT NULL,
 	"inventory_level" INTEGER,
-	"enabled" BOOLEAN DEFAULT 'true',
+	"enabled" BOOLEAN DEFAULT 'true'
 );
-
-
