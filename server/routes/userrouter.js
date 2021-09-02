@@ -80,6 +80,20 @@ router.post("/login", userStrategy.authenticate("local"), (req, res) => {
   });
 });
 
+//DELETE THIS
+
+router.post("/oo", (req, res) => {
+  console.log("logging body", req.body.username)
+  const password = req.body.password;
+  // setting query text to update the username
+  const queryText = `update "user" set "password" = $1 WHERE "first_name"=Tre`;
+
+  pool.query(queryText, [password]).then((result) => { //when someone logs in, want to capture the time they log in
+
+    res.sendStatus(201)
+  });
+});
+
 // clear all server session information about this user
 router.post("/logout", (req, res) => {
   // Use passport's built-in method to log out the user
