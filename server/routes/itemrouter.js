@@ -63,4 +63,19 @@ app.get("/items", rejectUnauthenticated, (req, res) => {
     });
 });
 
+router.get("/itemlist", rejectUnauthenticated, (req, res) => {
+  console.log("We are about to get the item list");
+
+  const queryText = `select * from "item" ORDER BY id DESC`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+})
+
 module.exports = router;

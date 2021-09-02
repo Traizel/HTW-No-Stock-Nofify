@@ -6,7 +6,7 @@ import {
   Redirect,
   Switch,
 } from "react-router-dom";
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import Nav from "../Nav/Nav";
 import Footer from "../Footer/Footer";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
@@ -14,6 +14,7 @@ import Main from "../Home/Main";
 import Login from "../LoginPage/LoginPage"
 import "./App.css";
 class App extends Component {
+  
   componentDidMount() {
     this.props.dispatch({ type: "FETCH_USER" });
   }

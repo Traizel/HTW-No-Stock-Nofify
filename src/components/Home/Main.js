@@ -14,7 +14,7 @@ import swal from "sweetalert";
 //import { response } from "express";
 
 // This component is for new
-class New extends Component {
+class Main extends Component {
 
   componentDidMount() {
     //get all new stock items with 0 stock
@@ -34,7 +34,7 @@ class New extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.user,
-  itemlist: state.item.itemlist,
+  items: state.rows,
 });
-export default connect(mapStateToProps)(New);
+
+export default connect(mapStateToProps) (Main);
