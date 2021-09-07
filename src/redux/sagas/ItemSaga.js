@@ -4,7 +4,7 @@ import axios from 'axios'
 
 function* getitemlist(action) {
   try {
-    const response = yield axios.get(`/api/item/itemlist`);
+    const response = yield axios.get(`/api/item/items`);
     yield put({
       type: "SET_ITEM",
       payload: response.data,

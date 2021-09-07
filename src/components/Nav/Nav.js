@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import swal from "sweetalert";
 import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
 import { Grid, TextField, Button } from "@material-ui/core";
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
@@ -25,7 +24,6 @@ class Nav extends Component {
             src="https://cdn11.bigcommerce.com/s-et4qthkygq/images/stencil/177x60/htwlogo_web_1573140308__59565.original.png"
             alt="HTW logo"
           ></img>
-        <LogOutButton />
       </>
     )
   }

@@ -4,11 +4,6 @@ import MUIDataTable from "mui-datatables";
 
 
 class MUITable extends Component {
-  componentDidMount() {
-    this.props.dispatch({
-      type: "GET_USERS",
-    });
-  }
 
   state = {
     //title: this.props.title,

@@ -2,35 +2,27 @@ require("dotenv").config();
 const { WebClient } = require("@slack/web-api");
 const { createEventAdapter } = require("@slack/events-api");
 const slackEvents = createEventAdapter(process.env.SLACK_SIGNING_SECRET);
-const { RTMClient } = require("@slack/rtm-api");
-const axios = require('axios')
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const express = require("express");
 const bodyParser = require("body-parser");
 const pool = require("./modules/pool");
 const app = express();
-const sessionMiddleware = require("./modules/session-middleware");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("build"));
 
-const passport = require('./strategies/user.strategy');
-
 // Route includes
-const userRouter = require('./routes/userrouter');
 const itemRouter = require('./routes/itemrouter');
+
+
 
 //change this to push update 1
 
-app.use(sessionMiddleware);
 
-// start up passport sessions
-app.use(passport.initialize());
-app.use(passport.session());
 
-app.use('/api/user', userRouter);
+
 app.use('/api/item', itemRouter);
   
 const token = process.env.SLACK_TOKEN;
