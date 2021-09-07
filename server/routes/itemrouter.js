@@ -32,14 +32,24 @@ router.get("/items", (req, res) => {
       pool
         .query(queryText)
         .then((itemResult) => {
-        console.log('BC Data:', bcResponse.data);
-      for(res of bcResponse.data) {
-          let bcItemName = res.name;
-          let bcItemSku = res.sku;
-          let bcItemInv = res.inventory_level;
-      const queryText = `INSERT INTO "item" (name, sku, inventory_level) VALUES ($1, $2, $3)`;
+
+          let msg = '';
+         // console.log('BC Data:', bcResponse.data.data);
+      for(let i = 0; i < bcResponse.data.data.length ; i++) {
+          let data = bcResponse.data.data;
+          let bcItemName = data[i].name;
+          let bcItemSku = data[i].sku;
+          let bcItemInv = data[i].inventory_level;
+
+          if(i === data.length - 1) {
+          msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv});`);
+          } else {
+          msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}), `);
+          }
+      }
+      const queryText = `INSERT INTO "item" (name, sku, inventory_level) VALUES ${msg}`;
       pool
-        .query(queryText, [bcItemName, bcItemSku, bcItemInv])
+        .query(queryText)
         .then((insertResult) => {
           console.log("We are about to get the item list");
 
@@ -58,7 +68,6 @@ router.get("/items", (req, res) => {
           console.log(`Error on item query ${error}`);
           res.sendStatus(500);
         });
-        }
       })
       .catch((error) => {
         console.log(`Error on item query ${error}`);
@@ -68,22 +77,8 @@ router.get("/items", (req, res) => {
     .catch(function (error) {
       // handle error
       console.log(error);
-    });
-});
-
-router.get("/itemlist", (req, res) => {
-  console.log("We are about to get the item list");
-
-  const queryText = `select * from "item" ORDER BY id DESC`;
-  pool
-    .query(queryText)
-    .then((result) => {
-      res.send(result.rows);
-    })
-    .catch((error) => {
-      console.log(`Error on item query ${error}`);
       res.sendStatus(500);
     });
-})
+});
 
 module.exports = router;

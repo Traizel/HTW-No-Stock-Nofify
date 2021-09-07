@@ -2,8 +2,6 @@ require("dotenv").config();
 const { WebClient } = require("@slack/web-api");
 const { createEventAdapter } = require("@slack/events-api");
 const slackEvents = createEventAdapter(process.env.SLACK_SIGNING_SECRET);
-const sgMail = require("@sendgrid/mail");
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const express = require("express");
 const bodyParser = require("body-parser");
 const pool = require("./modules/pool");
