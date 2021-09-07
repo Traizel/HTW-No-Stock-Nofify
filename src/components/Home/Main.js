@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, {useEffect} from "react";
+import { useSelector, useDispatch } from 'react-redux';
 import './Main.css'
-import Button from "react-bootstrap/Button";
 import MUITable from "../MUITable/MUITable";
+import Button from "react-bootstrap/Button";
 import { Paper, TextField } from "@material-ui/core";
 import Form from "react-bootstrap/Form";
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
@@ -12,24 +12,106 @@ import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 import FlagIcon from "@material-ui/icons/Flag";
 import QueueIcon from "@material-ui/icons/Queue";
 import swal from "sweetalert";
+import ItemList from './ItemList';
 //import { response } from "express";
 
-// This component is for new
-class Main extends Component {
 
-  componentDidMount() {
-    //get all new stock items with 0 stock
-    this.props.dispatch({
+function Main () {
+
+  const items = useSelector(store => store.item.itemlist);
+  console.log(items);
+  const dispatch = useDispatch();
+  let list = <></>;
+
+
+  useEffect(() => {
+    dispatch({
       type: "GET_ITEM_LIST",
     });
-  }
+  }, [])
+    //get all new stock items with 0 stock
+    
+  //   if (items) {
+  //     list = 
+  //     <>
+  //     {items.map(item => 
+  // (<ItemList key={item.id} item={item}/>
+  //       ))}
+  //     </>
+  //   } else {
+  //     list = <></>
+  //   }
 
-  render() {
+
+  const i = items.map((item) => [
+    item.name,
+    item.sku,
+    item.id,
+  ]);
     //defines the dataselector to know which items to preform actions on
     return (
       <>
-      <table>
+      <h1></h1>
+      <MUITable
+              data={i} //brings in data as an array, in this case, list of items
+              columns={[
+                //names the columns found on MUI table
+                { name: "Item Name" },
+                { name: "Item SKU" },
+                { name: "Item ID" },
+                {
+                  name: "",
+                  options: {
+                    filter: false,
+                    sort: false,
+                    empty: true,
+                    customBodyRenderLite: (dataIndex, rowIndex) => {
+                      return (
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={(event) => {
+                            event.preventDefault();
+                            const itemArray = this.item;
+                            const item = itemArray[dataIndex];
+                            const id = item.id;
+                            this.setState({
+                              toggle: !this.state.toggle,
+                              id: item.id,
+                            });
+                            this.props.dispatch({
+                              type: "MARK_STOCKED",
+                              payload: {
+                                id: id,
+                              },
+                            });
+                          }}
+                        >
+                          <FlagIcon /> Mark as Stocked
+                        </Button>
+                      );
+                    },
+                  },
+                },
+              ]}
+              title={""} //give the table a name
+              />
+      {/* {//<table>
         <thead>
+          <tr>
+            <td>
+              <p></p>
+            </td>
+            <td>
+              <p></p>
+            </td>
+            <td>
+              <p></p>
+            </td>
+            <td>
+              <p></p>
+            </td>
+          </tr>
           <tr>
             <td>
               <p>Name</p>
@@ -38,21 +120,19 @@ class Main extends Component {
               <p>SKU</p>
             </td>
             <td>
-              <p>BC ID</p>
+              <p>ID</p>
             </td>
             <td>
               <p>Delete</p>
             </td>
           </tr>
         </thead>
-      </table>
+        <tbody>
+          {list}
+        </tbody>
+      </table>} */}
       </>
     )
   }
-}
 
-const mapStateToProps = (state) => ({
-  items: state.data,
-});
-
-export default connect(mapStateToProps) (Main);
+export default Main;
