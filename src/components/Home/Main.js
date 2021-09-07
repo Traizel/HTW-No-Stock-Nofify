@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import './Main.css'
 import Button from "react-bootstrap/Button";
 import MUITable from "../MUITable/MUITable";
 import { Paper, TextField } from "@material-ui/core";
@@ -27,7 +28,24 @@ class Main extends Component {
     //defines the dataselector to know which items to preform actions on
     return (
       <>
-      <h2>HI</h2>
+      <table>
+        <thead>
+          <tr>
+            <td>
+              <p>Name</p>
+            </td>
+            <td>
+              <p>SKU</p>
+            </td>
+            <td>
+              <p>BC ID</p>
+            </td>
+            <td>
+              <p>Delete</p>
+            </td>
+          </tr>
+        </thead>
+      </table>
       </>
     )
   }

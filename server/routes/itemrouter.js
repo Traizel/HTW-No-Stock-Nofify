@@ -28,11 +28,44 @@ router.get("/items", (req, res) => {
       config
     )
     .then(function (bcResponse) {
-      const queryText = `DELETE from "item"`;
+      const queryText = `select * from "item" ORDER BY name DESC`;
       pool
         .query(queryText)
-        .then((itemResult) => {
+        .then((itemResponse) => {
+      const queryText = `delete from "temp"`;
+      pool
+        .query(queryText)
+        .then((response) => {
+          let msg = '';
+      if (!itemResponse.rows[1]) {
+        console.log('Item Table Empty!');
+      } else {
+          for (let i = 0; i < itemResponse.rows.length; i++) {
+            let data = itemResponse.rows;
+            let bcItemName = data[i].name;
+            let bcItemSku = data[i].sku;
+            let bcItemInv = data[i].inventory_level;
 
+          if (i === data.length - 1) {
+            msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv});`);
+          } else {
+            msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}), `);
+          }
+        } 
+      }
+      let queryText = '';
+      if (msg === '') {
+        queryText = `select * from "item"`;
+      } else {
+        queryText = `INSERT INTO "temp" (name, sku, inventory_level) VALUES ${msg}`;
+      }
+      pool
+        .query(queryText)
+        .then((result) => {
+      const queryText = `select * from "temp" ORDER BY name DESC`;
+      pool
+        .query(queryText)
+        .then((tempResponse) => {
           let msg = '';
          // console.log('BC Data:', bcResponse.data.data);
       for(let i = 0; i < bcResponse.data.data.length ; i++) {
@@ -40,14 +73,31 @@ router.get("/items", (req, res) => {
           let bcItemName = data[i].name;
           let bcItemSku = data[i].sku;
           let bcItemInv = data[i].inventory_level;
-
-          if(i === data.length - 1) {
-          msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv});`);
+          if (!itemResponse.rows[1]) {
+            if (i === data.length - 1) {
+              msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv});`);
+            } else {
+              msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}), `);
+            }
           } else {
-          msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}), `);
+           // console.log(itemResponse.rows[i].name);
+           // console.log(tempResponse.rows[i].name);
+          if(i === data.length - 1 && tempResponse.rows[i].name !== itemResponse.rows[i].name) {
+          msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv});`);
           }
+          else if(tempResponse.rows[i].name !== itemResponse.rows[i].name) {
+          msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}), `);
+          } else {
+            console.log('Already in Database!');
+          }
+        }
       }
-      const queryText = `INSERT INTO "item" (name, sku, inventory_level) VALUES ${msg}`;
+      let queryText = '';
+      if (msg === '') {
+      queryText = `select * from "item"`;
+      } else {
+      queryText = `INSERT INTO "item" (name, sku, inventory_level) VALUES ${msg}`;
+      }
       pool
         .query(queryText)
         .then((insertResult) => {
@@ -63,6 +113,21 @@ router.get("/items", (req, res) => {
               console.log(`Error on item query ${error}`);
               res.sendStatus(500);
             });
+        })
+        .catch((error) => {
+          console.log(`Error on item query ${error}`);
+          res.sendStatus(500);
+          });
+        })
+        .catch((error) => {
+          console.log(`Error on item query ${error}`);
+          res.sendStatus(500);
+          });
+        })
+        .catch((error) => {
+          console.log(`Error on item query ${error}`);
+          res.sendStatus(500);
+          });
         })
         .catch((error) => {
           console.log(`Error on item query ${error}`);
