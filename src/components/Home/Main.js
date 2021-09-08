@@ -51,7 +51,22 @@ function Main () {
     //defines the dataselector to know which items to preform actions on
     return (
       <>
-      <h1></h1>
+      <br></br>
+      <br></br>
+      <br></br>
+      < Button 
+      variant = "contained"
+      color = "primary"
+      onClick = {
+        (event) => {
+          event.preventDefault();
+          dispatch({
+            type: "UPDATE_ITEMS",
+          });
+      swal("Refreshing Zero Stock..");
+        }
+      }
+      ><AssignmentTurnedInIcon/> Refresh</Button>
       <MUITable
               data={i} //brings in data as an array, in this case, list of items
               columns={[
@@ -72,19 +87,14 @@ function Main () {
                           color="primary"
                           onClick={(event) => {
                             event.preventDefault();
-                            const itemArray = this.item;
-                            const item = itemArray[dataIndex];
-                            const id = item.id;
-                            this.setState({
-                              toggle: !this.state.toggle,
-                              id: item.id,
-                            });
-                            this.props.dispatch({
+                            const id = items[dataIndex].id;
+                            dispatch({
                               type: "MARK_STOCKED",
                               payload: {
                                 id: id,
                               },
                             });
+                            swal("Sounds good! We will remove this one!");
                           }}
                         >
                           <FlagIcon /> Mark as Stocked

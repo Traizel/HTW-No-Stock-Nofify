@@ -359,12 +359,12 @@ router.get("/items", (req, res) => {
                                                       }
                                                       for (let i = 0; i < bcResponse.length; i++) {
                                                           // console.log(`BC Response #${i}`, bcResponse[i]);
-                                                          let bcItemName = bcResponse[i].name;
-                                                          if (bcResponse[i].name.indexOf("`") > -1 || bcResponse[i].name.indexOf("'") > -1 || bcResponse[i].name.indexOf('"') > -1) {
-                                                            console.log('Found a symbol, deleting..');
-                                                            bcItemName = bcResponse[i].name.replace('"'|"`"|"'", " ");
-                                                            console.log(bcItemName);
-                                                          }
+                                                          let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
+                                                          // if (bcResponse[i].name.indexOf("`") > -1 || bcResponse[i].name.indexOf("'") > -1 || bcResponse[i].name.indexOf('"') > -1) {
+                                                          //   console.log('Found a symbol, deleting..');
+                                                          //   bcItemName = bcResponse[i].name.replace('"'|"`"|"'", " ");
+                                                          //   console.log(bcItemName);
+                                                          // }
                                                           let bcItemSku = bcResponse[i].sku;
                                                           let bcItemInv = bcResponse[i].inventory_level;
                                                             if (i === bcResponse.length - 1) {
@@ -459,6 +459,31 @@ router.get("/getitems", (req, res) => {
     .query(queryText)
     .then((selectResult) => {
       res.send(selectResult.rows);
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+});
+
+router.delete("/items/:id", (req, res) => {
+  console.log("We are about to get the item list");
+  const id = req.params.id;
+
+  const queryText = `delete from "item" WHERE id = $1`;
+  pool
+    .query(queryText, [id])
+    .then((deleteResult) => {
+      const queryText = `select * from "item" ORDER BY id DESC`;
+      pool
+        .query(queryText)
+        .then((selectResult) => {
+      res.send(selectResult.rows);
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
     })
     .catch((error) => {
       console.log(`Error on item query ${error}`);
