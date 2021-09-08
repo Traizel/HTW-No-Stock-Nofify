@@ -327,7 +327,7 @@ router.get("/items", (req, res) => {
                                       const queryText = `delete from "item"`;
                                       pool
                                         .query(queryText)
-                                                    .then((response) => {
+                                                    .then(function (response) {
                                                       let msg = '';
                                                       let bcResponse = [];
                                                       for (item of bcResponse1.data.data) {
@@ -358,23 +358,36 @@ router.get("/items", (req, res) => {
                                                         bcResponse.push(item);
                                                       }
                                                       for (let i = 0; i < bcResponse.length; i++) {
-                                                          // console.log(`BC Response #${i}`, bcResponse[i]);
+                                                        if (bcResponse[i].variants) {
+                                                          console.log('Splitting Variants..');
                                                           let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
-                                                          // if (bcResponse[i].name.indexOf("`") > -1 || bcResponse[i].name.indexOf("'") > -1 || bcResponse[i].name.indexOf('"') > -1) {
-                                                          //   console.log('Found a symbol, deleting..');
-                                                          //   bcItemName = bcResponse[i].name.replace('"'|"`"|"'", " ");
-                                                          //   console.log(bcItemName);
-                                                          // }
-                                                          let bcItemSku = bcResponse[i].sku;
                                                           let bcItemInv = bcResponse[i].inventory_level;
-                                                            if (i === bcResponse.length - 1) {
-                                                              msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv});`);
+                                                          let bcItemSku = bcResponse[i].sku;
+                                                          let bcItemId = bcResponse[i].id;
+                                                          // console.log(`BC Response #${i}`, bcResponse[i]);
+                                                          for (let j = 0; j < bcResponse[i].variants.length; j++) {
+                                                            bcItemSku = bcResponse[i].variants[j].sku;
+                                                            bcItemId = bcResponse[i].variants[j].id;
+                                                            if (i === bcResponse.length - 1 && j === bcResponse[i].variants.length - 1) {
+                                                              msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId});`);
                                                             } else {
-                                                              msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}), `);
+                                                              msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}), `);
                                                             }
                                                           }
+                                                        } else {
+                                                          let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
+                                                          let bcItemId = bcResponse[i].id;
+                                                          let bcItemSku = bcResponse[i].sku;
+                                                          let bcItemInv = bcResponse[i].inventory_level;
+                                                          if (i === bcResponse.length - 1) {
+                                                            msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId});`);
+                                                          } else {
+                                                            msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}), `);
+                                                          }
+                                                        }
+                                                      }
                                                           //console.log(msg);
-                                                        const queryText = `INSERT INTO "item" (name, sku, inventory_level) VALUES ${msg}`;
+                                                        const queryText = `INSERT INTO "item" (name, sku, inventory_level, id) VALUES ${msg}`;
                                                       pool
                                                         .query(queryText)
                                                         .then((insertResult) => {
