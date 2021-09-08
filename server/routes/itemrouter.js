@@ -24,10 +24,58 @@ setInterval(() => {
 router.get("/items", (req, res) => {
   axios
     .get(
-      `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0`,
+      `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=2500&page=1`,
       config
     )
-    .then(function (bcResponse) {
+    .then(function (bcResponse1) {
+  axios
+    .get(
+      `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=2500&page=2`,
+      config
+    )
+    .then(function (bcResponse2) {
+  axios
+    .get(
+      `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=2500&page=3`,
+      config
+    )
+    .then(function (bcResponse3) {
+  axios
+    .get(
+      `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=2500&page=4`,
+      config
+    )
+    .then(function (bcResponse4) {
+  axios
+    .get(
+      `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=2500&page=5`,
+      config
+    )
+    .then(function (bcResponse5) {
+  axios
+    .get(
+      `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=2500&page=6`,
+      config
+    )
+    .then(function (bcResponse6) {
+  axios
+    .get(
+      `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=2500&page=7`,
+      config
+    )
+    .then(function (bcResponse7) {
+  axios
+    .get(
+      `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=2500&page=8`,
+      config
+    )
+    .then(function (bcResponse8) {
+  axios
+    .get(
+      `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=2500&page=9`,
+      config
+    )
+    .then(function (bcResponse9) {
       const queryText = `select * from "item" ORDER BY name DESC`;
       pool
         .query(queryText)
@@ -67,14 +115,45 @@ router.get("/items", (req, res) => {
         .query(queryText)
         .then((tempResponse) => {
           let msg = '';
-         // console.log('BC Data:', bcResponse.data.data);
-      for(let i = 0; i < bcResponse.data.data.length ; i++) {
-          let data = bcResponse.data.data;
-          let bcItemName = data[i].name;
-          let bcItemSku = data[i].sku;
-          let bcItemInv = data[i].inventory_level;
+          let bcResponse = [];
+          for (item of bcResponse1.data.data) {
+          bcResponse.push(item);
+          }
+          for (item of bcResponse2.data.data) {
+          bcResponse.push(item);
+          }
+          for (item of bcResponse3.data.data) {
+          bcResponse.push(item);
+          }
+          for (item of bcResponse4.data.data) {
+          bcResponse.push(item);
+          }
+          for (item of bcResponse5.data.data) {
+          bcResponse.push(item);
+          }
+          for (item of bcResponse6.data.data) {
+          bcResponse.push(item);
+          }
+          for (item of bcResponse7.data.data) {
+          bcResponse.push(item);
+          }
+          for (item of bcResponse8.data.data) {
+          bcResponse.push(item);
+          }
+          for (item of bcResponse9.data.data) {
+          bcResponse.push(item);
+          }
+      for(let i = 0; i < bcResponse.length ; i++) {
+        if (bcResponse[i] !== []) {
+          // console.log(`BC Response #${i}`, bcResponse[i]);
+          console.log(bcResponse[i].name);
+          let bcItemName = bcResponse[i].name;
+          let bcItemSku = bcResponse[i].sku;
+          let bcItemInv = bcResponse[i].inventory_level;
+          console.log(itemResponse.rows[i].name);
+          console.log(tempResponse.rows[i].name);
           if (!itemResponse.rows[1]) {
-            if (i === data.length - 1) {
+            if (i === bcResponse.length - 1) {
               msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv});`);
             } else {
               msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}), `);
@@ -82,7 +161,7 @@ router.get("/items", (req, res) => {
           } else {
            // console.log(itemResponse.rows[i].name);
            // console.log(tempResponse.rows[i].name);
-          if(i === data.length - 1 && tempResponse.rows[i].name !== itemResponse.rows[i].name) {
+          if(i === bcResponse.length - 1 && tempResponse.rows[i].name !== itemResponse.rows[i].name) {
           msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv});`);
           }
           else if(tempResponse.rows[i].name !== itemResponse.rows[i].name) {
@@ -92,6 +171,7 @@ router.get("/items", (req, res) => {
           }
         }
       }
+    }
       let queryText = '';
       if (msg === '') {
       queryText = `select * from "item"`;
@@ -138,6 +218,46 @@ router.get("/items", (req, res) => {
         console.log(`Error on item query ${error}`);
         res.sendStatus(500);
       });
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
     })
     .catch(function (error) {
       // handle error
