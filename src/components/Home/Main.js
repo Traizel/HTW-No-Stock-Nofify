@@ -47,6 +47,7 @@ function Main () {
     item.name,
     item.sku,
     item.id,
+    item.level,
   ]);
     //defines the dataselector to know which items to preform actions on
     return (
@@ -74,6 +75,7 @@ function Main () {
                 { name: "Item Name" },
                 { name: "Item SKU" },
                 { name: "Item ID" },
+                { name: "Level" },
                 {
                   name: "",
                   options: {

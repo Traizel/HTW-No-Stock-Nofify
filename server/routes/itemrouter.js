@@ -272,25 +272,25 @@ setInterval(() => {
 router.get("/items", (req, res) => {
   axios
     .get(
-      `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=2500&page=1`,
+      `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=1`,
       config
     )
     .then(function (bcResponse1) {
       axios
         .get(
-          `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=2500&page=2`,
+          `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=2`,
           config
         )
         .then(function (bcResponse2) {
           axios
             .get(
-              `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=2500&page=3`,
+              `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=3`,
               config
             )
             .then(function (bcResponse3) {
               axios
                 .get(
-                  `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=2500&page=4`,
+                  `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=4`,
                   config
                 )
                 .then(function (bcResponse4) {
@@ -302,25 +302,25 @@ router.get("/items", (req, res) => {
                     .then(function (bcResponse5) {
                       axios
                         .get(
-                          `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=2500&page=6`,
+                          `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=6`,
                           config
                         )
                         .then(function (bcResponse6) {
                           axios
                             .get(
-                              `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=2500&page=7`,
+                              `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=7`,
                               config
                             )
                             .then(function (bcResponse7) {
                               axios
                                 .get(
-                                  `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=2500&page=8`,
+                                  `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=8`,
                                   config
                                 )
                                 .then(function (bcResponse8) {
                                   axios
                                     .get(
-                                      `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=2500&page=9`,
+                                      `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=9`,
                                       config
                                     )
                                     .then(function (bcResponse9) {
@@ -358,36 +358,50 @@ router.get("/items", (req, res) => {
                                                         bcResponse.push(item);
                                                       }
                                                       for (let i = 0; i < bcResponse.length; i++) {
-                                                        if (bcResponse[i].variants) {
-                                                          console.log('Splitting Variants..');
-                                                          let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
-                                                          let bcItemInv = bcResponse[i].inventory_level;
-                                                          let bcItemSku = bcResponse[i].sku;
-                                                          let bcItemId = bcResponse[i].id;
-                                                          // console.log(`BC Response #${i}`, bcResponse[i]);
-                                                          for (let j = 0; j < bcResponse[i].variants.length; j++) {
-                                                            bcItemSku = bcResponse[i].variants[j].sku;
-                                                            bcItemId = bcResponse[i].variants[j].id;
-                                                            if (i === bcResponse.length - 1 && j === bcResponse[i].variants.length - 1) {
-                                                              msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId});`);
-                                                            } else {
-                                                              msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}), `);
-                                                            }
-                                                          }
-                                                        } else {
                                                           let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
                                                           let bcItemId = bcResponse[i].id;
                                                           let bcItemSku = bcResponse[i].sku;
                                                           let bcItemInv = bcResponse[i].inventory_level;
                                                           if (i === bcResponse.length - 1) {
-                                                            msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId});`);
+                                                            msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product');`);
                                                           } else {
-                                                            msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}), `);
+                                                            msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
                                                           }
                                                         }
-                                                      }
+                                                        for (let i = 0; i < bcResponse.length; i++) {
+                                                          let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
+                                                          let bcItemId = bcResponse[i].id;
+                                                          let bcItemSku = bcResponse[i].sku;
+                                                          let bcItemInv = bcResponse[i].inventory_level;
+                                                          
+                                                          axios
+                                                            .get(
+                                                              `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products/${bcItemId}/variants`,
+                                                              config
+                                                            )
+                                                            .then(function (variantResponse) {
+                                                              let varItems = variantResponse.data.data;
+                                                              for (let j = 0; j < varItems.length; j++) {
+                                                                if (i === bcResponse.length - 1 && j === varItems.length - 1 && varItems[j].inventory_level === 0) {
+                                                                  bcItemSku = varItems[j].sku;
+                                                                  BcItemId = varItems[j].id;
+                                                                  msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Variant');`);
+                                                                } else if (varItems[j].inventory_level === 0) {
+                                                                  bcItemSku = varItems[j].sku;
+                                                                  BcItemId = varItems[j].id;
+                                                                  msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Variant'), `);
+                                                                } else {
+                                                                  console.log('Variant not at 0 stock!');
+                                                                }
+                                                              }
+                                                            })
+                                                            .catch((error) => {
+                                                              console.log(`Error on variant query ${error}`);
+                                                              res.sendStatus(500);
+                                                            });
+                                                        }
                                                           //console.log(msg);
-                                                        const queryText = `INSERT INTO "item" (name, sku, inventory_level, id) VALUES ${msg}`;
+                                                        const queryText = `INSERT INTO "item" (name, sku, inventory_level, id, level) VALUES ${msg}`;
                                                       pool
                                                         .query(queryText)
                                                         .then((insertResult) => {
@@ -456,7 +470,7 @@ router.get("/items", (req, res) => {
     })
     .catch((error) => {
       // handle error
-      console.log(e `Error on get1 query ${error}`);
+      console.log(`Error on get1 query ${error}`);
       res.sendStatus(500);
     });
 });
