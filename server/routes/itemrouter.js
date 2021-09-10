@@ -3,6 +3,7 @@ const pool = require('../modules/pool');
 const router = express.Router();
 const axios = require("axios");
 const moment = require("moment");
+var lupus = require('lupus');
 
 let config = {
   //authenticate Big Commerce API
@@ -404,10 +405,10 @@ router.get("/items", (req, res) => {
                                                                   bcResponse.push(item);
                                                                 }
 
-                                                          for (let i = 0; i < bcResponse.length; i++) {
+                                                          lupus(0, bcResponse.length, function (i) {
 
                                                             let bcItemId = bcResponse[i].id;
-                                                          }
+                                                          
                                                             axios
                                                               .get(
                                                                 `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products/${bcItemId}/variants`,
@@ -462,13 +463,26 @@ router.get("/items", (req, res) => {
                                                                   } else {
                                                                     //console.log('Variant not at 0 stock!');
                                                                   }
-                                                                }
+                                                                
                                                               
                                                                     //console.log(msg);
                                                                   const queryText = `INSERT INTO "item" (name, sku, inventory_level, id, level) VALUES ${varMsg}`;
                                                                   pool
                                                                     .query(queryText)
                                                                     .then((variantInsertResult) => {
+
+                                                                      })
+                                                                      .catch((error) => {
+                                                                        console.log(`Error on varInsert query ${error}`);
+                                                                        res.sendStatus(500);
+                                                                      });
+                                                                    }
+                                                                      })
+                                                                      .catch((error) => {
+                                                                        console.log(`Error on delete query ${error}`);
+                                                                        res.sendStatus(500);
+                                                                      });
+                                                                  });
 
                                                           console.log("We are about to get the item list");
 
@@ -482,19 +496,10 @@ router.get("/items", (req, res) => {
                                                               console.log(`Error on select query ${error}`);
                                                               res.sendStatus(500);
                                                             });
-                                                        })
-                                                        .catch((error) => {
-                                                          console.log(`Error on insert2 query ${error}`);
-                                                          res.sendStatus(500);
-                                                        });
-                                                        })
-                                                        .catch((error) => {
-                                                          console.log(`Error on delete query ${error}`);
-                                                          res.sendStatus(500);
-                                                        });
+                                                        
                                                     })
                                                     .catch((error) => {
-                                                      console.log(`Error on delete query ${error}`);
+                                                      console.log(`Error on productInsert query ${error}`);
                                                       res.sendStatus(500);
                                                     });
                                                 })
