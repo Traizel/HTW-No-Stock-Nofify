@@ -787,7 +787,7 @@ try {
   return res.status(500).send();
 }
      
-await timeoutPromise(5000);
+await timeoutPromise(12000);
 
 try {
   let newMsg = msg.slice(0, -2);
