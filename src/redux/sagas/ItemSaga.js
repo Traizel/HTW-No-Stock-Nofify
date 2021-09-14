@@ -16,10 +16,16 @@ function* getitemlist(action) {
 
 function* updateItems(action) {
   try {
+    yield put({
+      type: "SET_UPDATING",
+    });
     const response = yield axios.get(`/api/item/items`);
     yield put({
       type: "SET_ITEM",
       payload: response.data,
+    });
+    yield put({
+      type: "SET_DONE",
     });
   } catch (error) {
     console.log("Error with getting the list of items:", error);

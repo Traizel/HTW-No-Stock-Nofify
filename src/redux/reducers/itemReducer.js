@@ -9,7 +9,20 @@ const itemlist = (state = [], action) => {
   }
 };
 
+const displayState = (state = true, action) => {
+  switch (action.type) {
+    case "SET_UPDATING":
+      return false;
+    case "SET_DONE":
+      return true;
+    default:
+      return state;
+  }
+};
+
+
 
 export default combineReducers({
   itemlist,
+  displayState,
 });

@@ -19,6 +19,7 @@ import ItemList from './ItemList';
 function Main () {
 
   const items = useSelector(store => store.item.itemlist);
+  const display = useSelector(store => store.item.displayState);
   console.log(items);
   const dispatch = useDispatch();
   let list = <></>;
@@ -51,6 +52,9 @@ function Main () {
   ]);
     //defines the dataselector to know which items to preform actions on
     return (
+      <>
+      {display
+      ?
       <>
       <br></br>
       <br></br>
@@ -108,41 +112,15 @@ function Main () {
               ]}
               title={""} //give the table a name
               />
-      {/* {//<table>
-        <thead>
-          <tr>
-            <td>
-              <p></p>
-            </td>
-            <td>
-              <p></p>
-            </td>
-            <td>
-              <p></p>
-            </td>
-            <td>
-              <p></p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <p>Name</p>
-            </td>
-            <td>
-              <p>SKU</p>
-            </td>
-            <td>
-              <p>ID</p>
-            </td>
-            <td>
-              <p>Delete</p>
-            </td>
-          </tr>
-        </thead>
-        <tbody>
-          {list}
-        </tbody>
-      </table>} */}
+      </>
+      :
+      <>
+      <br></br>
+      <br></br>
+      <br></br>
+      <div className="loader"></div>
+      </>
+      }
       </>
     )
   }
