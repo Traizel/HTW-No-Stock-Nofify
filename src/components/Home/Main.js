@@ -7,7 +7,11 @@ import { Paper, TextField } from "@material-ui/core";
 import Form from "react-bootstrap/Form";
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
+import Switch from '@material-ui/core/Switch';
 import DeleteIcon from "@material-ui/icons/Delete";
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
 import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 import FlagIcon from "@material-ui/icons/Flag";
 import QueueIcon from "@material-ui/icons/Queue";
@@ -20,7 +24,7 @@ function Main () {
 
   const items = useSelector(store => store.item.itemlist);
   const display = useSelector(store => store.item.displayState);
-  const invView = useSelector(store => store.item.viewState);
+  const isChecked = useSelector(store => store.item.setView);
   console.log(items);
   const dispatch = useDispatch();
   let view = 0;
@@ -42,6 +46,13 @@ function Main () {
     }
   }
 
+  const handleChange = (event) => {
+    event.preventDefault();
+    dispatch({
+      type: "SET_VIEW",
+      payload: event.target.checked,
+    });
+  };
 
   const ni = newItems.map((item) => [
     item.name,
@@ -78,29 +89,20 @@ function Main () {
         }
       }
       ><AssignmentTurnedInIcon/> Refresh</Button>
-      <Button 
-      variant = "contained"
-      color = "primary"
-      onClick = {
-        (event) => {
-          event.preventDefault();
-          if (view === 0) {
-          view = 1;
-          dispatch({
-            type: "SET_DEAD",
-          });
-          } else if (view === 1) {
-          view = 0;
-          dispatch({
-            type: "SET_NEW",
-          });
-          }
-          console.log(view);
-        }
-      }
-      ><PlayArrowIcon/> Switch Inventories</Button>
+      <FormControl component="fieldset">
+      <FormGroup aria-label="position" row>
+        <FormControlLabel
+          value="start"
+          checked={isChecked}
+          control={<Switch color="primary" onChange={(e)=>handleChange(e)} />}
+          inputProps={{ 'aria-label': 'secondary checkbox' }}
+          label="Switch Inventories"
+          labelPlacement="start"
+        />
+      </FormGroup>
+    </FormControl>
       <>
-      {invView
+      {isChecked
       ?
       <MUITable
               data={ni} //brings in data as an array, in this case, list of items

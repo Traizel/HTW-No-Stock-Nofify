@@ -20,12 +20,10 @@ const displayState = (state = true, action) => {
   }
 };
 
-const viewState = (state = true, action) => {
+const setView = (state = true, action) => {
   switch (action.type) {
-    case "SET_DEAD":
-      return false;
-    case "SET_NEW":
-      return true;
+    case "SET_VIEW":
+      return action.payload;
     default:
       return state;
   }
@@ -35,5 +33,5 @@ const viewState = (state = true, action) => {
 export default combineReducers({
   itemlist,
   displayState,
-  viewState,
+  setView,
 });
