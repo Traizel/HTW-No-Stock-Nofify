@@ -20,10 +20,10 @@ function Main () {
 
   const items = useSelector(store => store.item.itemlist);
   const display = useSelector(store => store.item.displayState);
+  const invView = useSelector(store => store.item.viewState);
   console.log(items);
   const dispatch = useDispatch();
-  let list = <></>;
-
+  let view = 0;
 
   useEffect(() => {
     dispatch({
@@ -31,20 +31,26 @@ function Main () {
     });
   }, [])
     //get all new stock items with 0 stock
-    
-  //   if (items) {
-  //     list = 
-  //     <>
-  //     {items.map(item => 
-  // (<ItemList key={item.id} item={item}/>
-  //       ))}
-  //     </>
-  //   } else {
-  //     list = <></>
-  //   }
+  let newItems = [];
+  let deadItems = [];
+
+  for (let item of items) {
+    if (item.dead) {
+      deadItems.push(item);
+    } else {
+      newItems.push(item);
+    }
+  }
 
 
-  const i = items.map((item) => [
+  const ni = newItems.map((item) => [
+    item.name,
+    item.sku,
+    item.id,
+    item.level,
+  ]);
+
+  const di = deadItems.map((item) => [
     item.name,
     item.sku,
     item.id,
@@ -59,7 +65,7 @@ function Main () {
       <br></br>
       <br></br>
       <br></br>
-      < Button 
+      <Button 
       variant = "contained"
       color = "primary"
       onClick = {
@@ -72,8 +78,32 @@ function Main () {
         }
       }
       ><AssignmentTurnedInIcon/> Refresh</Button>
+      <Button 
+      variant = "contained"
+      color = "primary"
+      onClick = {
+        (event) => {
+          event.preventDefault();
+          if (view === 0) {
+          view = 1;
+          dispatch({
+            type: "SET_DEAD",
+          });
+          } else if (view === 1) {
+          view = 0;
+          dispatch({
+            type: "SET_NEW",
+          });
+          }
+          console.log(view);
+        }
+      }
+      ><PlayArrowIcon/> Switch Inventories</Button>
+      <>
+      {invView
+      ?
       <MUITable
-              data={i} //brings in data as an array, in this case, list of items
+              data={ni} //brings in data as an array, in this case, list of items
               columns={[
                 //names the columns found on MUI table
                 { name: "Item Name" },
@@ -93,7 +123,7 @@ function Main () {
                           color="primary"
                           onClick={(event) => {
                             event.preventDefault();
-                            const id = items[dataIndex].id;
+                            const id = newItems[dataIndex].id;
                             dispatch({
                               type: "MARK_STOCKED",
                               payload: {
@@ -109,9 +139,83 @@ function Main () {
                     },
                   },
                 },
+                {
+                  name: "",
+                  options: {
+                    filter: false,
+                    sort: false,
+                    empty: true,
+                    customBodyRenderLite: (dataIndex, rowIndex) => {
+                      return (
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={(event) => {
+                            event.preventDefault();
+                            const id = newItems[dataIndex].id;
+                            dispatch({
+                              type: "MARK_DEAD",
+                              payload: {
+                                id: id,
+                              },
+                            });
+                            swal("This one is now marked as dead inventory!");
+                          }}
+                        >
+                          <QueueIcon /> Dead Inventory
+                        </Button>
+                      );
+                    },
+                  },
+                },
               ]}
               title={""} //give the table a name
               />
+      :
+      <>
+      <MUITable
+              data={di} //brings in data as an array, in this case, list of items
+              columns={[
+                //names the columns found on MUI table
+                { name: "Item Name" },
+                { name: "Item SKU" },
+                { name: "Item ID" },
+                { name: "Level" },
+                {
+                  name: "",
+                  options: {
+                    filter: false,
+                    sort: false,
+                    empty: true,
+                    customBodyRenderLite: (dataIndex, rowIndex) => {
+                      return (
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={(event) => {
+                            event.preventDefault();
+                            const id = deadItems[dataIndex].id;
+                            dispatch({
+                              type: "UNMARK_DEAD",
+                              payload: {
+                                id: id,
+                              },
+                            });
+                            swal("Okay! This one is now unmarked as dead inventory!");
+                          }}
+                        >
+                          <QueueIcon /> Unmark Dead
+                        </Button>
+                      );
+                    },
+                  },
+                },
+              ]}
+              title={""} //give the table a name
+              />
+      </>
+      }
+      </>
       </>
       :
       <>

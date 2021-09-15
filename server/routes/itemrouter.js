@@ -859,6 +859,56 @@ router.delete("/items/:id", (req, res) => {
       res.sendStatus(500);
     });
 });
+
+router.put("/items/:id", (req, res) => {
+  console.log("We are updating an item as dead with id:", req.params.id);
+  const id = req.params.id;
+
+  const queryText = `UPDATE "item" SET dead = true WHERE id = $1`;
+  pool
+    .query(queryText, [id])
+    .then((updateResult) => {
+      const queryText = `select * from "item" ORDER BY id DESC`;
+      pool
+        .query(queryText)
+        .then((selectResult) => {
+          res.send(selectResult.rows);
+        })
+        .catch((error) => {
+          console.log(`Error on item query ${error}`);
+          res.sendStatus(500);
+        });
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+});
+
+router.put("/deadItems/:id", (req, res) => {
+  console.log("We are updating an item as not dead with id:", req.params.id);
+  const id = req.params.id;
+
+  const queryText = `UPDATE "item" SET dead = false WHERE id = $1`;
+  pool
+    .query(queryText, [id])
+    .then((updateResult) => {
+      const queryText = `select * from "item" ORDER BY id DESC`;
+      pool
+        .query(queryText)
+        .then((selectResult) => {
+          res.send(selectResult.rows);
+        })
+        .catch((error) => {
+          console.log(`Error on item query ${error}`);
+          res.sendStatus(500);
+        });
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+});
                                             
 
 

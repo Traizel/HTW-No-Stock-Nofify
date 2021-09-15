@@ -20,9 +20,20 @@ const displayState = (state = true, action) => {
   }
 };
 
+const viewState = (state = true, action) => {
+  switch (action.type) {
+    case "SET_DEAD":
+      return false;
+    case "SET_NEW":
+      return true;
+    default:
+      return state;
+  }
+};
 
 
 export default combineReducers({
   itemlist,
   displayState,
+  viewState,
 });
