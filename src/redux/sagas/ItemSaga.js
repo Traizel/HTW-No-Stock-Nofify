@@ -29,9 +29,6 @@ function* updateItems(action) {
     });
   } catch (error) {
     console.log("Error with getting the list of items:", error);
-    yield put({
-      type: "SET_DONE",
-    });
   }
 }
 
