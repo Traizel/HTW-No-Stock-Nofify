@@ -48,11 +48,33 @@ const addChecked = (state = [], action) => {
       if (action.payload.checked) {
       return [...state, action.payload.item];
       } else {
-      return state.slice(0, action.payload.checked)
-          .concat(state.slice(action.payload.checked + 1));
+        let spot = state.indexOf(action.payload.item);
+
+      return state.slice(0, spot)
+          .concat(state.slice(spot + 1));
       }
+    case "CLEAR_CHECKED":
+      return [];
     default:
       return state;
+  }
+};
+
+const trackChecked = (state = [], action) => {
+  switch (action.type) {
+    case "ADD_TO_TRACKED":
+      if (action.payload.checked) {
+        return [...state, action.payload.data];
+      } else {
+        let spot = state.indexOf(action.payload.data);
+        return state.slice(0, spot)
+          .concat(state.slice(spot + 1));
+      }
+      console.log(state);
+      case "CLEAR_TRACKING":
+        return [];
+      default:
+        return state;
   }
 };
 
@@ -63,4 +85,5 @@ export default combineReducers({
   setView,
   setChecked,
   addChecked,
+  trackChecked,
 });

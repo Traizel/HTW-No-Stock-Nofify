@@ -27,8 +27,9 @@ function Main () {
   const display = useSelector(store => store.item.displayState);
   const isChecked = useSelector(store => store.item.setView);
   const checkedList = useSelector(store => store.item.addChecked);
+  const trackChecked = useSelector(store => store.item.trackChecked);
   const dispatch = useDispatch();
-  let checkboxChecked = false;
+  let checkedItems = [];
 
   useEffect(() => {
     dispatch({
@@ -47,14 +48,18 @@ function Main () {
     }
   }
 
-  const updateCheckbox = (event) => {
+  const updateCheckbox = (dataIndex, checkChecked) => {
     dispatch({
       type: "SET_CHECKED",
-      payload: checkboxChecked,
+      payload: checkChecked,
     });
     dispatch({
         type: "ADD_TO_CHECKED",
-        payload: { item: newItems[event].id, checked: checkboxChecked}
+        payload: { item: newItems[dataIndex].id, checked: checkChecked}
+      });
+    dispatch({
+        type: "ADD_TO_TRACKED",
+        payload: { data: dataIndex, checked: checkChecked}
       });
   };
 
@@ -136,7 +141,15 @@ function Main () {
               items: checkedList,
             },
           });
+          for (let trackItem of trackChecked) {
+            let checkChecked = document.getElementById(trackItem)
+              .checked;
+            checkChecked = false;
+          }
       swal("Marking Items as Stocked!");
+          dispatch({
+            type: "CLEAR_TRACKING",
+          });
         }
       }
     }
@@ -175,7 +188,9 @@ function Main () {
                           name=""
                           value=""
                           onClick = {(event) => {
-                            updateCheckbox(dataIndex);
+                            let checkChecked = document.getElementById(dataIndex)
+                              .checked;
+                            updateCheckbox(dataIndex, checkChecked);
                           }
                         }
                         >
