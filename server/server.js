@@ -27,7 +27,7 @@ const token = process.env.SLACK_TOKEN;
 
 const web = new WebClient(token);
 
-const conversationId = "C0139RJPUEM";
+const conversationId = "C02EV4JKSLA";
 
 // Handle errors (see `errorCodes` export)
 slackEvents.on('error', console.error);

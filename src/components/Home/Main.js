@@ -121,7 +121,13 @@ function Main () {
               items: checkedList,
             },
           });
+          for (let trackItem of trackChecked) {
+            document.getElementById(trackItem).checked = false;
+          }
       swal("Marking Items as Stocked!");
+      dispatch({
+        type: "CLEAR_TRACKING",
+          });
         }
       }
     }
@@ -142,11 +148,9 @@ function Main () {
             },
           });
           for (let trackItem of trackChecked) {
-            let checkChecked = document.getElementById(trackItem)
-              .checked;
-            checkChecked = false;
+            document.getElementById(trackItem).checked = false;
           }
-      swal("Marking Items as Stocked!");
+      swal("Marking Items as Dead Inventory!");
           dispatch({
             type: "CLEAR_TRACKING",
           });
