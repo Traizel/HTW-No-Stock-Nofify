@@ -36,9 +36,12 @@ function* updateItems(action) {
 }
 
 function* markStocked(action) {
-  const id = action.payload.id;
+  const id = action.payload.items;
   try {
     const response = yield axios.delete(`/api/item/items/${id}`);
+    yield put({
+      type: "CLEAR_CHECKED",
+    });
     yield put({
       type: "SET_ITEM",
       payload: response.data,
@@ -49,9 +52,12 @@ function* markStocked(action) {
 }
 
 function* markDead(action) {
-  const id = action.payload.id;
+  const id = action.payload.items;
   try {
     const response = yield axios.put(`/api/item/items/${id}`);
+    yield put({
+      type: "CLEAR_CHECKED",
+    });
     yield put({
       type: "SET_ITEM",
       payload: response.data,

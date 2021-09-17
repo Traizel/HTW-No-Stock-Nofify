@@ -8,6 +8,7 @@ import Form from "react-bootstrap/Form";
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import Switch from '@material-ui/core/Switch';
+import Checkbox from "@material-ui/core/Checkbox";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -25,9 +26,10 @@ function Main () {
   const items = useSelector(store => store.item.itemlist);
   const display = useSelector(store => store.item.displayState);
   const isChecked = useSelector(store => store.item.setView);
-  console.log(items);
+  const checkedList = useSelector(store => store.item.addChecked);
+  const trackChecked = useSelector(store => store.item.trackChecked);
   const dispatch = useDispatch();
-  let view = 0;
+  let checkedItems = [];
 
   useEffect(() => {
     dispatch({
@@ -45,6 +47,21 @@ function Main () {
       newItems.push(item);
     }
   }
+
+  const updateCheckbox = (dataIndex, checkChecked) => {
+    dispatch({
+      type: "SET_CHECKED",
+      payload: checkChecked,
+    });
+    dispatch({
+        type: "ADD_TO_CHECKED",
+        payload: { item: newItems[dataIndex].id, checked: checkChecked}
+      });
+    dispatch({
+        type: "ADD_TO_TRACKED",
+        payload: { data: dataIndex, checked: checkChecked}
+      });
+  };
 
   const handleChange = (event) => {
     event.preventDefault();
@@ -89,6 +106,58 @@ function Main () {
         }
       }
       ><AssignmentTurnedInIcon/> Refresh</Button>
+      <Button 
+      variant = "contained"
+      color = "primary"
+      onClick = {
+        (event) => {
+          event.preventDefault();
+          if (!checkedList[1]) {
+            swal("You need to select at least 1 Item!");
+          } else {
+          dispatch({
+            type: "MARK_STOCKED",
+            payload: {
+              items: checkedList,
+            },
+          });
+          for (let trackItem of trackChecked) {
+            document.getElementById(trackItem).checked = false;
+          }
+      swal("Marking Items as Stocked!");
+      dispatch({
+        type: "CLEAR_TRACKING",
+          });
+        }
+      }
+    }
+      ><FlagIcon/> Mark as Stocked</Button>
+      <Button 
+      variant = "contained"
+      color = "primary"
+      onClick = {
+        (event) => {
+          event.preventDefault();
+          if (!checkedList[1]) {
+            swal("You need to select at least 1 Item!");
+          } else {
+          dispatch({
+            type: "MARK_DEAD",
+            payload: {
+              items: checkedList,
+            },
+          });
+          for (let trackItem of trackChecked) {
+            document.getElementById(trackItem).checked = false;
+          }
+      swal("Marking Items as Dead Inventory!");
+          dispatch({
+            type: "CLEAR_TRACKING",
+          });
+        }
+      }
+    }
+      ><QueueIcon/> Dead Inventory</Button>
       <FormControl component="fieldset">
       <FormGroup aria-label="position" row>
         <FormControlLabel
@@ -108,68 +177,36 @@ function Main () {
               data={ni} //brings in data as an array, in this case, list of items
               columns={[
                 //names the columns found on MUI table
+                {
+                  name: "",
+                  options: {
+                    filter: false,
+                    sort: false,
+                    empty: true,
+                    customBodyRenderLite: (dataIndex, rowIndex) => {
+                      return (
+                        <input
+                          type="checkbox"
+                          id={dataIndex}
+                          style={{ cursor: "pointer", width: 50, height: 50 }}
+                          name=""
+                          value=""
+                          onClick = {(event) => {
+                            let checkChecked = document.getElementById(dataIndex)
+                              .checked;
+                            updateCheckbox(dataIndex, checkChecked);
+                          }
+                        }
+                        >
+                        </input>
+                      );
+                    },
+                  },
+                },
                 { name: "Item Name" },
                 { name: "Item SKU" },
                 { name: "Item ID" },
                 { name: "Level" },
-                {
-                  name: "",
-                  options: {
-                    filter: false,
-                    sort: false,
-                    empty: true,
-                    customBodyRenderLite: (dataIndex, rowIndex) => {
-                      return (
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={(event) => {
-                            event.preventDefault();
-                            const id = newItems[dataIndex].id;
-                            dispatch({
-                              type: "MARK_STOCKED",
-                              payload: {
-                                id: id,
-                              },
-                            });
-                            swal("Sounds good! We will remove this one!");
-                          }}
-                        >
-                          <FlagIcon /> Mark as Stocked
-                        </Button>
-                      );
-                    },
-                  },
-                },
-                {
-                  name: "",
-                  options: {
-                    filter: false,
-                    sort: false,
-                    empty: true,
-                    customBodyRenderLite: (dataIndex, rowIndex) => {
-                      return (
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={(event) => {
-                            event.preventDefault();
-                            const id = newItems[dataIndex].id;
-                            dispatch({
-                              type: "MARK_DEAD",
-                              payload: {
-                                id: id,
-                              },
-                            });
-                            swal("This one is now marked as dead inventory!");
-                          }}
-                        >
-                          <QueueIcon /> Dead Inventory
-                        </Button>
-                      );
-                    },
-                  },
-                },
               ]}
               title={""} //give the table a name
               />
