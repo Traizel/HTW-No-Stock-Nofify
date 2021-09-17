@@ -2,8 +2,10 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 const axios = require("axios");
-const moment = require("moment");
 var lupus = require('lupus');
+const { WebClient } = require("@slack/web-api");
+const { createEventAdapter } = require("@slack/events-api");
+const slackEvents = createEventAdapter(process.env.SLACK_SIGNING_SECRET);
 
 let config = {
   //authenticate Big Commerce API
@@ -13,16 +15,27 @@ let config = {
   },
 };
 
-let slackNotify = true
+
+let slackNotify = false;
+
+const token = process.env.SLACK_TOKEN;
+
+const web = new WebClient(token);
+
+const conversationId = "C02EV4JKSLA";
+
+// Handle errors (see `errorCodes` export)
+slackEvents.on('error', console.error);
 
 setInterval(() => {
   slackNotify = true;
-}, 1000 * 60 * 60);
 
+  if (slackNotify) {
+    console.log('running Slack Notify..');
+    slackNotify = false;
+    getItems();
 
-while (slackNotify) {
-  slackNotify = false;
-  router.get("/slack", async function getItems(req, res) {
+  async function getItems(req, res) {
     let bcResponse1;
     let bcResponse2;
     let bcResponse3;
@@ -37,6 +50,7 @@ while (slackNotify) {
     let bcItemId;
     let varItems;
     let getItems = [];
+    let newItems = [];
 
     function timeoutPromise(interval) {
       return new Promise((resolve, reject) => {
@@ -55,7 +69,6 @@ while (slackNotify) {
         )
     } catch (err) {
       console.log('Error on Get1: ', err);
-      return res.status(500).send();
     }
 
     try {
@@ -66,7 +79,6 @@ while (slackNotify) {
         )
     } catch (err) {
       console.log('Error on Get2: ', err);
-      return res.status(500).send();
     }
 
     try {
@@ -77,7 +89,6 @@ while (slackNotify) {
         )
     } catch (err) {
       console.log('Error on Get3: ', err);
-      return res.status(500).send();
     }
 
     try {
@@ -88,7 +99,6 @@ while (slackNotify) {
         )
     } catch (err) {
       console.log('Error on Get3: ', err);
-      return res.status(500).send();
     }
 
     try {
@@ -99,7 +109,6 @@ while (slackNotify) {
         )
     } catch (err) {
       console.log('Error on Get4: ', err);
-      return res.status(500).send();
     }
 
     try {
@@ -110,7 +119,6 @@ while (slackNotify) {
         )
     } catch (err) {
       console.log('Error on Get5: ', err);
-      return res.status(500).send();
     }
 
     try {
@@ -121,7 +129,6 @@ while (slackNotify) {
         )
     } catch (err) {
       console.log('Error on Get6: ', err);
-      return res.status(500).send();
     }
 
     try {
@@ -132,7 +139,6 @@ while (slackNotify) {
         )
     } catch (err) {
       console.log('Error on Get7: ', err);
-      return res.status(500).send();
     }
 
     try {
@@ -143,7 +149,6 @@ while (slackNotify) {
         )
     } catch (err) {
       console.log('Error on Get8: ', err);
-      return res.status(500).send();
     }
 
     try {
@@ -154,7 +159,6 @@ while (slackNotify) {
         )
     } catch (err) {
       console.log('Error on Get9: ', err);
-      return res.status(500).send();
     }
 
     try {
@@ -187,7 +191,6 @@ while (slackNotify) {
       }
     } catch (err) {
       console.log('Error on bcCreate: ', err);
-      return res.status(500).send();
     }
 
     try {
@@ -199,7 +202,6 @@ while (slackNotify) {
         })
     } catch (err) {
       console.log('Error on getItems: ', err);
-      return res.status(500).send();
     }
 
     await timeoutPromise(1000);
@@ -214,6 +216,7 @@ while (slackNotify) {
           let bcItemInv = bcResponse[i].inventory_level;
 
           msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
+          newItems.push(bcResponse[i]);
         }
       } else {
         for (let i = 0; i < bcResponse.length; i++) {
@@ -231,13 +234,13 @@ while (slackNotify) {
 
           if (canInsert === true) {
             msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
+            newItems.push(bcResponse[i]);
           }
         }
       }
 
     } catch (err) {
       console.log('Error on productMsg: ', err);
-      return res.status(500).send();
     }
 
     await timeoutPromise(2000);
@@ -267,6 +270,12 @@ while (slackNotify) {
               bcItemSku = varItems[k].sku;
               bcItemId = varItems[k].id;
               msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Variant'), `);
+              let variant = {
+                name: bcItemName,
+                sku: bcItemSku,
+                id: bcItemId
+              };
+              newItems.push(variant);
             } else {
               //console.log('Variant not at 0 stock!');
             }
@@ -274,6 +283,7 @@ while (slackNotify) {
         } else {
 
           for (let k = 0; k < varItems.length; k++) {
+
 
             bcItemId = varItems[k].id;
             let canInsert = true;
@@ -286,7 +296,14 @@ while (slackNotify) {
 
             if (varItems[k].inventory_level === 0 && canInsert === true) {
               bcItemSku = varItems[k].sku;
+              bcItemId = varItems[k].id;
               msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Variant'), `);
+              let variant = {
+                name: bcItemName,
+                sku: bcItemSku,
+                id: bcItemId
+              };
+              newItems.push(variant);
             } else {
               //console.log('Variant not at 0 stock!');
             }
@@ -295,7 +312,6 @@ while (slackNotify) {
       })
     } catch (err) {
       console.log('Error on varMsg: ', err);
-      return res.status(500).send();
     }
 
     await timeoutPromise(12000);
@@ -313,7 +329,6 @@ while (slackNotify) {
       }
     } catch (err) {
       console.log('Error on insert: ', err);
-      return res.status(500).send();
     }
 
     await timeoutPromise(3000);
@@ -324,18 +339,25 @@ while (slackNotify) {
       const queryText = `select * from "item" ORDER BY id DESC`;
       await pool
         .query(queryText)
-        .then((selectResult) => {
-          res.send(selectResult.rows);
-        })
     } catch (err) {
       console.log('Error on getItems: ', err);
-      return res.status(500).send();
     }
 
+    try {
+      if (!newItems[1]) {
+        console.log('No Message Sent to slack!');
+      } else {
+      let slackText = `:warning: *NO STOCK NOTIFY!* :warning:\n\n<!channel>\n\n`;
 
-  });
-}
+      for (let i = 0; i < newItems.length; i++) {
+        if (newItems[i].sku) {
+        slackText += "*ITEM:* ```" + newItems[i].name + "``` with *SKU:* ```" + newItems[i].sku + "``` is recently out of stock! Please look into this *ASAP*!\n\n\n\n"
+        } else {
+        slackText += "*ITEM:* ```" + newItems[i].name + "``` with *SKU:* ```" + "NO SKU or on the Product Level!" + "``` is recently out of stock! Please look into this *ASAP*!\n\n\n\n"
+        }
+      }
 
+<<<<<<< HEAD
 // router.get("/items", (req, res) => {
 //   axios
 //     .get(
@@ -2828,7 +2850,28 @@ while (slackNotify) {
 
 
 
+=======
+      (async () => {
+        // See: https://api.slack.com/methods/chat.postMessage
+        const res = await web.chat.postMessage({
+          icon_emoji: ":warning:",
+          channel: conversationId,
+          text: `${slackText}`,
+        });
+>>>>>>> f7813c34c4a988f0c61b70db329cb10dda7d6e9b
 
+        // `res` contains information about the posted message
+
+        console.log("Message sent: ", res);
+      })();
+     }
+    } catch (err) {
+      console.log('Error on slack message: ', err);
+    }
+
+  }
+}
+}, 1000 * 60 * 15);
 
 router.get("/items", async function getItems (req, res) {
   let bcResponse1;
@@ -3107,7 +3150,22 @@ router.get("/getitems", (req, res) => {
 
 router.delete("/items/:id", async function (req, res) {
   console.log("We are deleting items as dead with id:", req.params.id);
-  const items = req.params.id;
+  const ids = req.params.id;
+
+  let items = [];
+  let itemToPush = '';
+  for (let i = 0; i < ids.length; i++) {
+    if (ids[i] !== ',') {
+      itemToPush += (ids[i]);
+    }
+    if (ids[i] === ',') {
+      items.push(itemToPush);
+      itemToPush = '';
+    }
+  }
+  items.push(itemToPush);
+  itemToPush = '';
+  
   try {
     for (item of items) {
       const queryText = `delete from "item" WHERE id = ${item}`;
