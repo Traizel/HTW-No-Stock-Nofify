@@ -2252,6 +2252,294 @@ while (slackNotify) {
 
 
 
+// router.get("/items", (req, res) => {
+//   axios
+//     .get(
+//       `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=1`,
+//       config
+//     )
+//     .then(function (bcResponse1) {
+//       axios
+//         .get(
+//           `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=2`,
+//           config
+//         )
+//         .then(function (bcResponse2) {
+//           axios
+//             .get(
+//               `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=3`,
+//               config
+//             )
+//             .then(function (bcResponse3) {
+//               axios
+//                 .get(
+//                   `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=4`,
+//                   config
+//                 )
+//                 .then(function (bcResponse4) {
+//                   axios
+//                     .get(
+//                       `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=2500&page=5`,
+//                       config
+//                     )
+//                     .then(function (bcResponse5) {
+//                       axios
+//                         .get(
+//                           `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=6`,
+//                           config
+//                         )
+//                         .then(function (bcResponse6) {
+//                           axios
+//                             .get(
+//                               `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=7`,
+//                               config
+//                             )
+//                             .then(function (bcResponse7) {
+//                               axios
+//                                 .get(
+//                                   `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=8`,
+//                                   config
+//                                 )
+//                                 .then(function (bcResponse8) {
+//                                   axios
+//                                     .get(
+//                                       `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=9`,
+//                                       config
+//                                     )
+//                                     .then(function (bcResponse9) {
+//                                       const queryText = `delete from "item"`;
+//                                       pool
+//                                         .query(queryText)
+//                                                     .then(function (response) {
+//                                                       let msg = '';
+//                                                       let bcResponse = [];
+//                                                       for (item of bcResponse1.data.data) {
+//                                                         bcResponse.push(item);
+//                                                       }
+//                                                       for (item of bcResponse2.data.data) {
+//                                                         bcResponse.push(item);
+//                                                       }
+//                                                       for (item of bcResponse3.data.data) {
+//                                                         bcResponse.push(item);
+//                                                       }
+//                                                       for (item of bcResponse4.data.data) {
+//                                                         bcResponse.push(item);
+//                                                       }
+//                                                       for (item of bcResponse5.data.data) {
+//                                                         bcResponse.push(item);
+//                                                       }
+//                                                       for (item of bcResponse6.data.data) {
+//                                                         bcResponse.push(item);
+//                                                       }
+//                                                       for (item of bcResponse7.data.data) {
+//                                                         bcResponse.push(item);
+//                                                       }
+//                                                       for (item of bcResponse8.data.data) {
+//                                                         bcResponse.push(item);
+//                                                       }
+//                                                       for (item of bcResponse9.data.data) {
+//                                                         bcResponse.push(item);
+//                                                       }
+//                                                       for (let i = 0; i < bcResponse.length; i++) {
+//                                                           let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
+//                                                           let bcItemId = bcResponse[i].id;
+//                                                           let bcItemSku = bcResponse[i].sku;
+//                                                           let bcItemInv = bcResponse[i].inventory_level;
+//                                                           if (i === bcResponse.length - 1) {
+//                                                             msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product');`);
+//                                                           } else {
+//                                                             msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
+//                                                           }
+//                                                         }
+                                                        
+//                                                           //console.log(msg);
+//                                                         const queryText = `INSERT INTO "item" (name, sku, inventory_level, id, level) VALUES ${msg}`;
+//                                                       pool
+//                                                         .query(queryText)
+//                                                         .then((productInsertResult) => {
+                                                                
+//                                                                 let bcResponse = [];
+//                                                                 for (item of bcResponse1.data.data) {
+//                                                                   bcResponse.push(item);
+//                                                                 }
+//                                                                 for (item of bcResponse2.data.data) {
+//                                                                   bcResponse.push(item);
+//                                                                 }
+//                                                                 for (item of bcResponse3.data.data) {
+//                                                                   bcResponse.push(item);
+//                                                                 }
+//                                                                 for (item of bcResponse4.data.data) {
+//                                                                   bcResponse.push(item);
+//                                                                 }
+//                                                                 for (item of bcResponse5.data.data) {
+//                                                                   bcResponse.push(item);
+//                                                                 }
+//                                                                 for (item of bcResponse6.data.data) {
+//                                                                   bcResponse.push(item);
+//                                                                 }
+//                                                                 for (item of bcResponse7.data.data) {
+//                                                                   bcResponse.push(item);
+//                                                                 }
+//                                                                 for (item of bcResponse8.data.data) {
+//                                                                   bcResponse.push(item);
+//                                                                 }
+//                                                                 for (item of bcResponse9.data.data) {
+//                                                                   bcResponse.push(item);
+//                                                                 }
+
+//                                                           lupus(0, bcResponse.length, function (i) {
+
+//                                                             let bcItemId = bcResponse[i].id;
+                                                          
+//                                                             axios
+//                                                               .get(
+//                                                                 `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products/${bcItemId}/variants`,
+//                                                                 config
+//                                                               )
+//                                                               .then(function (variantResponse) {
+//                                                                 let varItems = variantResponse.data.data;
+//                                                                 let bcResponse = [];
+//                                                                 for (item of bcResponse1.data.data) {
+//                                                                   bcResponse.push(item);
+//                                                                 }
+//                                                                 for (item of bcResponse2.data.data) {
+//                                                                   bcResponse.push(item);
+//                                                                 }
+//                                                                 for (item of bcResponse3.data.data) {
+//                                                                   bcResponse.push(item);
+//                                                                 }
+//                                                                 for (item of bcResponse4.data.data) {
+//                                                                   bcResponse.push(item);
+//                                                                 }
+//                                                                 for (item of bcResponse5.data.data) {
+//                                                                   bcResponse.push(item);
+//                                                                 }
+//                                                                 for (item of bcResponse6.data.data) {
+//                                                                   bcResponse.push(item);
+//                                                                 }
+//                                                                 for (item of bcResponse7.data.data) {
+//                                                                   bcResponse.push(item);
+//                                                                 }
+//                                                                 for (item of bcResponse8.data.data) {
+//                                                                   bcResponse.push(item);
+//                                                                 }
+//                                                                 for (item of bcResponse9.data.data) {
+//                                                                   bcResponse.push(item);
+//                                                                 }
+
+//                                                                 let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
+//                                                                 let bcItemId = bcResponse[i].id;
+//                                                                 let bcItemSku = bcResponse[i].sku;
+//                                                                 let bcItemInv = bcResponse[i].inventory_level;
+
+//                                                                 for (let j = 0; j < varItems.length; j++) {
+//                                                                   let varMsg = '';
+//                                                                   if (i === bcResponse.length - 1 && j === varItems.length - 1 && varItems[j].inventory_level === 0) {
+//                                                                     bcItemSku = varItems[j].sku;
+//                                                                     BcItemId = varItems[j].id;
+//                                                                     varMsg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Variant');`);
+//                                                                   } else if (varItems[j].inventory_level === 0) {
+//                                                                     bcItemSku = varItems[j].sku;
+//                                                                     BcItemId = varItems[j].id;
+//                                                                     varMsg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Variant'), `);
+//                                                                   } else {
+//                                                                     //console.log('Variant not at 0 stock!');
+//                                                                   }
+                                                                
+                                                              
+//                                                                     //console.log(msg);
+//                                                                   const queryText = `INSERT INTO "item" (name, sku, inventory_level, id, level) VALUES ${varMsg}`;
+//                                                                   pool
+//                                                                     .query(queryText)
+//                                                                     .then((variantInsertResult) => {
+
+//                                                                       })
+//                                                                       .catch((error) => {
+//                                                                         console.log(`Error on varInsert query ${error}`);
+//                                                                         res.sendStatus(500);
+//                                                                       });
+//                                                                     }
+//                                                                       })
+//                                                                       .catch((error) => {
+//                                                                         console.log(`Error on getVar query ${error}`);
+//                                                                         res.sendStatus(500);
+//                                                                       });
+//                                                                   });
+
+//                                                           console.log("We are about to get the item list");
+
+//                                                           const queryText = `select * from "item" ORDER BY id DESC`;
+//                                                           pool
+//                                                             .query(queryText)
+//                                                             .then((selectResult) => {
+//                                                               res.send(selectResult.rows);
+//                                                             })
+//                                                             .catch((error) => {
+//                                                               console.log(`Error on select query ${error}`);
+//                                                               res.sendStatus(500);
+//                                                             });
+                                                        
+//                                                     })
+//                                                     .catch((error) => {
+//                                                       console.log(`Error on productInsert query ${error}`);
+//                                                       res.sendStatus(500);
+//                                                     });
+//                                                 })
+//                                                 .catch((error) => {
+//                                                   console.log(`Error on get9 query ${error}`);
+//                                                   res.sendStatus(500);
+//                                                 });
+//                                                 })
+//                                                 .catch((error) => {
+//                                                   console.log(`Error on delete query ${error}`);
+//                                                   res.sendStatus(500);
+//                                                 });
+//                                             })
+//                                         .catch((error) => {
+//                                           console.log(`Error on get8 query ${error}`);
+//                                           res.sendStatus(500);
+//                                         });
+//                                     })
+//                                     .catch((error) => {
+//                                       console.log(`Error on get7 query ${error}`);
+//                                       res.sendStatus(500);
+//                                     });
+//                                 })
+//                                 .catch((error) => {
+//                                   console.log(`Error on get6 query ${error}`);
+//                                   res.sendStatus(500);
+//                                 });
+//                             })
+//                             .catch((error) => {
+//                               console.log(`Error on get5 query ${error}`);
+//                               res.sendStatus(500);
+//                             });
+//                         })
+//                     .catch((error) => {
+//                       console.log(`Error on get4 query ${error}`);
+//                       res.sendStatus(500);
+//                     });
+//                 })
+//             .catch((error) => {
+//               console.log(`Error on get3 query ${error}`);
+//               res.sendStatus(500);
+//             });
+//         })
+//         .catch((error) => {
+//           console.log(`Error on get2 query ${error}`);
+//           res.sendStatus(500);
+//         });
+//     })
+//     .catch((error) => {
+//       // handle error
+//       console.log(`Error on get1 query ${error}`);
+//       res.sendStatus(500);
+//     });
+// });
+
+
+
+
 
 
 router.get("/items", async function getItems (req, res) {
