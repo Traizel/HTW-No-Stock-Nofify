@@ -38,7 +38,7 @@ slackEvents.start().then(() => {
     (async () => {
       // See: https://api.slack.com/methods/chat.postMessage
       const res = await web.chat.postMessage({
-        icon_emoji: ":email:",
+        icon_emoji: ":sunglasses:",
         channel: conversationId,
         text: "Connected",
       });
