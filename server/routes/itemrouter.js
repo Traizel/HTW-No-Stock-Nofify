@@ -36,162 +36,457 @@ setInterval(() => {
     getItems();
 
   async function getItems(req, res) {
-    let bcResponse1;
-    let bcResponse2;
-    let bcResponse3;
-    let bcResponse4;
-    let bcResponse5;
-    let bcResponse6;
-    let bcResponse7;
-    let bcResponse8;
-    let bcResponse9;
-    let bcResponse = [];
-    let msg = '';
-    let bcItemId;
-    let varItems;
-    let getItems = [];
-    let newItems = [];
+  let bcResponse1;
+  let bcResponse2;
+  let bcResponse3;
+  let bcResponse4;
+  let bcResponse5;
+  let bcResponse6;
+  let bcResponse7;
+  let bcResponse8;
+  let bcResponse9;
+  let bcResponse10;
+  let bcResponse11;
+  let bcResponse12;
+  let bcResponse13;
+  let bcResponse14;
+  let bcResponse15;
+  let bcResponse16;
+  let bcResponse17;
+  let bcResponse18;
+  let bcResponse19;
+  let bcResponse20;
+  let bcResponse21;
+  let bcResponse22;
+  let bcResponse23;
+  let bcResponse24;
+  let bcResponse25;
+  let bcResponse26;
+  let bcResponse27;
+  let bcResponse28;
+  let bcResponse = [];
+  let msg = '';
+  let bcItemId;
+  let varItems;
+  let getItems = [];
 
-    function timeoutPromise(interval) {
-      return new Promise((resolve, reject) => {
-        setTimeout(function () {
-          resolve("done");
-        }, interval);
-      });
-    };
+  function timeoutPromise(interval) {
+    return new Promise((resolve, reject) => {
+      setTimeout(function () {
+        resolve("done");
+      }, interval);
+    });
+  };
 
 
-    try {
-      bcResponse1 = await axios
-        .get(
-          `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=1`,
-          config
-        )
-    } catch (err) {
-      console.log('Error on Get1: ', err);
+  try {
+    bcResponse1 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=1`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get1: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse2 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=2`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get2: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse3 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=3`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get3: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse3 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=3`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get3: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse4 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=4`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get4: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse5 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=5`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get5: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse6 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=6`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get6: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse7 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=7`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get7: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse8 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=8`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get8: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse9 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=9`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get9: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse10 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=10`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get10: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse11 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=11`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get11: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse12 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=12`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get12: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse13 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=13`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get13: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse14 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=14`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get14: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse15 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=15`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get15: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse16 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=16`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get16: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse17 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=17`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get17: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse18 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=18`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get18: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse19 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=19`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get19: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse20 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=20`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get20: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse21 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=21`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get21: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse22 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=22`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get22: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse23 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=23`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get23: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse24 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=24`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get24: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse25 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=25`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get25: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse26 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=26`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get26: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse27 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=27`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get27: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse28 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=28`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get28: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    for (item of bcResponse1.data.data) {
+      bcResponse.push(item);
     }
-
-    try {
-      bcResponse2 = await axios
-        .get(
-          `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=2`,
-          config
-        )
-    } catch (err) {
-      console.log('Error on Get2: ', err);
+    for (item of bcResponse2.data.data) {
+      bcResponse.push(item);
     }
-
-    try {
-      bcResponse3 = await axios
-        .get(
-          `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=3`,
-          config
-        )
-    } catch (err) {
-      console.log('Error on Get3: ', err);
+    for (item of bcResponse3.data.data) {
+      bcResponse.push(item);
     }
-
-    try {
-      bcResponse3 = await axios
-        .get(
-          `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=3`,
-          config
-        )
-    } catch (err) {
-      console.log('Error on Get3: ', err);
+    for (item of bcResponse4.data.data) {
+      bcResponse.push(item);
     }
-
-    try {
-      bcResponse4 = await axios
-        .get(
-          `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=4`,
-          config
-        )
-    } catch (err) {
-      console.log('Error on Get4: ', err);
+    for (item of bcResponse5.data.data) {
+      bcResponse.push(item);
     }
-
-    try {
-      bcResponse5 = await axios
-        .get(
-          `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=5`,
-          config
-        )
-    } catch (err) {
-      console.log('Error on Get5: ', err);
+    for (item of bcResponse6.data.data) {
+      bcResponse.push(item);
     }
-
-    try {
-      bcResponse6 = await axios
-        .get(
-          `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=6`,
-          config
-        )
-    } catch (err) {
-      console.log('Error on Get6: ', err);
+    for (item of bcResponse7.data.data) {
+      bcResponse.push(item);
     }
-
-    try {
-      bcResponse7 = await axios
-        .get(
-          `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=7`,
-          config
-        )
-    } catch (err) {
-      console.log('Error on Get7: ', err);
+    for (item of bcResponse8.data.data) {
+      bcResponse.push(item);
     }
-
-    try {
-      bcResponse8 = await axios
-        .get(
-          `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=8`,
-          config
-        )
-    } catch (err) {
-      console.log('Error on Get8: ', err);
+    for (item of bcResponse9.data.data) {
+      bcResponse.push(item);
     }
-
-    try {
-      bcResponse9 = await axios
-        .get(
-          `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=9`,
-          config
-        )
-    } catch (err) {
-      console.log('Error on Get9: ', err);
+    for (item of bcResponse10.data.data) {
+      bcResponse.push(item);
     }
-
-    try {
-      for (item of bcResponse1.data.data) {
-        bcResponse.push(item);
-      }
-      for (item of bcResponse2.data.data) {
-        bcResponse.push(item);
-      }
-      for (item of bcResponse3.data.data) {
-        bcResponse.push(item);
-      }
-      for (item of bcResponse4.data.data) {
-        bcResponse.push(item);
-      }
-      for (item of bcResponse5.data.data) {
-        bcResponse.push(item);
-      }
-      for (item of bcResponse6.data.data) {
-        bcResponse.push(item);
-      }
-      for (item of bcResponse7.data.data) {
-        bcResponse.push(item);
-      }
-      for (item of bcResponse8.data.data) {
-        bcResponse.push(item);
-      }
-      for (item of bcResponse9.data.data) {
-        bcResponse.push(item);
-      }
-    } catch (err) {
-      console.log('Error on bcCreate: ', err);
+    for (item of bcResponse11.data.data) {
+      bcResponse.push(item);
     }
+    for (item of bcResponse12.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse13.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse14.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse15.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse16.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse17.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse18.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse19.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse20.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse21.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse22.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse23.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse24.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse25.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse26.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse27.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse28.data.data) {
+      bcResponse.push(item);
+    }
+  } catch (err) {
+    console.log('Error on bcCreate: ', err);
+    return res.status(500).send();
+  }
 
     try {
       const queryText = `select * from "item" ORDER BY id DESC`;
@@ -204,7 +499,7 @@ setInterval(() => {
       console.log('Error on getItems: ', err);
     }
 
-    await timeoutPromise(1000);
+    await timeoutPromise(2000);
 
     try {
       if (!getItems.rows[1]) {
@@ -215,8 +510,10 @@ setInterval(() => {
           let bcItemSku = bcResponse[i].sku;
           let bcItemInv = bcResponse[i].inventory_level;
 
-          msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
-          newItems.push(bcResponse[i]);
+          if (bcItemInv === 0) {
+            msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
+            newItems.push(bcResponse[i]);
+          }
         }
       } else {
         for (let i = 0; i < bcResponse.length; i++) {
@@ -232,7 +529,7 @@ setInterval(() => {
             }
           }
 
-          if (canInsert === true) {
+          if (canInsert === true && bcItemInv === 0) {
             msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
             newItems.push(bcResponse[i]);
           }
@@ -243,7 +540,7 @@ setInterval(() => {
       console.log('Error on productMsg: ', err);
     }
 
-    await timeoutPromise(2000);
+    await timeoutPromise(10000);
 
     try {
       lupus(0, bcResponse.length, async function getVariants(i) {
@@ -388,6 +685,25 @@ router.get("/items", async function getItems(req, res) {
   let bcResponse7;
   let bcResponse8;
   let bcResponse9;
+  let bcResponse10;
+  let bcResponse11;
+  let bcResponse12;
+  let bcResponse13;
+  let bcResponse14;
+  let bcResponse15;
+  let bcResponse16;
+  let bcResponse17;
+  let bcResponse18;
+  let bcResponse19;
+  let bcResponse20;
+  let bcResponse21;
+  let bcResponse22;
+  let bcResponse23;
+  let bcResponse24;
+  let bcResponse25;
+  let bcResponse26;
+  let bcResponse27;
+  let bcResponse28;
   let bcResponse = [];
   let msg = '';
   let bcItemId;
@@ -406,7 +722,7 @@ router.get("/items", async function getItems(req, res) {
   try {
     bcResponse1 = await axios
       .get(
-        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=1`,
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=1`,
         config
       )
   } catch (err) {
@@ -417,7 +733,7 @@ router.get("/items", async function getItems(req, res) {
   try {
     bcResponse2 = await axios
       .get(
-        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=2`,
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=2`,
         config
       )
   } catch (err) {
@@ -428,7 +744,7 @@ router.get("/items", async function getItems(req, res) {
   try {
     bcResponse3 = await axios
       .get(
-        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=3`,
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=3`,
         config
       )
   } catch (err) {
@@ -439,7 +755,7 @@ router.get("/items", async function getItems(req, res) {
   try {
     bcResponse3 = await axios
       .get(
-        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=3`,
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=3`,
         config
       )
   } catch (err) {
@@ -450,7 +766,7 @@ router.get("/items", async function getItems(req, res) {
   try {
     bcResponse4 = await axios
       .get(
-        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=4`,
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=4`,
         config
       )
   } catch (err) {
@@ -461,7 +777,7 @@ router.get("/items", async function getItems(req, res) {
   try {
     bcResponse5 = await axios
       .get(
-        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=5`,
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=5`,
         config
       )
   } catch (err) {
@@ -472,7 +788,7 @@ router.get("/items", async function getItems(req, res) {
   try {
     bcResponse6 = await axios
       .get(
-        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=6`,
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=6`,
         config
       )
   } catch (err) {
@@ -483,7 +799,7 @@ router.get("/items", async function getItems(req, res) {
   try {
     bcResponse7 = await axios
       .get(
-        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=7`,
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=7`,
         config
       )
   } catch (err) {
@@ -494,7 +810,7 @@ router.get("/items", async function getItems(req, res) {
   try {
     bcResponse8 = await axios
       .get(
-        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=8`,
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=8`,
         config
       )
   } catch (err) {
@@ -505,11 +821,220 @@ router.get("/items", async function getItems(req, res) {
   try {
     bcResponse9 = await axios
       .get(
-        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?inventory_level=0&limit=250&page=9`,
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=9`,
         config
       )
   } catch (err) {
     console.log('Error on Get9: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse10 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=10`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get10: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse11 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=11`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get11: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse12 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=12`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get12: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse13 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=13`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get13: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse14 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=14`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get14: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse15 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=15`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get15: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse16 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=16`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get16: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse17 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=17`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get17: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse18 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=18`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get18: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse19 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=19`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get19: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse20 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=20`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get20: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse21 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=21`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get21: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse22 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=22`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get22: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse23 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=23`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get23: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse24 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=24`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get24: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse25 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=25`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get25: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse26 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=26`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get26: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse27 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=27`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get27: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    bcResponse28 = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=28`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get28: ', err);
     return res.status(500).send();
   }
 
@@ -541,6 +1066,63 @@ router.get("/items", async function getItems(req, res) {
     for (item of bcResponse9.data.data) {
       bcResponse.push(item);
     }
+    for (item of bcResponse10.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse11.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse12.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse13.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse14.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse15.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse16.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse17.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse18.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse19.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse20.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse21.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse22.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse23.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse24.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse25.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse26.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse27.data.data) {
+      bcResponse.push(item);
+    }
+    for (item of bcResponse28.data.data) {
+      bcResponse.push(item);
+    }
   } catch (err) {
     console.log('Error on bcCreate: ', err);
     return res.status(500).send();
@@ -558,7 +1140,7 @@ router.get("/items", async function getItems(req, res) {
     return res.status(500).send();
   }
 
-  await timeoutPromise(1000);
+  await timeoutPromise(2000);
 
   try {
     if (!getItems.rows[1]) {
@@ -569,7 +1151,9 @@ router.get("/items", async function getItems(req, res) {
         let bcItemSku = bcResponse[i].sku;
         let bcItemInv = bcResponse[i].inventory_level;
 
+        if (bcItemInv === 0) {
         msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
+        }
       }
     } else {
       for (let i = 0; i < bcResponse.length; i++) {
@@ -585,7 +1169,7 @@ router.get("/items", async function getItems(req, res) {
           }
         }
 
-        if (canInsert === true) {
+        if (canInsert === true && bcItemInv === 0) {
           msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
         }
       }
@@ -596,7 +1180,7 @@ router.get("/items", async function getItems(req, res) {
     return res.status(500).send();
   }
 
-  await timeoutPromise(2000);
+  await timeoutPromise(10000);
 
   try {
     lupus(0, bcResponse.length, async function getVariants(i) {
