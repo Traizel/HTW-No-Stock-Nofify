@@ -69,6 +69,7 @@ setInterval(() => {
   let bcItemId;
   let varItems;
   let getItems = [];
+  let newItems = [];
 
   function timeoutPromise(interval) {
     return new Promise((resolve, reject) => {
