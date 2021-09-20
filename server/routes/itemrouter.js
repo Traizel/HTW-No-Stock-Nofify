@@ -378,7 +378,7 @@ setInterval(() => {
 }
 }, 1000 * 60 * 15);
 
-router.get("/items", async function getItems (req, res) {
+router.get("/items", async function getItems(req, res) {
   let bcResponse1;
   let bcResponse2;
   let bcResponse3;
@@ -389,12 +389,10 @@ router.get("/items", async function getItems (req, res) {
   let bcResponse8;
   let bcResponse9;
   let bcResponse = [];
-  let deleteItems;
   let msg = '';
   let bcItemId;
   let varItems;
-  let insert;
-  let getItems;
+  let getItems = [];
 
   function timeoutPromise(interval) {
     return new Promise((resolve, reject) => {
@@ -404,7 +402,7 @@ router.get("/items", async function getItems (req, res) {
     });
   };
 
-  
+
   try {
     bcResponse1 = await axios
       .get(
@@ -514,16 +512,7 @@ router.get("/items", async function getItems (req, res) {
     console.log('Error on Get9: ', err);
     return res.status(500).send();
   }
-  
-  try {
-    const queryText = `delete from "item"`;
-    deleteItems = await pool
-      .query(queryText)
-  } catch (err) {
-    console.log('Error on delete: ', err);
-    return res.status(500).send();
-  }
-  
+
   try {
     for (item of bcResponse1.data.data) {
       bcResponse.push(item);
@@ -552,89 +541,154 @@ router.get("/items", async function getItems (req, res) {
     for (item of bcResponse9.data.data) {
       bcResponse.push(item);
     }
-} catch (err) {
-  console.log('Error on bcCreate: ', err);
-  return res.status(500).send();
-}
+  } catch (err) {
+    console.log('Error on bcCreate: ', err);
+    return res.status(500).send();
+  }
 
-try {
-    for (let i = 0; i < bcResponse.length; i++) {
-      let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
-      let bcItemId = bcResponse[i].id;
-      let bcItemSku = bcResponse[i].sku;
-      let bcItemInv = bcResponse[i].inventory_level;
+  try {
+    const queryText = `select * from "item" ORDER BY id DESC`;
+    await pool
+      .query(queryText)
+      .then((getResult) => {
+        getItems = getResult;
+      })
+  } catch (err) {
+    console.log('Error on getItems: ', err);
+    return res.status(500).send();
+  }
 
-      msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
+  await timeoutPromise(1000);
+
+  try {
+    if (!getItems.rows[1]) {
+      console.log('Item DB Empty!');
+      for (let i = 0; i < bcResponse.length; i++) {
+        let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
+        let bcItemId = bcResponse[i].id;
+        let bcItemSku = bcResponse[i].sku;
+        let bcItemInv = bcResponse[i].inventory_level;
+
+        msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
+      }
+    } else {
+      for (let i = 0; i < bcResponse.length; i++) {
+        let bcItemId = bcResponse[i].id;
+        let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
+        let bcItemSku = bcResponse[i].sku;
+        let bcItemInv = bcResponse[i].inventory_level;
+        let canInsert = true;
+
+        for (let j = 0; j < getItems.rows.length; j++) {
+          if (bcItemId === getItems.rows[j].id) {
+            canInsert = false;
+          }
+        }
+
+        if (canInsert === true) {
+          msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
+        }
+      }
     }
-    
+
   } catch (err) {
     console.log('Error on productMsg: ', err);
     return res.status(500).send();
   }
-                                    
-try {
-  lupus(0, bcResponse.length, async function getVariants (i) {
-    bcItemId = bcResponse[i].id;
 
-    getVar = await axios
-      .get(
-        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products/${bcItemId}/variants`,
-        config
-      )
+  await timeoutPromise(2000);
+
+  try {
+    lupus(0, bcResponse.length, async function getVariants(i) {
+      bcItemId = bcResponse[i].id;
+
+      getVar = await axios
+        .get(
+          `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products/${bcItemId}/variants`,
+          config
+        )
 
 
-         let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
-         bcItemId = bcResponse[i].id;
-         let bcItemSku = bcResponse[i].sku;
-         let bcItemInv = bcResponse[i].inventory_level;
-         let varItems = getVar.data.data;
+      let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
+      bcItemId = bcResponse[i].id;
+      let bcItemSku = bcResponse[i].sku;
+      let bcItemInv = bcResponse[i].inventory_level;
+      varItems = getVar.data.data;
 
-         for (let j = 0; j < varItems.length; j++) {
-           
-            if (varItems[j].inventory_level === 0) {
-             bcItemSku = varItems[j].sku;
-             bcItemId = varItems[j].id;
-             msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Variant'), `);
-           } else {
-             //console.log('Variant not at 0 stock!');
-           }
-         }
-  })
-} catch (err) {
-  console.log('Error on varMsg: ', err);
-  return res.status(500).send();
-}
-     
-await timeoutPromise(12000);
+      if (!getItems.rows[1]) {
+        //console.log('Item DB Empty!');
+        for (let k = 0; k < varItems.length; k++) {
 
-try {
-  let newMsg = msg.slice(0, -2);
+          if (varItems[k].inventory_level === 0) {
+            bcItemSku = varItems[k].sku;
+            bcItemId = varItems[k].id;
+            msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Variant'), `);
+          } else {
+            //console.log('Variant not at 0 stock!');
+          }
+        }
+      } else {
 
-const queryText = `INSERT INTO "item" (name, sku, inventory_level, id, level) VALUES ${newMsg};`;
-insert = await pool
-  .query(queryText)
-} catch (err) {
-  console.log('Error on insert: ', err);
-  return res.status(500).send();
-}
+        for (let k = 0; k < varItems.length; k++) {
 
-await timeoutPromise(3000);
+          bcItemId = varItems[k].id;
+          let canInsert = true;
 
-try {
-console.log("We are about to get the item list");
+          for (let j = 0; j < getItems.rows.length; j++) {
+            if (bcItemId === getItems.rows[j].id) {
+              canInsert = false;
+            }
+          }
 
-const queryText = `select * from "item" ORDER BY id DESC`;
-getItems = await pool
-  .query(queryText)
-  .then((selectResult) => {
-    res.send(selectResult.rows);
-  })
-} catch (err) {
-  console.log('Error on getItems: ', err);
-  return res.status(500).send();
-}
-                                
-                                     
+          if (varItems[k].inventory_level === 0 && canInsert === true) {
+            bcItemSku = varItems[k].sku;
+            msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Variant'), `);
+          } else {
+            //console.log('Variant not at 0 stock!');
+          }
+        }
+      }
+    })
+  } catch (err) {
+    console.log('Error on varMsg: ', err);
+    return res.status(500).send();
+  }
+
+  await timeoutPromise(12000);
+
+  try {
+    if (msg === '') {
+      console.log('No new items!');
+    } else {
+
+      let newMsg = msg.slice(0, -2);
+
+      const queryText = `INSERT INTO "item" (name, sku, inventory_level, id, level) VALUES ${newMsg};`;
+      await pool
+        .query(queryText)
+    }
+  } catch (err) {
+    console.log('Error on insert: ', err);
+    return res.status(500).send();
+  }
+
+  await timeoutPromise(3000);
+
+  try {
+    console.log("We are about to get the item list");
+
+    const queryText = `select * from "item" ORDER BY id DESC`;
+    await pool
+      .query(queryText)
+      .then((selectResult) => {
+        res.send(selectResult.rows);
+      })
+  } catch (err) {
+    console.log('Error on getItems: ', err);
+    return res.status(500).send();
+  }
+
+
 });
 
 
