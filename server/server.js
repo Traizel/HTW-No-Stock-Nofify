@@ -20,33 +20,13 @@ const itemRouter = require('./routes/itemrouter');
 
 
 
-
 app.use('/api/item', itemRouter);
-  
-const token = process.env.SLACK_TOKEN;
-
-const web = new WebClient(token);
-
-const conversationId = "C02EV4JKSLA";
 
 // Handle errors (see `errorCodes` export)
 slackEvents.on('error', console.error);
 
 // Start a basic HTTP server
 slackEvents.start().then(() => {
-  // Listening on path '/slack/events' by default
-    (async () => {
-      // See: https://api.slack.com/methods/chat.postMessage
-      const res = await web.chat.postMessage({
-        icon_emoji: ":sunglasses:",
-        channel: conversationId,
-        text: "Connected",
-      });
-
-      // `res` contains information about the posted message
-      
-      console.log("Message sent: ", res);
-    })();
     console.log("bot listening on port", PORT);
 });
      
