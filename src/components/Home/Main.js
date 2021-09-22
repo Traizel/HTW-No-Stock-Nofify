@@ -112,7 +112,7 @@ function Main () {
       onClick = {
         (event) => {
           event.preventDefault();
-          if (!checkedList[1]) {
+          if (!checkedList[0]) {
             swal("You need to select at least 1 Item!");
           } else {
           dispatch({
@@ -138,7 +138,7 @@ function Main () {
       onClick = {
         (event) => {
           event.preventDefault();
-          if (!checkedList[1]) {
+          if (!checkedList[0]) {
             swal("You need to select at least 1 Item!");
           } else {
           dispatch({

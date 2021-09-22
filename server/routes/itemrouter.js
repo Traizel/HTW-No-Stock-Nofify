@@ -506,7 +506,7 @@ setInterval(() => {
   await timeoutPromise(2000);
 
 try {
-  if (!getItems.rows[1]) {
+  if (!getItems.rows[0]) {
     console.log('Item DB Empty!');
   } else {
     for (let i = 0; i < bcResponse.length; i++) {
@@ -548,7 +548,7 @@ try {
       let bcItemInv = bcResponse[i].inventory_level;
       varItems = getVar.data.data;
 
-      if (getItems.rows[1]) {
+      if (getItems.rows[0]) {
 
         for (let k = 0; k < varItems.length; k++) {
 
@@ -572,7 +572,7 @@ try {
   await timeoutPromise(12000);
 
 try {
-  if (!stockedItems[1]) {
+  if (!stockedItems[0]) {
     console.log('No Message Sent to slack!');
   } else {
     let slackText = `:white_check_mark: *RESTOCK NOTIFY!* :white_check_mark:\n\n`;
@@ -1112,7 +1112,7 @@ try {
 await timeoutPromise(2000);
 
 try {
-  if (!getItems.rows[1]) {
+  if (!getItems.rows[0]) {
     console.log('Item DB Empty!');
     for (let i = 0; i < bcResponse.length; i++) {
       let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
@@ -1168,7 +1168,7 @@ try {
     let bcItemInv = bcResponse[i].inventory_level;
     varItems = getVar.data.data;
 
-    if (!getItems.rows[1]) {
+    if (!getItems.rows[0]) {
       //console.log('Item DB Empty!');
       for (let k = 0; k < varItems.length; k++) {
 
@@ -1726,7 +1726,7 @@ setInterval(() => {
     await timeoutPromise(2000);
 
     try {
-      if (!getItems.rows[1]) {
+      if (!getItems.rows[0]) {
         console.log('Item DB Empty!');
         for (let i = 0; i < bcResponse.length; i++) {
           let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
@@ -1786,7 +1786,7 @@ setInterval(() => {
         let bcItemInv = bcResponse[i].inventory_level;
         varItems = getVar.data.data;
 
-        if (!getItems.rows[1]) {
+        if (!getItems.rows[0]) {
           //console.log('Item DB Empty!');
           for (let k = 0; k < varItems.length; k++) {
 
@@ -1869,7 +1869,7 @@ setInterval(() => {
     }
 
     try {
-      if (!newItems[1]) {
+      if (!newItems[0]) {
         console.log('No Message Sent to slack!');
       } else {
       let slackText = `:warning: *NO STOCK NOTIFY!* :warning:\n\n<!channel>\n\n`;
@@ -2376,7 +2376,7 @@ router.get("/items", async function getItems(req, res) {
   await timeoutPromise(2000);
 
   try {
-    if (!getItems.rows[1]) {
+    if (!getItems.rows[0]) {
       console.log('Item DB Empty!');
       for (let i = 0; i < bcResponse.length; i++) {
         let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
@@ -2432,7 +2432,7 @@ router.get("/items", async function getItems(req, res) {
       let bcItemInv = bcResponse[i].inventory_level;
       varItems = getVar.data.data;
 
-      if (!getItems.rows[1]) {
+      if (!getItems.rows[0]) {
         //console.log('Item DB Empty!');
         for (let k = 0; k < varItems.length; k++) {
 
