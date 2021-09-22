@@ -14,10 +14,10 @@ class MUITable extends Component {
       filter: true,
       filterType: "dropdown",
       responsive: "vertical",
-      tableBodyHeight: "7400px",
+      tableBodyHeight: "600px",
       tableBodyMaxHeight: " ",
-      rowsPerPage: 100,
-      rowsPerPageOptions: [100, 500, 1000],
+      rowsPerPage: 50,
+      rowsPerPageOptions: [50, 100, 500],
       selectableRows: false, //false means checkboxes are hidden, I created my own checkbox functionality so this is turned off
     },
   };
