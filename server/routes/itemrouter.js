@@ -1733,9 +1733,8 @@ setInterval(() => {
           let bcItemId = bcResponse[i].id;
           let bcItemSku = bcResponse[i].sku;
           let bcItemInv = bcResponse[i].inventory_level;
-          let bcItemTrack = bcResponse[i].inventory_tracking;
 
-          if (bcItemInv === 0 && bcItemTrack !== 'none') {
+          if (bcItemInv === 0) {
             msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
             newItems.push(bcResponse[i]);
           }
@@ -1746,7 +1745,6 @@ setInterval(() => {
           let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
           let bcItemSku = bcResponse[i].sku;
           let bcItemInv = bcResponse[i].inventory_level;
-          let bcItemTrack = bcResponse[i].inventory_tracking;
           let canInsert = true;
 
           for (let j = 0; j < getItems.rows.length; j++) {
@@ -1755,7 +1753,7 @@ setInterval(() => {
             }
           }
 
-          if (canInsert === true && bcItemInv === 0 && bcItemTrack !== 'none') {
+          if (canInsert === true && bcItemInv === 0) {
             msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
             newItems.push(bcResponse[i]);
           }
@@ -1877,7 +1875,10 @@ setInterval(() => {
       let slackText = `:warning: *NO STOCK NOTIFY!* :warning:\n\n<!channel>\n\n`;
 
       for (let i = 0; i < newItems.length; i++) {
-        if (newItems[i].sku) {
+        let itemTrack = newItems[i].inventory_tracking;
+        if (itemTrack === 'none') {
+        slackText += "*ITEM:* ```" + newItems[i].name + "``` with *SKU:* ```" + newItems[i].sku + "``` has *Inventory Tracking* disabled! Enable Tracking *ASAP*!\n\n\n\n"
+        } else if (newItems[i].sku) {
         slackText += "*ITEM:* ```" + newItems[i].name + "``` with *SKU:* ```" + newItems[i].sku + "``` is recently out of stock! Please look into this *ASAP*!\n\n\n\n"
         } else {
         slackText += "*ITEM:* ```" + newItems[i].name + "``` with *SKU:* ```" + "NO SKU or on the Product Level!" + "``` is recently out of stock! Please look into this *ASAP*!\n\n\n\n"
