@@ -1733,8 +1733,9 @@ setInterval(() => {
           let bcItemId = bcResponse[i].id;
           let bcItemSku = bcResponse[i].sku;
           let bcItemInv = bcResponse[i].inventory_level;
+          let bcItemTrack = bcResponse[i].inventory_tracking;
 
-          if (bcItemInv === 0) {
+          if (bcItemInv === 0 && bcItemTrack !== 'none') {
             msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
             newItems.push(bcResponse[i]);
           }
@@ -1745,6 +1746,7 @@ setInterval(() => {
           let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
           let bcItemSku = bcResponse[i].sku;
           let bcItemInv = bcResponse[i].inventory_level;
+          let bcItemTrack = bcResponse[i].inventory_tracking;
           let canInsert = true;
 
           for (let j = 0; j < getItems.rows.length; j++) {
@@ -1753,7 +1755,7 @@ setInterval(() => {
             }
           }
 
-          if (canInsert === true && bcItemInv === 0) {
+          if (canInsert === true && bcItemInv === 0 && bcItemTrack !== 'none') {
             msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
             newItems.push(bcResponse[i]);
           }
@@ -1768,7 +1770,10 @@ setInterval(() => {
 
     try {
       lupus(0, bcResponse.length, async function getVariants(i) {
-        bcItemId = bcResponse[i].id;
+        let bcItemId = bcResponse[i].id;
+        let bcItemTrack = bcResponse[i].inventory_tracking;
+
+        if (bcItemTrack === 'variant') {
 
         getVar = await axios
           .get(
@@ -1830,6 +1835,7 @@ setInterval(() => {
             }
           }
         }
+       }
       })
     } catch (err) {
       console.log('Error on varMsg: ', err);
