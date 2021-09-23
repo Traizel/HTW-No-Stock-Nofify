@@ -532,7 +532,6 @@ try {
   try {
     lupus(0, bcResponse.length, async function getVariants(i) {
 
-      if (bcResponse[i].id) {
       let bcItemId = bcResponse[i].id;
 
       getVar = await axios
@@ -558,7 +557,6 @@ try {
           }
         }
       }
-     }
     })
   } catch (err) {
     console.log('Error on varMsg: ', err);
@@ -1115,8 +1113,9 @@ try {
       let bcItemId = bcResponse[i].id;
       let bcItemSku = bcResponse[i].sku;
       let bcItemInv = bcResponse[i].inventory_level;
+      let bcItemTrack = bcResponse[i].inventory_tracking;
 
-      if (bcItemInv === 0) {
+      if (bcItemInv === 0 && bcItemTrack !== 'none') {
         msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
       }
     }
@@ -1126,6 +1125,7 @@ try {
       let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
       let bcItemSku = bcResponse[i].sku;
       let bcItemInv = bcResponse[i].inventory_level;
+      let bcItemTrack = bcResponse[i].inventory_tracking;
       let canInsert = true;
 
       for (let j = 0; j < getItems.rows.length; j++) {
@@ -1134,7 +1134,7 @@ try {
         }
       }
 
-      if (canInsert === true && bcItemInv === 0) {
+      if (canInsert === true && bcItemInv === 0 && bcItemTrack !== 'none') {
         msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
       }
     }
@@ -1149,7 +1149,10 @@ await timeoutPromise(10000);
 
 try {
   lupus(0, bcResponse.length, async function getVariants(i) {
-    bcItemId = bcResponse[i].id;
+    let bcItemId = bcResponse[i].id;
+    let bcItemTrack = bcResponse[i].inventory_tracking;
+
+    if (bcItemTrack === 'variant') {
 
     getVar = await axios
       .get(
@@ -1197,6 +1200,7 @@ try {
         }
       }
     }
+   }
   })
 } catch (err) {
   console.log('Error on varMsg: ', err);
@@ -1729,8 +1733,9 @@ setInterval(() => {
           let bcItemId = bcResponse[i].id;
           let bcItemSku = bcResponse[i].sku;
           let bcItemInv = bcResponse[i].inventory_level;
+          let bcItemTrack = bcResponse[i].inventory_tracking;
 
-          if (bcItemInv === 0) {
+          if (bcItemInv === 0 && bcItemTrack !== 'none') {
             msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
             newItems.push(bcResponse[i]);
           }
@@ -1741,6 +1746,7 @@ setInterval(() => {
           let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
           let bcItemSku = bcResponse[i].sku;
           let bcItemInv = bcResponse[i].inventory_level;
+          let bcItemTrack = bcResponse[i].inventory_tracking;
           let canInsert = true;
 
           for (let j = 0; j < getItems.rows.length; j++) {
@@ -1749,7 +1755,7 @@ setInterval(() => {
             }
           }
 
-          if (canInsert === true && bcItemInv === 0) {
+          if (canInsert === true && bcItemInv === 0 && bcItemTrack !== 'none') {
             msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
             newItems.push(bcResponse[i]);
           }
@@ -2379,8 +2385,9 @@ router.get("/items", async function getItems(req, res) {
         let bcItemId = bcResponse[i].id;
         let bcItemSku = bcResponse[i].sku;
         let bcItemInv = bcResponse[i].inventory_level;
+        let bcItemTrack = bcResponse[i].inventory_tracking;
 
-        if (bcItemInv === 0) {
+        if (bcItemInv === 0 && bcItemTrack !== 'none') {
         msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
         }
       }
@@ -2390,6 +2397,7 @@ router.get("/items", async function getItems(req, res) {
         let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
         let bcItemSku = bcResponse[i].sku;
         let bcItemInv = bcResponse[i].inventory_level;
+        let bcItemTrack = bcResponse[i].inventory_tracking;
         let canInsert = true;
 
         for (let j = 0; j < getItems.rows.length; j++) {
@@ -2398,7 +2406,7 @@ router.get("/items", async function getItems(req, res) {
           }
         }
 
-        if (canInsert === true && bcItemInv === 0) {
+        if (canInsert === true && bcItemInv === 0 && bcItemTrack !== 'none') {
           msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
         }
       }
@@ -2413,8 +2421,11 @@ router.get("/items", async function getItems(req, res) {
 
   try {
     lupus(0, bcResponse.length, async function getVariants(i) {
-      bcItemId = bcResponse[i].id;
+      let bcItemId = bcResponse[i].id;
+      let bcItemTrack = bcResponse[i].inventory_tracking;
 
+      if (bcItemTrack === 'variant') {
+        
       getVar = await axios
         .get(
           `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products/${bcItemId}/variants`,
@@ -2461,6 +2472,7 @@ router.get("/items", async function getItems(req, res) {
           }
         }
       }
+     }
     })
   } catch (err) {
     console.log('Error on varMsg: ', err);
