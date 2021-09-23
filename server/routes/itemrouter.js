@@ -33,7 +33,7 @@ slackEvents.on('error', console.error);
 // Auto Restock Notify
 setInterval(() => {
   // set this to true to activate
-  stockNotify = false;
+  stockNotify = true;
 
   if (stockNotify) {
     console.log('Checking for Stocked Items..');
@@ -510,22 +510,18 @@ try {
     console.log('Item DB Empty!');
   } else {
     for (let i = 0; i < bcResponse.length; i++) {
-      if (bcResponse[i].id) {
       let bcItemId = bcResponse[i].id;
       let bcItemInv = bcResponse[i].inventory_level;
       for (let j = 0; j < getItems.rows.length; j++) {
-        if (getItems.rows[i].id) {
-        let itemId = getItems.rows[i].id;
+        let itemId = getItems.rows[j].id;
         // console.log('BC: ', bcItemId);
         // console.log('Item: ', itemId);
         if (bcItemId === itemId && bcItemInv !== 0) {
-          stockedItems.push(getItems.rows[i]);
+          stockedItems.push(getItems.rows[j]);
        }
-      }
      }
-    }
    }
-  }
+ }
 
 } catch (err) {
   console.log('Error on getStocked: ', err);
@@ -571,38 +567,38 @@ try {
 
   await timeoutPromise(12000);
 
-try {
-  if (!stockedItems[0]) {
-    console.log('No Message Sent to slack!');
-  } else {
-    let slackText = `:white_check_mark: *RESTOCK NOTIFY!* :white_check_mark:\n\n`;
+// try {
+//   if (!stockedItems[0]) {
+//     console.log('No Message Sent to slack!');
+//   } else {
+//     let slackText = `:white_check_mark: *RESTOCK NOTIFY!* :white_check_mark:\n\n`;
 
-    for (let i = 0; i < stockedItems.length; i++) {
-      if (stockedItems[i].sku) {
-        slackText += "*ITEM:* ```" + stockedItems[i].name + "``` with *SKU:* ```" + stockedItems[i].sku + "``` has been restocked and removed from *No Stock Notify*!\n\n\n\n"
-      } else {
-        slackText += "*ITEM:* ```" + stockedItems[i].name + "``` with *SKU:* ```" + "NO SKU or on the Product Level!" + "``` has been restocked and removed from *No Stock Notify*!\n\n\n\n"
-      }
-    }
+//     for (let i = 0; i < stockedItems.length; i++) {
+//       if (stockedItems[i].sku) {
+//         slackText += "*ITEM:* ```" + stockedItems[i].name + "``` with *SKU:* ```" + stockedItems[i].sku + "``` has been restocked and removed from *No Stock Notify*!\n\n\n\n"
+//       } else {
+//         slackText += "*ITEM:* ```" + stockedItems[i].name + "``` with *SKU:* ```" + "NO SKU or on the Product Level!" + "``` has been restocked and removed from *No Stock Notify*!\n\n\n\n"
+//       }
+//     }
 
-    (async () => {
-      // See: https://api.slack.com/methods/chat.postMessage
-      const res = await web.chat.postMessage({
-        icon_emoji: ":white_check_mark:",
-        channel: conversationId,
-        text: `${slackText}`,
-      });
+//     (async () => {
+//       // See: https://api.slack.com/methods/chat.postMessage
+//       const res = await web.chat.postMessage({
+//         icon_emoji: ":white_check_mark:",
+//         channel: conversationId,
+//         text: `${slackText}`,
+//       });
 
-      // `res` contains information about the posted message
+//       // `res` contains information about the posted message
 
-      console.log("Message sent: ", res);
-    })();
-  }
-} catch (err) {
-  console.log('Error on slack message: ', err);
-}
+//       console.log("Message sent: ", res);
+//     })();
+//   }
+// } catch (err) {
+//   console.log('Error on slack message: ', err);
+// }
 
-await timeoutPromise(3000);
+// await timeoutPromise(3000);
 
 try {
   for (item of stockedItems) {
@@ -617,14 +613,14 @@ try {
 
     }
   }
-}, 1000 * 60 * 480);
+}, 1000 * 60 * 11);
 
 
 
 // Auto Reset Database (Not Dead Inventory)
 setInterval(() => {
   // set this to true to activate
-  resetNoStock = true;
+  resetNoStock = false;
 
   if (resetNoStock) {
     console.log('Resetting Database..');
