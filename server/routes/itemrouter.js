@@ -533,6 +533,9 @@ try {
     lupus(0, bcResponse.length, async function getVariants(i) {
 
       let bcItemId = bcResponse[i].id;
+      let bcItemTrack = bcResponse[i].inventory_tracking;
+
+      if (bcItemTrack === 'variant') {
 
       getVar = await axios
         .get(
@@ -540,7 +543,6 @@ try {
           config
         )
 
-      let bcItemInv = bcResponse[i].inventory_level;
       varItems = getVar.data.data;
 
       if (getItems.rows[0]) {
@@ -551,12 +553,13 @@ try {
 
           for (let j = 0; j < getItems.rows.length; j++) {
             let itemId = getItems.rows[j].id;
-            if (bcItemId === itemId && bcItemInv !== 0) {
+            if (bcItemId === itemId && varItems[k].inventory_level !== 0) {
               stockedItems.push(getItems.rows[j]);
             }
           }
         }
       }
+     }
     })
   } catch (err) {
     console.log('Error on varMsg: ', err);
@@ -2425,7 +2428,7 @@ router.get("/items", async function getItems(req, res) {
       let bcItemTrack = bcResponse[i].inventory_tracking;
 
       if (bcItemTrack === 'variant') {
-        
+
       getVar = await axios
         .get(
           `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products/${bcItemId}/variants`,
