@@ -493,7 +493,7 @@ setInterval(() => {
   }
 
   try {
-    const queryText = `select * from "item" ORDER BY id DESC`;
+    const queryText = `select * from "item" WHERE dead = false ORDER BY id DESC`;
     await pool
       .query(queryText)
       .then((getResult) => {
