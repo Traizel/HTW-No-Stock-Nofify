@@ -1156,6 +1156,7 @@ try {
     let bcItemTrack = bcResponse[i].inventory_tracking;
 
     if (bcItemTrack === 'variant') {
+    let getVar = [];
 
     getVar = await axios
       .get(
@@ -1777,6 +1778,7 @@ setInterval(() => {
         let bcItemTrack = bcResponse[i].inventory_tracking;
 
         if (bcItemTrack === 'variant') {
+        let getVar = [];
 
         getVar = await axios
           .get(
@@ -2428,6 +2430,7 @@ router.get("/items", async function getItems(req, res) {
       let bcItemTrack = bcResponse[i].inventory_tracking;
 
       if (bcItemTrack === 'variant') {
+      let getVar = [];
 
       getVar = await axios
         .get(
