@@ -10,8 +10,11 @@ import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import Switch from '@material-ui/core/Switch';
 import Checkbox from "@material-ui/core/Checkbox";
 import DeleteIcon from "@material-ui/icons/Delete";
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
 import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 import FlagIcon from "@material-ui/icons/Flag";
@@ -46,6 +49,16 @@ function Main () {
     } else {
       newItems.push(item);
     }
+  }
+
+  const changeReason = (dataIndex, check) => {
+    dispatch({
+      type: "CHANGE_REASON",
+      payload: {
+        id: deadItems[dataIndex].id,
+        reason: check,
+      },
+    });
   }
 
   const updateCheckbox = (dataIndex, checkChecked) => {
@@ -83,6 +96,7 @@ function Main () {
     item.sku,
     item.id,
     item.level,
+    item.reason,
   ]);
     //defines the dataselector to know which items to preform actions on
     return (
@@ -220,6 +234,43 @@ function Main () {
                 { name: "Item SKU" },
                 { name: "Item ID" },
                 { name: "Level" },
+                { name: "Reason", 
+                  options: {
+                    display: false,
+                  },
+                },
+                {
+                  name: "Reason",
+                  options: {
+                    filter: false,
+                    sort: false,
+                    empty: true,
+                    customBodyRenderLite: (dataIndex, rowIndex) => {
+                      return (
+                        <FormControl component="fieldset">
+                            <FormLabel component="legend"></FormLabel>
+                        <RadioGroup
+                          variant="contained"
+                          aria-label="Reason"
+                          value={deadItems[dataIndex].reason}
+                          name="controlled-radio-buttons-group"
+                          color="secondary"
+                          onClick={(event) => {
+                            event.preventDefault();
+                            let click = event.target.value;
+                            changeReason(dataIndex, click);
+                          }}
+                        >
+                          <FormControlLabel value="backorder" control={<Radio />} label="Backorder" />
+                          <FormControlLabel value="clothing" control={<Radio />} label="Clothing" />
+                          <FormControlLabel value="temp" control={<Radio />} label="Temp" />
+                          <FormControlLabel value="unused" control={<Radio />} label="Unused" />
+                        </RadioGroup>
+                        </FormControl>
+                      );
+                    },
+                  },
+                },
                 {
                   name: "",
                   options: {

@@ -77,6 +77,19 @@ function* unmarkDead(action) {
   }
 }
 
+function* changeReason(action) {
+  const payload = action.payload;
+  try {
+    const response = yield axios.put(`/api/item/updateReason`, {payload: payload});
+    yield put({
+      type: "SET_ITEM",
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log("Error with getting the list of items:", error);
+  }
+}
+
 //this takes all of the Saga functions and dispatches them
 function* itemSaga() {
     yield takeLatest('GET_ITEM_LIST', getitemlist);
@@ -84,6 +97,7 @@ function* itemSaga() {
     yield takeLatest('MARK_STOCKED', markStocked);
     yield takeLatest('MARK_DEAD', markDead);
     yield takeLatest('UNMARK_DEAD', unmarkDead);
+    yield takeLatest('CHANGE_REASON', changeReason);
 }
 
 export default itemSaga;

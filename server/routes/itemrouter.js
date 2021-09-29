@@ -614,7 +614,7 @@ try {
 
     }
   }
-}, 1000 * 60 * 11);
+}, 1000 * 60 * 1100);
 
 
 
@@ -1909,7 +1909,7 @@ setInterval(() => {
 
   }
 }
-}, 1000 * 60 * 15);
+}, 1000 * 60 * 1500);
 
 
 
@@ -2658,6 +2658,33 @@ router.put("/deadItems/:id", (req, res) => {
     });
 });
                                             
+router.put("/updateReason", (req, res) => {
+  console.log(req.body.payload);
+  const payload = req.body.payload;
+  const id = payload.id
+  const reason = payload.reason;
+  console.log("We are updating a reason on item with id:", id);
+
+  const queryText = `UPDATE "item" SET reason = $1 WHERE id = $2`;
+  pool
+    .query(queryText, [reason, id])
+    .then((updateResult) => {
+      const queryText = `select * from "item" ORDER BY id DESC`;
+      pool
+        .query(queryText)
+        .then((selectResult) => {
+          res.send(selectResult.rows);
+        })
+        .catch((error) => {
+          console.log(`Error on item query ${error}`);
+          res.sendStatus(500);
+        });
+    })
+    .catch((error) => {
+      console.log(`Error on item query ${error}`);
+      res.sendStatus(500);
+    });
+});
 
 
 module.exports = router;

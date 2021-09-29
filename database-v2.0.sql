@@ -5,5 +5,6 @@ CREATE TABLE "item"
 	"sku" varchar(255) DEFAULT 'NO SKU',
 	"inventory_level" INTEGER,
 	"level" varchar(255) DEFAULT 'Product',
-	"dead" boolean DEFAULT false
+	"dead" boolean DEFAULT false,
+	"reason" varchar(255) DEFAULT 'temp'
 );
