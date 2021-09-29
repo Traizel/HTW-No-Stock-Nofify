@@ -536,6 +536,7 @@ try {
       let bcItemTrack = bcResponse[i].inventory_tracking;
 
       if (bcItemTrack === 'variant') {
+      let getVar = [];
 
       getVar = await axios
         .get(
@@ -1166,9 +1167,7 @@ try {
 
 
     let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
-    bcItemId = bcResponse[i].id;
     let bcItemSku = bcResponse[i].sku;
-    let bcItemInv = bcResponse[i].inventory_level;
     varItems = getVar.data.data;
 
     if (!getItems.rows[0]) {
@@ -1178,7 +1177,7 @@ try {
         if (varItems[k].inventory_level === 0) {
           bcItemSku = varItems[k].sku;
           bcItemId = varItems[k].id;
-          msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Variant'), `);
+          msg += (`('${bcItemName}', '${bcItemSku}', ${varItems[k].inventory_level}, ${bcItemId}, 'Variant'), `);
         } else {
           //console.log('Variant not at 0 stock!');
         }
@@ -1198,7 +1197,7 @@ try {
 
         if (varItems[k].inventory_level === 0 && canInsert === true) {
           bcItemSku = varItems[k].sku;
-          msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Variant'), `);
+          msg += (`('${bcItemName}', '${bcItemSku}', ${varItems[k].inventory_level}, ${bcItemId}, 'Variant'), `);
         } else {
           //console.log('Variant not at 0 stock!');
         }
@@ -1788,9 +1787,7 @@ setInterval(() => {
 
 
         let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
-        bcItemId = bcResponse[i].id;
         let bcItemSku = bcResponse[i].sku;
-        let bcItemInv = bcResponse[i].inventory_level;
         varItems = getVar.data.data;
 
         if (!getItems.rows[0]) {
@@ -1800,7 +1797,7 @@ setInterval(() => {
             if (varItems[k].inventory_level === 0) {
               bcItemSku = varItems[k].sku;
               bcItemId = varItems[k].id;
-              msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Variant'), `);
+              msg += (`('${bcItemName}', '${bcItemSku}', ${varItems[k].inventory_level}, ${bcItemId}, 'Variant'), `);
               let variant = {
                 name: bcItemName,
                 sku: bcItemSku,
@@ -1828,7 +1825,7 @@ setInterval(() => {
             if (varItems[k].inventory_level === 0 && canInsert === true) {
               bcItemSku = varItems[k].sku;
               bcItemId = varItems[k].id;
-              msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Variant'), `);
+              msg += (`('${bcItemName}', '${bcItemSku}', ${varItems[k].inventory_level}, ${bcItemId}, 'Variant'), `);
               let variant = {
                 name: bcItemName,
                 sku: bcItemSku,
@@ -2440,9 +2437,7 @@ router.get("/items", async function getItems(req, res) {
 
 
       let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
-      bcItemId = bcResponse[i].id;
       let bcItemSku = bcResponse[i].sku;
-      let bcItemInv = bcResponse[i].inventory_level;
       varItems = getVar.data.data;
 
       if (!getItems.rows[0]) {
@@ -2452,7 +2447,7 @@ router.get("/items", async function getItems(req, res) {
           if (varItems[k].inventory_level === 0) {
             bcItemSku = varItems[k].sku;
             bcItemId = varItems[k].id;
-            msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Variant'), `);
+            msg += (`('${bcItemName}', '${bcItemSku}', ${varItems[k].inventory_level}, ${bcItemId}, 'Variant'), `);
           } else {
             //console.log('Variant not at 0 stock!');
           }
@@ -2472,7 +2467,7 @@ router.get("/items", async function getItems(req, res) {
 
           if (varItems[k].inventory_level === 0 && canInsert === true) {
             bcItemSku = varItems[k].sku;
-            msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Variant'), `);
+            msg += (`('${bcItemName}', '${bcItemSku}', ${varItems[k].inventory_level}, ${bcItemId}, 'Variant'), `);
           } else {
             //console.log('Variant not at 0 stock!');
           }
