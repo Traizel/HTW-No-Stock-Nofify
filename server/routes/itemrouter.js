@@ -506,9 +506,7 @@ setInterval(() => {
   await timeoutPromise(2000);
 
 try {
-  if (!getItems.rows[0]) {
-    console.log('Item DB Empty!');
-  } else {
+  if (getItems.rows[0]) {
     for (let i = 0; i < bcResponse.length; i++) {
       let bcItemId = bcResponse[i].id;
       let bcItemInv = bcResponse[i].inventory_level;
@@ -550,7 +548,7 @@ try {
 
         for (let k = 0; k < varItems.length; k++) {
 
-          let bcItemId = varItems[k].id;
+          bcItemId = varItems[k].id;
 
           for (let j = 0; j < getItems.rows.length; j++) {
             let itemId = getItems.rows[j].id;
