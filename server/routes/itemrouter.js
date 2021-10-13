@@ -493,7 +493,7 @@ setInterval(() => {
   }
 
   try {
-    const queryText = `select * from "item" WHERE dead = false ORDER BY id DESC`;
+    const queryText = `select * from "item" ORDER BY id DESC`;
     await pool
       .query(queryText)
       .then((getResult) => {
@@ -503,18 +503,20 @@ setInterval(() => {
     console.log('Error on getItems: ', err);
   }
 
-  await timeoutPromise(2000);
+await timeoutPromise(2000);
 
 try {
   if (getItems.rows[0]) {
     for (let i = 0; i < bcResponse.length; i++) {
       let bcItemId = bcResponse[i].id;
+      let bcItemSku = bcResponse[i].sku;
       let bcItemInv = bcResponse[i].inventory_level;
       for (let j = 0; j < getItems.rows.length; j++) {
         let itemId = getItems.rows[j].id;
+        let itemSku = getItems.rows[j].sku;
         // console.log('BC: ', bcItemId);
         // console.log('Item: ', itemId);
-        if (bcItemId === itemId && bcItemInv !== 0) {
+        if (bcItemId === itemId && bcItemSku === itemSku && bcItemInv !== 0) {
           stockedItems.push(getItems.rows[j]);
        }
      }
@@ -549,10 +551,12 @@ try {
         for (let k = 0; k < varItems.length; k++) {
 
           bcItemId = varItems[k].id;
+          let bcItemSku = varItems[k].sku;
 
           for (let j = 0; j < getItems.rows.length; j++) {
             let itemId = getItems.rows[j].id;
-            if (bcItemId === itemId && varItems[k].inventory_level !== 0) {
+            let itemSku = getItems.rows[j].sku;
+            if (bcItemId === itemId && bcItemSku === itemSku && varItems[k].inventory_level !== 0) {
               stockedItems.push(getItems.rows[j]);
             }
           }
@@ -1799,7 +1803,8 @@ setInterval(() => {
               let variant = {
                 name: bcItemName,
                 sku: bcItemSku,
-                id: bcItemId
+                id: bcItemId,
+                inventory_tracking: varItems[k].inventory_tracking
               };
               newItems.push(variant);
             } else {
@@ -1827,7 +1832,8 @@ setInterval(() => {
               let variant = {
                 name: bcItemName,
                 sku: bcItemSku,
-                id: bcItemId
+                id: bcItemId,
+                inventory_tracking: varItems[k].inventory_tracking
               };
               newItems.push(variant);
             } else {
@@ -1879,7 +1885,7 @@ setInterval(() => {
       for (let i = 0; i < newItems.length; i++) {
         let itemTrack = newItems[i].inventory_tracking;
         if (itemTrack === 'none') {
-        slackText += "*ITEM:* ```" + newItems[i].name + "``` with *SKU:* ```" + newItems[i].sku + "``` has *Inventory Tracking* disabled! Enable Tracking *ASAP*!\n\n\n\n"
+        slackText += "*ITEM:* ```" + newItems[i].name + "``` has *Inventory Tracking* disabled! Enable Tracking *ASAP*!\n\n\n\n"
         } else if (newItems[i].sku) {
         slackText += "*ITEM:* ```" + newItems[i].name + "``` with *SKU:* ```" + newItems[i].sku + "``` is recently out of stock! Please look into this *ASAP*!\n\n\n\n"
         } else {
