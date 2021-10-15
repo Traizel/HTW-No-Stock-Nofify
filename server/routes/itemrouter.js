@@ -20,7 +20,7 @@ let slackNotify = false;
 let stockNotify = false;
 let resetNoStock = false;
 let getSinglePage = false;
-let pageToUse = 1;
+let pageToUse = 0;
 
 const token = process.env.SLACK_TOKEN;
 
@@ -801,9 +801,9 @@ async function getItems() {
           bcItemId = bcResponse[i].id;
           let bcItemSku = bcResponse[i].sku;
           let bcItemInv = bcResponse[i].inventory_level;
-          //let bcItemTrack = bcResponse[i].inventory_tracking;
+          let bcItemTrack = bcResponse[i].inventory_tracking;
 
-          if (bcItemInv === 0) {
+          if (bcItemInv === 0 && bcItemTrack !== 'variant') {
             msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
             newItems.push(bcResponse[i]);
           }
@@ -814,7 +814,7 @@ async function getItems() {
           let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
           let bcItemSku = bcResponse[i].sku;
           let bcItemInv = bcResponse[i].inventory_level;
-          //let bcItemTrack = bcResponse[i].inventory_tracking;
+          let bcItemTrack = bcResponse[i].inventory_tracking;
           let canInsert = true;
 
           for (let j = 0; j < getItems.rows.length; j++) {
@@ -823,7 +823,7 @@ async function getItems() {
             }
           }
 
-          if (canInsert === true && bcItemInv === 0) {
+          if (canInsert === true && bcItemInv === 0 && bcItemTrack !== 'variant') {
             msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
             newItems.push(bcResponse[i]);
           }
@@ -1038,9 +1038,9 @@ async function getItemsSinglePage(pageToUse) {
         bcItemId = bcResponse[i].id;
         let bcItemSku = bcResponse[i].sku;
         let bcItemInv = bcResponse[i].inventory_level;
-        //let bcItemTrack = bcResponse[i].inventory_tracking;
+        let bcItemTrack = bcResponse[i].inventory_tracking;
 
-        if (bcItemInv === 0) {
+        if (bcItemInv === 0 && bcItemTrack !== 'variant') {
           msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
           newItems.push(bcResponse[i]);
         }
@@ -1051,7 +1051,7 @@ async function getItemsSinglePage(pageToUse) {
         let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
         let bcItemSku = bcResponse[i].sku;
         let bcItemInv = bcResponse[i].inventory_level;
-        //let bcItemTrack = bcResponse[i].inventory_tracking;
+        let bcItemTrack = bcResponse[i].inventory_tracking;
         let canInsert = true;
 
         for (let j = 0; j < getItems.rows.length; j++) {
@@ -1060,7 +1060,7 @@ async function getItemsSinglePage(pageToUse) {
           }
         }
 
-        if (canInsert === true && bcItemInv === 0) {
+        if (canInsert === true && bcItemInv === 0 && bcItemTrack !== 'variant') {
           msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
           newItems.push(bcResponse[i]);
         }
@@ -1613,7 +1613,7 @@ setInterval(() => {
     getSinglePage = false;
     getItemsSinglePage(pageToUse);
   }
-}, 1000 * 60 * 5);
+}, 1000 * 60 * 4);
 
 
 router.get("/items", async function getItems(req, res) {
