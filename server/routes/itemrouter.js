@@ -19,6 +19,8 @@ let config = {
 let slackNotify = false;
 let stockNotify = false;
 let resetNoStock = false;
+let getSinglePage = false;
+let pageToUse = 1;
 
 const token = process.env.SLACK_TOKEN;
 
@@ -40,7 +42,7 @@ function timeoutPromise(interval) {
 };
 
 
-//Get BC Items Function
+//Get All BC Items Function
 async function getBCItems () {
     let bcResponse1;
     let bcResponse2;
@@ -760,6 +762,502 @@ return bcResponse;
 }
 
 
+//Get Single BC Page Funciton
+async function getSingleBCPage(page) {
+  
+let bcResponse;
+
+  try {
+    bcResponse = await axios
+      .get(
+        `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=${page}`,
+        config
+      )
+  } catch (err) {
+    console.log('Error on Get: ', err);
+    return res.status(500).send();
+  }
+
+  await timeoutPromise(500);
+
+  return bcResponse;
+}
+
+
+//Get Zero Stock Items & Notify
+async function getItems() {
+
+    let bcResponse = [];
+    let msg = '';
+    let bcItemId;
+    let varItems = [];
+    let getItems = [];
+    let newItems = [];
+
+    try {
+      bcResponse = await getBCItems();
+    } catch (err) {
+      console.log('Error on getBCItems: ', err);
+    }
+
+    await timeoutPromise(1000);
+
+    try {
+      const queryText = `select * from "item" ORDER BY id DESC`;
+      await pool
+        .query(queryText)
+        .then((getResult) => {
+          getItems = getResult;
+        })
+    } catch (err) {
+      console.log('Error on getItems: ', err);
+    }
+
+    await timeoutPromise(2000);
+
+    try {
+      if (!getItems.rows[0]) {
+        console.log('Item DB Empty!');
+        for (let i = 0; i < bcResponse.length; i++) {
+          let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
+          bcItemId = bcResponse[i].id;
+          let bcItemSku = bcResponse[i].sku;
+          let bcItemInv = bcResponse[i].inventory_level;
+          //let bcItemTrack = bcResponse[i].inventory_tracking;
+
+          if (bcItemInv === 0) {
+            msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
+            newItems.push(bcResponse[i]);
+          }
+        }
+      } else {
+        for (let i = 0; i < bcResponse.length; i++) {
+          bcItemId = bcResponse[i].id;
+          let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
+          let bcItemSku = bcResponse[i].sku;
+          let bcItemInv = bcResponse[i].inventory_level;
+          //let bcItemTrack = bcResponse[i].inventory_tracking;
+          let canInsert = true;
+
+          for (let j = 0; j < getItems.rows.length; j++) {
+            if (bcItemId === getItems.rows[j].id) {
+              canInsert = false;
+            }
+          }
+
+          if (canInsert === true && bcItemInv === 0) {
+            msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
+            newItems.push(bcResponse[i]);
+          }
+        }
+      }
+
+    } catch (err) {
+      console.log('Error on productMsg: ', err);
+    }
+
+    await timeoutPromise(10000);
+
+    try {
+      lupus(0, bcResponse.length, async function getVariants(i) {
+        try {
+          bcItemId = bcResponse[i].id;
+          let bcItemTrack = bcResponse[i].inventory_tracking;
+          let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
+
+          if (bcItemTrack === 'variant') {
+            let getVar = [];
+
+            getVar = await axios
+              .get(
+                `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products/${bcItemId}/variants`,
+                config
+              )
+
+            let varSku = getVar.data.data.sku;
+            let varId = getVar.data.data.id;
+            let varInv = getVar.data.data.inventory_level;
+
+            let varToPush = {
+              sku: varSku,
+              id: varId,
+              inventory_level: varInv,
+              name: bcItemName,
+              inventory_tracking: bcItemTrack,
+            }
+
+            varItems.push(varToPush);
+          }
+        } catch (err) {
+          console.log('Error on getVar: ', err);
+        }
+      })
+    } catch (err) {
+      console.log('Error on makeVarArray: ', err);
+    }
+
+
+    try {
+
+      if (!getItems.rows[0]) {
+        //console.log('Item DB Empty!');
+        for (let k = 0; k < varItems.length; k++) {
+
+          if (varItems[k].inventory_level === 0) {
+            let bcItemName = varItems[k].name;
+            let bcItemSku = varItems[k].sku;
+            bcItemId = varItems[k].id;
+            let bcItemInv = varItems[k].inventory_level;
+            msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Variant'), `);
+            let variant = {
+              name: bcItemName,
+              sku: bcItemSku,
+              id: bcItemId,
+              inventory_tracking: varItems[k].inventory_tracking
+            };
+            newItems.push(variant);
+          } else {
+            //console.log('Variant not at 0 stock!');
+          }
+        }
+      } else {
+
+        for (let k = 0; k < varItems.length; k++) {
+
+
+          bcItemId = varItems[k].id;
+          let canInsert = true;
+
+          for (let j = 0; j < getItems.rows.length; j++) {
+            if (bcItemId === getItems.rows[j].id) {
+              canInsert = false;
+            }
+          }
+
+          if (varItems[k].inventory_level === 0 && canInsert === true) {
+            let bcItemSku = varItems[k].sku;
+            let bcItemId = varItems[k].id;
+            let bcItemName = varItems[k].name;
+            msg += (`('${bcItemName}', '${bcItemSku}', ${varItems[k].inventory_level}, ${bcItemId}, 'Variant'), `);
+            let variant = {
+              name: bcItemName,
+              sku: bcItemSku,
+              id: bcItemId,
+              inventory_tracking: varItems[k].inventory_tracking
+            };
+            newItems.push(variant);
+          } else {
+            //console.log('Variant not at 0 stock!');
+          }
+        }
+      }
+    } catch (err) {
+      console.log('Error on varMsg: ', err);
+    }
+
+    await timeoutPromise(12000);
+
+    try {
+      if (msg === '') {
+        console.log('No new items!');
+      } else {
+
+        let newMsg = msg.slice(0, -2);
+
+        const queryText = `INSERT INTO "item" (name, sku, inventory_level, id, level) VALUES ${newMsg};`;
+        await pool
+          .query(queryText)
+      }
+    } catch (err) {
+      console.log('Error on insert: ', err);
+    }
+
+    await timeoutPromise(3000);
+
+    try {
+      console.log("We are about to get the item list");
+
+      const queryText = `select * from "item" ORDER BY id DESC`;
+      await pool
+        .query(queryText)
+    } catch (err) {
+      console.log('Error on getItems: ', err);
+    }
+
+    try {
+      if (!newItems[0]) {
+        console.log('No Message Sent to slack!');
+      } else {
+        let slackText = `:warning: *NO STOCK NOTIFY!* :warning:\n\n<!channel>\n\n`;
+
+        for (let i = 0; i < newItems.length; i++) {
+          let itemTrack = newItems[i].inventory_tracking;
+          if (itemTrack === 'none') {
+            slackText += "*ITEM:* ```" + newItems[i].name + "``` has *Inventory Tracking* disabled! Enable Tracking *ASAP*!\n\n\n\n"
+          } else if (newItems[i].sku) {
+            slackText += "*ITEM:* ```" + newItems[i].name + "``` with *SKU:* ```" + newItems[i].sku + "``` is recently out of stock! Please look into this *ASAP*!\n\n\n\n"
+          } else {
+            slackText += "*ITEM:* ```" + newItems[i].name + "``` with *SKU:* ```" + "NO SKU or on the Product Level!" + "``` is recently out of stock! Please look into this *ASAP*!\n\n\n\n"
+          }
+        }
+
+        (async () => {
+          // See: https://api.slack.com/methods/chat.postMessage
+          const res = await web.chat.postMessage({
+            icon_emoji: ":warning:",
+            channel: conversationId,
+            text: `${slackText}`,
+          });
+
+          // `res` contains information about the posted message
+
+          console.log("Message sent: ", res);
+        })();
+      }
+    } catch (err) {
+      console.log('Error on slack message: ', err);
+    }
+
+}
+
+
+//Get Zero Stock Items & Notify on Single Page
+async function getItemsSinglePage(pageToUse) {
+
+  let bcResponse = [];
+  let msg = '';
+  let bcItemId;
+  let varItems = [];
+  let getItems = [];
+  let newItems = [];
+
+  try {
+    bcResponse = await getSingleBCPage(pageToUse);
+  } catch (err) {
+    console.log('Error on getBCItems: ', err);
+  }
+
+  await timeoutPromise(1000);
+
+  try {
+    const queryText = `select * from "item" ORDER BY id DESC`;
+    await pool
+      .query(queryText)
+      .then((getResult) => {
+        getItems = getResult;
+      })
+  } catch (err) {
+    console.log('Error on getItems: ', err);
+  }
+
+  await timeoutPromise(2000);
+
+  try {
+    if (!getItems.rows[0]) {
+      console.log('Item DB Empty!');
+      for (let i = 0; i < bcResponse.length; i++) {
+        let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
+        bcItemId = bcResponse[i].id;
+        let bcItemSku = bcResponse[i].sku;
+        let bcItemInv = bcResponse[i].inventory_level;
+        //let bcItemTrack = bcResponse[i].inventory_tracking;
+
+        if (bcItemInv === 0) {
+          msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
+          newItems.push(bcResponse[i]);
+        }
+      }
+    } else {
+      for (let i = 0; i < bcResponse.length; i++) {
+        bcItemId = bcResponse[i].id;
+        let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
+        let bcItemSku = bcResponse[i].sku;
+        let bcItemInv = bcResponse[i].inventory_level;
+        //let bcItemTrack = bcResponse[i].inventory_tracking;
+        let canInsert = true;
+
+        for (let j = 0; j < getItems.rows.length; j++) {
+          if (bcItemId === getItems.rows[j].id) {
+            canInsert = false;
+          }
+        }
+
+        if (canInsert === true && bcItemInv === 0) {
+          msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
+          newItems.push(bcResponse[i]);
+        }
+      }
+    }
+
+  } catch (err) {
+    console.log('Error on productMsg: ', err);
+  }
+
+  await timeoutPromise(10000);
+
+  try {
+    lupus(0, bcResponse.length, async function getVariants(i) {
+      try {
+        bcItemId = bcResponse[i].id;
+        let bcItemTrack = bcResponse[i].inventory_tracking;
+        let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
+
+        if (bcItemTrack === 'variant') {
+          let getVar = [];
+
+          getVar = await axios
+            .get(
+              `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products/${bcItemId}/variants`,
+              config
+            )
+
+          let varSku = getVar.data.data.sku;
+          let varId = getVar.data.data.id;
+          let varInv = getVar.data.data.inventory_level;
+
+          let varToPush = {
+            sku: varSku,
+            id: varId,
+            inventory_level: varInv,
+            name: bcItemName,
+            inventory_tracking: bcItemTrack,
+          }
+
+          varItems.push(varToPush);
+        }
+      } catch (err) {
+        console.log('Error on getVar: ', err);
+      }
+    })
+  } catch (err) {
+    console.log('Error on makeVarArray: ', err);
+  }
+
+
+  try {
+
+    if (!getItems.rows[0]) {
+      //console.log('Item DB Empty!');
+      for (let k = 0; k < varItems.length; k++) {
+
+        if (varItems[k].inventory_level === 0) {
+          let bcItemName = varItems[k].name;
+          let bcItemSku = varItems[k].sku;
+          bcItemId = varItems[k].id;
+          let bcItemInv = varItems[k].inventory_level;
+          msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Variant'), `);
+          let variant = {
+            name: bcItemName,
+            sku: bcItemSku,
+            id: bcItemId,
+            inventory_tracking: varItems[k].inventory_tracking
+          };
+          newItems.push(variant);
+        } else {
+          //console.log('Variant not at 0 stock!');
+        }
+      }
+    } else {
+
+      for (let k = 0; k < varItems.length; k++) {
+
+
+        bcItemId = varItems[k].id;
+        let canInsert = true;
+
+        for (let j = 0; j < getItems.rows.length; j++) {
+          if (bcItemId === getItems.rows[j].id) {
+            canInsert = false;
+          }
+        }
+
+        if (varItems[k].inventory_level === 0 && canInsert === true) {
+          let bcItemSku = varItems[k].sku;
+          let bcItemId = varItems[k].id;
+          let bcItemName = varItems[k].name;
+          msg += (`('${bcItemName}', '${bcItemSku}', ${varItems[k].inventory_level}, ${bcItemId}, 'Variant'), `);
+          let variant = {
+            name: bcItemName,
+            sku: bcItemSku,
+            id: bcItemId,
+            inventory_tracking: varItems[k].inventory_tracking
+          };
+          newItems.push(variant);
+        } else {
+          //console.log('Variant not at 0 stock!');
+        }
+      }
+    }
+  } catch (err) {
+    console.log('Error on varMsg: ', err);
+  }
+
+  await timeoutPromise(12000);
+
+  try {
+    if (msg === '') {
+      console.log('No new items!');
+    } else {
+
+      let newMsg = msg.slice(0, -2);
+
+      const queryText = `INSERT INTO "item" (name, sku, inventory_level, id, level) VALUES ${newMsg};`;
+      await pool
+        .query(queryText)
+    }
+  } catch (err) {
+    console.log('Error on insert: ', err);
+  }
+
+  await timeoutPromise(3000);
+
+  try {
+    console.log("We are about to get the item list");
+
+    const queryText = `select * from "item" ORDER BY id DESC`;
+    await pool
+      .query(queryText)
+  } catch (err) {
+    console.log('Error on getItems: ', err);
+  }
+
+  try {
+    if (!newItems[0]) {
+      console.log('No Message Sent to slack!');
+    } else {
+      let slackText = `:warning: *NO STOCK NOTIFY!* :warning:\n\n<!channel>\n\n`;
+
+      for (let i = 0; i < newItems.length; i++) {
+        let itemTrack = newItems[i].inventory_tracking;
+        if (itemTrack === 'none') {
+          slackText += "*ITEM:* ```" + newItems[i].name + "``` has *Inventory Tracking* disabled! Enable Tracking *ASAP*!\n\n\n\n"
+        } else if (newItems[i].sku) {
+          slackText += "*ITEM:* ```" + newItems[i].name + "``` with *SKU:* ```" + newItems[i].sku + "``` is recently out of stock! Please look into this *ASAP*!\n\n\n\n"
+        } else {
+          slackText += "*ITEM:* ```" + newItems[i].name + "``` with *SKU:* ```" + "NO SKU or on the Product Level!" + "``` is recently out of stock! Please look into this *ASAP*!\n\n\n\n"
+        }
+      }
+
+      (async () => {
+        // See: https://api.slack.com/methods/chat.postMessage
+        const res = await web.chat.postMessage({
+          icon_emoji: ":warning:",
+          channel: conversationId,
+          text: `${slackText}`,
+        });
+
+        // `res` contains information about the posted message
+
+        console.log("Message sent: ", res);
+      })();
+    }
+  } catch (err) {
+    console.log('Error on slack message: ', err);
+  }
+
+}
+
+
 // Auto Restock Notify
 setInterval(() => {
   // set this to true to activate
@@ -911,7 +1409,7 @@ try {
 
     }
   }
-}, 1000 * 60 * 19);
+}, 1000 * 60 * 13);
 
 
 // Auto Reset Database (Not Dead Inventory)
@@ -1113,251 +1611,31 @@ try {
 // Auto No Stock Notify
 setInterval(() => {
   // set this to true to activate
-  slackNotify = true;
+  slackNotify = false;
 
   if (slackNotify) {
     console.log('running Slack Notify..');
     slackNotify = false;
     getItems();
+ }
+}, 1000 * 60 * 480);
 
-  async function getItems(req, res) {
-  
-  let bcResponse = [];
-  let msg = '';
-  let bcItemId;
-  let varItems = [];
-  let getItems = [];
-  let newItems = [];
 
-  try {
-    bcResponse = await getBCItems();
-  } catch (err) {
-    console.log('Error on getBCItems: ', err);
-    return res.status(500).send();
+// Auto Get Single Page
+setInterval(() => {
+  // set this to true to activate
+  getSinglePage = true;
+
+  if (getSinglePage) {
+    pageToUse++;
+    if (pageToUse > 28) {
+      pageToUse = 1;
+    }
+    console.log(`running Slack Notify on page ${pageToUse}..`);
+    getSinglePage = false;
+    getItemsSinglePage(pageToUse);
   }
-
-await timeoutPromise(1000);
-
-    try {
-      const queryText = `select * from "item" ORDER BY id DESC`;
-      await pool
-        .query(queryText)
-        .then((getResult) => {
-          getItems = getResult;
-        })
-    } catch (err) {
-      console.log('Error on getItems: ', err);
-    }
-
-    await timeoutPromise(2000);
-
-    try {
-      if (!getItems.rows[0]) {
-        console.log('Item DB Empty!');
-        for (let i = 0; i < bcResponse.length; i++) {
-          let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
-          bcItemId = bcResponse[i].id;
-          let bcItemSku = bcResponse[i].sku;
-          let bcItemInv = bcResponse[i].inventory_level;
-          //let bcItemTrack = bcResponse[i].inventory_tracking;
-
-          if (bcItemInv === 0) {
-            msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
-            newItems.push(bcResponse[i]);
-          }
-        }
-      } else {
-        for (let i = 0; i < bcResponse.length; i++) {
-          bcItemId = bcResponse[i].id;
-          let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
-          let bcItemSku = bcResponse[i].sku;
-          let bcItemInv = bcResponse[i].inventory_level;
-          //let bcItemTrack = bcResponse[i].inventory_tracking;
-          let canInsert = true;
-
-          for (let j = 0; j < getItems.rows.length; j++) {
-            if (bcItemId === getItems.rows[j].id) {
-              canInsert = false;
-            }
-          }
-
-          if (canInsert === true && bcItemInv === 0) {
-            msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
-            newItems.push(bcResponse[i]);
-          }
-        }
-      }
-
-    } catch (err) {
-      console.log('Error on productMsg: ', err);
-    }
-
-    await timeoutPromise(10000);
-
-    try {
-      lupus(0, bcResponse.length, async function getVariants(i) {
-        try {
-        bcItemId = bcResponse[i].id;
-        let bcItemTrack = bcResponse[i].inventory_tracking;
-        let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
-
-        if (bcItemTrack === 'variant') {
-        let getVar = [];
-
-        getVar = await axios
-          .get(
-            `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products/${bcItemId}/variants`,
-            config
-          )
-          
-          let varSku = getVar.data.data.sku;
-          let varId = getVar.data.data.id;
-          let varInv = getVar.data.data.inventory_level;
-
-          let varToPush = {
-            sku: varSku,
-            id: varId,
-            inventory_level: varInv,
-            name: bcItemName,
-            inventory_tracking: bcItemTrack,
-          }
-
-          varItems.push(varToPush);
-          }
-        } catch (err) {
-          console.log('Error on getVar: ', err);
-        }
-       })
-      } catch (err) {
-        console.log('Error on makeVarArray: ', err);
-      }
-
-
-    try {
-
-        if (!getItems.rows[0]) {
-          //console.log('Item DB Empty!');
-          for (let k = 0; k < varItems.length; k++) {
-
-            if (varItems[k].inventory_level === 0) {
-              let bcItemName = varItems[k].name;
-              let bcItemSku = varItems[k].sku;
-              bcItemId = varItems[k].id;
-              let bcItemInv = varItems[k].inventory_level;
-              msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Variant'), `);
-              let variant = {
-                name: bcItemName,
-                sku: bcItemSku,
-                id: bcItemId,
-                inventory_tracking: varItems[k].inventory_tracking
-              };
-              newItems.push(variant);
-            } else {
-              //console.log('Variant not at 0 stock!');
-            }
-          }
-        } else {
-
-          for (let k = 0; k < varItems.length; k++) {
-
-
-            bcItemId = varItems[k].id;
-            let canInsert = true;
-
-            for (let j = 0; j < getItems.rows.length; j++) {
-              if (bcItemId === getItems.rows[j].id) {
-                canInsert = false;
-              }
-            }
-
-            if (varItems[k].inventory_level === 0 && canInsert === true) {
-              let bcItemSku = varItems[k].sku;
-              let bcItemId = varItems[k].id;
-              let bcItemName = varItems[k].name;
-              msg += (`('${bcItemName}', '${bcItemSku}', ${varItems[k].inventory_level}, ${bcItemId}, 'Variant'), `);
-              let variant = {
-                name: bcItemName,
-                sku: bcItemSku,
-                id: bcItemId,
-                inventory_tracking: varItems[k].inventory_tracking
-              };
-              newItems.push(variant);
-            } else {
-              //console.log('Variant not at 0 stock!');
-            }
-          }
-        }
-    } catch (err) {
-      console.log('Error on varMsg: ', err);
-    }
-
-    await timeoutPromise(12000);
-
-    try {
-      if (msg === '') {
-        console.log('No new items!');
-      } else {
-
-        let newMsg = msg.slice(0, -2);
-
-        const queryText = `INSERT INTO "item" (name, sku, inventory_level, id, level) VALUES ${newMsg};`;
-        await pool
-          .query(queryText)
-      }
-    } catch (err) {
-      console.log('Error on insert: ', err);
-    }
-
-    await timeoutPromise(3000);
-
-    try {
-      console.log("We are about to get the item list");
-
-      const queryText = `select * from "item" ORDER BY id DESC`;
-      await pool
-        .query(queryText)
-    } catch (err) {
-      console.log('Error on getItems: ', err);
-    }
-
-    try {
-      if (!newItems[0]) {
-        console.log('No Message Sent to slack!');
-      } else {
-      let slackText = `:warning: *NO STOCK NOTIFY!* :warning:\n\n<!channel>\n\n`;
-
-      for (let i = 0; i < newItems.length; i++) {
-        let itemTrack = newItems[i].inventory_tracking;
-        if (itemTrack === 'none') {
-        slackText += "*ITEM:* ```" + newItems[i].name + "``` has *Inventory Tracking* disabled! Enable Tracking *ASAP*!\n\n\n\n"
-        } else if (newItems[i].sku) {
-        slackText += "*ITEM:* ```" + newItems[i].name + "``` with *SKU:* ```" + newItems[i].sku + "``` is recently out of stock! Please look into this *ASAP*!\n\n\n\n"
-        } else {
-        slackText += "*ITEM:* ```" + newItems[i].name + "``` with *SKU:* ```" + "NO SKU or on the Product Level!" + "``` is recently out of stock! Please look into this *ASAP*!\n\n\n\n"
-        }
-      }
-
-      (async () => {
-        // See: https://api.slack.com/methods/chat.postMessage
-        const res = await web.chat.postMessage({
-          icon_emoji: ":warning:",
-          channel: conversationId,
-          text: `${slackText}`,
-        });
-
-        // `res` contains information about the posted message
-
-        console.log("Message sent: ", res);
-      })();
-     }
-    } catch (err) {
-      console.log('Error on slack message: ', err);
-    }
-
-  }
-}
-}, 1000 * 60 * 29);
-
+}, 1000 * 60 * 5);
 
 
 router.get("/items", async function getItems(req, res) {
