@@ -83,7 +83,6 @@ async function getBCItems () {
         )
     } catch (err) {
       console.log('Error on Get1: ', err);
-      return res.status(500).send();
     }
 
 await timeoutPromise(1000);
@@ -96,7 +95,6 @@ await timeoutPromise(1000);
         )
     } catch (err) {
       console.log('Error on Get2: ', err);
-      return res.status(500).send();
     }
 
 await timeoutPromise(1000);
@@ -109,7 +107,6 @@ await timeoutPromise(1000);
         )
     } catch (err) {
       console.log('Error on Get3: ', err);
-      return res.status(500).send();
     }
 
 await timeoutPromise(1000);
@@ -122,7 +119,6 @@ await timeoutPromise(1000);
         )
     } catch (err) {
       console.log('Error on Get3: ', err);
-      return res.status(500).send();
     }
 
 await timeoutPromise(1000);
@@ -135,7 +131,6 @@ await timeoutPromise(1000);
         )
     } catch (err) {
       console.log('Error on Get4: ', err);
-      return res.status(500).send();
     }
 
 await timeoutPromise(1000);
@@ -148,7 +143,6 @@ await timeoutPromise(1000);
         )
     } catch (err) {
       console.log('Error on Get5: ', err);
-      return res.status(500).send();
     }
 
 await timeoutPromise(1000);
@@ -161,7 +155,6 @@ await timeoutPromise(1000);
         )
     } catch (err) {
       console.log('Error on Get6: ', err);
-      return res.status(500).send();
     }
 
 await timeoutPromise(1000);
@@ -174,7 +167,6 @@ await timeoutPromise(1000);
         )
     } catch (err) {
       console.log('Error on Get7: ', err);
-      return res.status(500).send();
     }
 
 await timeoutPromise(1000);
@@ -187,7 +179,6 @@ await timeoutPromise(1000);
         )
     } catch (err) {
       console.log('Error on Get8: ', err);
-      return res.status(500).send();
     }
 
 await timeoutPromise(1000);
@@ -200,7 +191,6 @@ await timeoutPromise(1000);
         )
     } catch (err) {
       console.log('Error on Get9: ', err);
-      return res.status(500).send();
     }
 
 await timeoutPromise(1000);
@@ -213,7 +203,6 @@ await timeoutPromise(1000);
         )
     } catch (err) {
       console.log('Error on Get10: ', err);
-      return res.status(500).send();
     }
 
 await timeoutPromise(1000);
@@ -226,7 +215,6 @@ await timeoutPromise(1000);
         )
     } catch (err) {
       console.log('Error on Get11: ', err);
-      return res.status(500).send();
     }
 
 await timeoutPromise(1000);
@@ -239,7 +227,6 @@ await timeoutPromise(1000);
         )
     } catch (err) {
       console.log('Error on Get12: ', err);
-      return res.status(500).send();
     }
 
 await timeoutPromise(1000);
@@ -252,7 +239,6 @@ await timeoutPromise(1000);
         )
     } catch (err) {
       console.log('Error on Get13: ', err);
-      return res.status(500).send();
     }
 
 await timeoutPromise(1000);
@@ -265,7 +251,6 @@ await timeoutPromise(1000);
         )
     } catch (err) {
       console.log('Error on Get14: ', err);
-      return res.status(500).send();
     }
 
 await timeoutPromise(1000);
@@ -278,7 +263,6 @@ await timeoutPromise(1000);
         )
     } catch (err) {
       console.log('Error on Get15: ', err);
-      return res.status(500).send();
     }
 
 await timeoutPromise(1000);
@@ -291,7 +275,6 @@ await timeoutPromise(1000);
         )
     } catch (err) {
       console.log('Error on Get16: ', err);
-      return res.status(500).send();
     }
 
 await timeoutPromise(1000);
@@ -304,7 +287,6 @@ await timeoutPromise(1000);
         )
     } catch (err) {
       console.log('Error on Get17: ', err);
-      return res.status(500).send();
     }
 
 await timeoutPromise(1000);
@@ -317,7 +299,6 @@ await timeoutPromise(1000);
         )
     } catch (err) {
       console.log('Error on Get18: ', err);
-      return res.status(500).send();
     }
 
 await timeoutPromise(1000);
@@ -330,7 +311,6 @@ await timeoutPromise(1000);
         )
     } catch (err) {
       console.log('Error on Get19: ', err);
-      return res.status(500).send();
     }
 
 await timeoutPromise(1000);
@@ -343,7 +323,6 @@ await timeoutPromise(1000);
         )
     } catch (err) {
       console.log('Error on Get20: ', err);
-      return res.status(500).send();
     }
 
 await timeoutPromise(1000);
@@ -356,7 +335,6 @@ await timeoutPromise(1000);
         )
     } catch (err) {
       console.log('Error on Get21: ', err);
-      return res.status(500).send();
     }
 
 await timeoutPromise(1000);
@@ -369,7 +347,6 @@ await timeoutPromise(1000);
         )
     } catch (err) {
       console.log('Error on Get22: ', err);
-      return res.status(500).send();
     }
 
 await timeoutPromise(1000);
@@ -382,7 +359,6 @@ await timeoutPromise(1000);
         )
     } catch (err) {
       console.log('Error on Get23: ', err);
-      return res.status(500).send();
     }
 
 await timeoutPromise(1000);
@@ -395,7 +371,6 @@ await timeoutPromise(1000);
         )
     } catch (err) {
       console.log('Error on Get24: ', err);
-      return res.status(500).send();
     }
 
 await timeoutPromise(1000);
@@ -408,7 +383,6 @@ await timeoutPromise(1000);
         )
     } catch (err) {
       console.log('Error on Get25: ', err);
-      return res.status(500).send();
     }
 
 await timeoutPromise(1000);
@@ -421,7 +395,6 @@ await timeoutPromise(1000);
         )
     } catch (err) {
       console.log('Error on Get26: ', err);
-      return res.status(500).send();
     }
 
 await timeoutPromise(1000);
@@ -434,7 +407,6 @@ await timeoutPromise(1000);
         )
     } catch (err) {
       console.log('Error on Get27: ', err);
-      return res.status(500).send();
     }
 
 await timeoutPromise(1000);
@@ -447,7 +419,6 @@ await timeoutPromise(1000);
         )
     } catch (err) {
       console.log('Error on Get28: ', err);
-      return res.status(500).send();
     }
 
 await timeoutPromise(1000);
@@ -458,7 +429,7 @@ await timeoutPromise(1000);
        }
       } catch (err) {
         console.log('Error on bcCreate: ', err);
-        return res.status(500).send();
+
       }
 
 await timeoutPromise(1000);
@@ -469,7 +440,7 @@ await timeoutPromise(1000);
        }
       } catch (err) {
         console.log('Error on bcCreate: ', err);
-        return res.status(500).send();
+
       }
 
 await timeoutPromise(1000);
@@ -480,7 +451,7 @@ await timeoutPromise(1000);
        }
       } catch (err) {
         console.log('Error on bcCreate: ', err);
-        return res.status(500).send();
+
       }
 
 await timeoutPromise(1000);
@@ -491,7 +462,7 @@ await timeoutPromise(1000);
        }
       } catch (err) {
         console.log('Error on bcCreate: ', err);
-        return res.status(500).send();
+
       }
 
 await timeoutPromise(1000);
@@ -502,7 +473,7 @@ await timeoutPromise(1000);
        }
       } catch (err) {
         console.log('Error on bcCreate: ', err);
-        return res.status(500).send();
+
       }
 
 await timeoutPromise(1000);
@@ -513,7 +484,7 @@ await timeoutPromise(1000);
        }
       } catch (err) {
         console.log('Error on bcCreate: ', err);
-        return res.status(500).send();
+
       }
 
 await timeoutPromise(1000);
@@ -524,7 +495,7 @@ await timeoutPromise(1000);
        }
       } catch (err) {
         console.log('Error on bcCreate: ', err);
-        return res.status(500).send();
+
       }
 
 await timeoutPromise(1000);
@@ -535,7 +506,7 @@ await timeoutPromise(1000);
        }
       } catch (err) {
         console.log('Error on bcCreate: ', err);
-        return res.status(500).send();
+
       }
 
 await timeoutPromise(1000);
@@ -546,7 +517,7 @@ await timeoutPromise(1000);
        }
       } catch (err) {
         console.log('Error on bcCreate: ', err);
-        return res.status(500).send();
+
       }
 
 await timeoutPromise(1000);
@@ -557,7 +528,7 @@ await timeoutPromise(1000);
        }
       } catch (err) {
         console.log('Error on bcCreate: ', err);
-        return res.status(500).send();
+
       }
 
 await timeoutPromise(1000);
@@ -568,7 +539,7 @@ await timeoutPromise(1000);
        }
       } catch (err) {
         console.log('Error on bcCreate: ', err);
-        return res.status(500).send();
+
       }
 
 await timeoutPromise(1000);
@@ -579,7 +550,7 @@ await timeoutPromise(1000);
        }
       } catch (err) {
         console.log('Error on bcCreate: ', err);
-        return res.status(500).send();
+
       }
 
 await timeoutPromise(1000);
@@ -590,7 +561,7 @@ await timeoutPromise(1000);
        }
       } catch (err) {
         console.log('Error on bcCreate: ', err);
-        return res.status(500).send();
+
       }
 
 await timeoutPromise(1000);
@@ -601,7 +572,7 @@ await timeoutPromise(1000);
        }
       } catch (err) {
         console.log('Error on bcCreate: ', err);
-        return res.status(500).send();
+
       }
 
 await timeoutPromise(1000);
@@ -612,7 +583,7 @@ await timeoutPromise(1000);
        }
       } catch (err) {
         console.log('Error on bcCreate: ', err);
-        return res.status(500).send();
+
       }
 
 await timeoutPromise(1000);
@@ -623,7 +594,7 @@ await timeoutPromise(1000);
        }
       } catch (err) {
         console.log('Error on bcCreate: ', err);
-        return res.status(500).send();
+
       }
 
 await timeoutPromise(1000);
@@ -634,7 +605,7 @@ await timeoutPromise(1000);
        }
       } catch (err) {
         console.log('Error on bcCreate: ', err);
-        return res.status(500).send();
+
       }
 
 await timeoutPromise(1000);
@@ -645,7 +616,7 @@ await timeoutPromise(1000);
        }
       } catch (err) {
         console.log('Error on bcCreate: ', err);
-        return res.status(500).send();
+
       }
 
 await timeoutPromise(1000);
@@ -656,7 +627,7 @@ await timeoutPromise(1000);
        }
       } catch (err) {
         console.log('Error on bcCreate: ', err);
-        return res.status(500).send();
+
       }
 
 await timeoutPromise(1000);
@@ -667,7 +638,7 @@ await timeoutPromise(1000);
        }
       } catch (err) {
         console.log('Error on bcCreate: ', err);
-        return res.status(500).send();
+
       }
 
 await timeoutPromise(1000);
@@ -678,7 +649,7 @@ await timeoutPromise(1000);
        }
       } catch (err) {
         console.log('Error on bcCreate: ', err);
-        return res.status(500).send();
+
       }
 
 await timeoutPromise(1000);
@@ -689,7 +660,7 @@ await timeoutPromise(1000);
        }
       } catch (err) {
         console.log('Error on bcCreate: ', err);
-        return res.status(500).send();
+
       }
 
 await timeoutPromise(1000);
@@ -700,7 +671,7 @@ await timeoutPromise(1000);
        }
       } catch (err) {
         console.log('Error on bcCreate: ', err);
-        return res.status(500).send();
+
       }
 
 await timeoutPromise(1000);
@@ -711,7 +682,7 @@ await timeoutPromise(1000);
        }
       } catch (err) {
         console.log('Error on bcCreate: ', err);
-        return res.status(500).send();
+
       }
 
 await timeoutPromise(1000);
@@ -722,7 +693,7 @@ await timeoutPromise(1000);
        }
       } catch (err) {
         console.log('Error on bcCreate: ', err);
-        return res.status(500).send();
+
       }
 
 await timeoutPromise(1000);
@@ -733,7 +704,7 @@ await timeoutPromise(1000);
        }
       } catch (err) {
         console.log('Error on bcCreate: ', err);
-        return res.status(500).send();
+
       }
 
 await timeoutPromise(1000);
@@ -744,7 +715,7 @@ await timeoutPromise(1000);
        }
       } catch (err) {
         console.log('Error on bcCreate: ', err);
-        return res.status(500).send();
+
       }
 
 await timeoutPromise(1000);
@@ -755,7 +726,6 @@ await timeoutPromise(1000);
       }
     } catch (err) {
       console.log('Error on bcCreate: ', err);
-      return res.status(500).send();
     }
 
 return bcResponse;
@@ -765,20 +735,28 @@ return bcResponse;
 //Get Single BC Page Funciton
 async function getSingleBCPage(page) {
   
-let bcResponse;
+let bcResponse1;
+let bcResponse = [];
 
   try {
-    bcResponse = await axios
+    bcResponse1 = await axios
       .get(
         `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=${page}`,
         config
       )
   } catch (err) {
     console.log('Error on Get: ', err);
-    return res.status(500).send();
   }
 
-  await timeoutPromise(500);
+  await timeoutPromise(1000);
+
+    try {
+        for (item of bcResponse1.data.data) {
+          bcResponse.push(item);
+        }
+      } catch (err) {
+        console.log('Error on bcCreate: ', err);
+      }
 
   return bcResponse;
 }
