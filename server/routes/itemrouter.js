@@ -828,41 +828,9 @@ async function addItems(bcResponse) {
     await timeoutPromise(10000);
 
     try {
-      lupus(0, bcResponse.length, async function getVariants(i) {
-        try {
-          bcItemId = bcResponse[i].id;
-          let bcItemTrack = bcResponse[i].inventory_tracking;
-          let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
-
-          if (bcItemTrack === 'variant') {
-            let getVar = [];
-
-            getVar = await axios
-              .get(
-                `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products/${bcItemId}/variants`,
-                config
-              )
-
-            let varSku = getVar.data.data.sku;
-            let varId = getVar.data.data.id;
-            let varInv = getVar.data.data.inventory_level;
-
-            let varToPush = {
-              sku: varSku,
-              id: varId,
-              inventory_level: varInv,
-              name: bcItemName,
-              inventory_tracking: bcItemTrack,
-            }
-
-            varItems.push(varToPush);
-          }
-        } catch (err) {
-          console.log('Error on getVar: ', err);
-        }
-      })
+      varItems = await getVars(bcResponse);
     } catch (err) {
-      console.log('Error on makeVarArray: ', err);
+      console.log('Error on getVars: ', err);
     }
 
 
@@ -1023,6 +991,52 @@ async function getItemsSinglePage(pageToUse) {
 }
 
 
+//Get All Variants of All Products
+async function getVars(bcResponse) {
+
+  let varItems = [];
+
+    try {
+      lupus(0, bcResponse.length, async function getVariants(i) {
+        try {
+          let bcItemId = bcResponse[i].id;
+          let bcItemTrack = bcResponse[i].inventory_tracking;
+          let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
+
+          if (bcItemTrack === 'variant') {
+            let getVar = [];
+
+            getVar = await axios
+              .get(
+                `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products/${bcItemId}/variants`,
+                config
+              )
+
+            let varSku = getVar.data.data.sku;
+            let varId = getVar.data.data.id;
+            let varInv = getVar.data.data.inventory_level;
+
+            let varToPush = {
+              sku: varSku,
+              id: varId,
+              inventory_level: varInv,
+              name: bcItemName,
+              inventory_tracking: bcItemTrack,
+            }
+
+            varItems.push(varToPush);
+          }
+        } catch (err) {
+          console.log('Error on getVar: ', err);
+        }
+      })
+    } catch (err) {
+      console.log('Error on makeVarArray: ', err);
+    }
+
+    return varItems;
+}
+
 // Auto Restock Notify
 setInterval(() => {
   // set this to true to activate
@@ -1045,7 +1059,6 @@ setInterval(() => {
     bcResponse = await getBCItems();
   } catch (err) {
     console.log('Error on getBCItems: ', err);
-    return res.status(500).send();
   }
 
 await timeoutPromise(1000);
@@ -1087,43 +1100,11 @@ try {
 
   await timeoutPromise(8000);
 
-    try {
-      lupus(0, bcResponse.length, async function getVariants(i) {
-        try {
-          bcItemId = bcResponse[i].id;
-          let bcItemTrack = bcResponse[i].inventory_tracking;
-          let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
-
-          if (bcItemTrack === 'variant') {
-            let getVar = [];
-
-            getVar = await axios
-              .get(
-                `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products/${bcItemId}/variants`,
-                config
-              )
-
-            let varSku = getVar.data.data.sku;
-            let varId = getVar.data.data.id;
-            let varInv = getVar.data.data.inventory_level;
-
-            let varToPush = {
-              sku: varSku,
-              id: varId,
-              inventory_level: varInv,
-              name: bcItemName,
-              inventory_tracking: bcItemTrack,
-            }
-
-            varItems.push(varToPush);
-          }
-        } catch (err) {
-          console.log('Error on getVar: ', err);
-        }
-      })
-    } catch (err) {
-      console.log('Error on makeVarArray: ', err);
-    }
+  try {
+  varItems = await getVars(bcResponse);
+  } catch (err) {
+    console.log('Error on getVars: ', err);
+  }
 
   try {
       if (getItems.rows[0]) {
@@ -1144,7 +1125,6 @@ try {
       }
   } catch (err) {
     console.log('Error on varMsg: ', err);
-    return res.status(500).send();
   }
 
   await timeoutPromise(12000);
@@ -1157,7 +1137,6 @@ try {
   }
 } catch (err) {
   console.log('Error on delete: ', err);
-  return res.status(500).send();
 }
 
     }
@@ -1465,50 +1444,14 @@ await timeoutPromise(1000);
   await timeoutPromise(10000);
 
     try {
-      lupus(0, bcResponse.length, async function getVariants(i) {
-        try {
-        bcItemId = bcResponse[i].id;
-        let bcItemTrack = bcResponse[i].inventory_tracking;
-        let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
-
-        if (bcItemTrack === 'variant') {
-        let getVar = [];
-
-        getVar = await axios
-          .get(
-            `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products/${bcItemId}/variants`,
-            config
-          )
-          
-          let varSku = getVar.data.data.sku;
-          let varId = getVar.data.data.id;
-          let varInv = getVar.data.data.inventory_level;
-
-          let varToPush = {
-            sku: varSku,
-            id: varId,
-            inventory_level: varInv,
-            name: bcItemName,
-            inventory_tracking: bcItemTrack,
-          }
-
-          varItems.push(varToPush);
-          }
-        } catch (err) {
-          console.log('Error on getVar: ', err);
-        }
-       })
+      varItems = await getVars(bcResponse);
       } catch (err) {
-        console.log('Error on makeVarArray: ', err);
+        console.log('Error on getVars: ', err);
       }
 
-
     try {
-
         if (!getItems.rows[0]) {
-          //console.log('Item DB Empty!');
           for (let k = 0; k < varItems.length; k++) {
-
             if (varItems[k].inventory_level === 0) {
               let bcItemName = varItems[k].name;
               let bcItemSku = varItems[k].sku;
@@ -1520,10 +1463,7 @@ await timeoutPromise(1000);
             }
           }
         } else {
-
           for (let k = 0; k < varItems.length; k++) {
-
-
             bcItemId = varItems[k].id;
             let canInsert = true;
 
