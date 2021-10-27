@@ -6,6 +6,7 @@ var lupus = require('lupus');
 const { WebClient } = require("@slack/web-api");
 const { createEventAdapter } = require("@slack/events-api");
 const slackEvents = createEventAdapter(process.env.SLACK_SIGNING_SECRET);
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 let config = {
   //authenticate Big Commerce API
@@ -13,6 +14,9 @@ let config = {
     "X-Auth-Client": process.env.BG_AUTH_CLIENT,
     "X-Auth-Token": process.env.BG_AUTH_TOKEN,
   },
+  // body: {
+  //   "is_condition_shown": true
+  // }
 };
 
 
@@ -20,6 +24,7 @@ let slackNotify = false;
 let stockNotify = false;
 let resetNoStock = false;
 let getSinglePage = false;
+let update = false;
 let pageToUse = 0;
 
 const token = process.env.SLACK_TOKEN;
@@ -1036,6 +1041,53 @@ async function getVars(bcResponse) {
 
     return varItems;
 }
+
+
+async function updateProducts(page) {
+
+  let bcItems = [];
+
+  bcItems = await getSingleBCPage(page);
+
+  for (let i = 0 ; i < bcItems.length ; i++) {
+
+     var data = "{\"is_condition_shown\":true}";
+
+     var xhr = new XMLHttpRequest();
+     xhr.withCredentials = true;
+
+     xhr.addEventListener("readystatechange", function () {
+       if (this.readyState === this.DONE) {
+       }
+     });
+
+     xhr.open("PUT", `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products/${bcItems[i].id}`);
+     xhr.setRequestHeader("accept", "application/json");
+     xhr.setRequestHeader("x-auth-token", "13n6uxj2je2wbnc0vggmz8sqjl93d1d");
+
+     xhr.send(data);
+     console.log('yUH');
+  }
+}
+
+
+// Auto Update Product
+setInterval(() => {
+  // set this to true to activate
+  update = false;
+
+  if (update) {
+
+    pageToUse++;
+    if (pageToUse > 28) {
+      pageToUse = 1;
+    }
+    console.log(`Updating Items on page ${pageToUse}..`);
+    update = false;
+    updateProducts(pageToUse);
+  }
+}, 1000 * 60 * 480);
+
 
 // Auto Restock Notify
 setInterval(() => {

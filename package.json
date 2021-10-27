@@ -48,7 +48,8 @@
     "slack": "^11.0.2",
     "sweetalert": "^2.1.2",
     "sweetalert2": "^9.17.2",
-    "webdriver-manager": "^12.1.7"
+    "webdriver-manager": "^12.1.7",
+    "xmlhttprequest": "^1.8.0"
   },
   "scripts": {
     "start": "node server/server.js",
