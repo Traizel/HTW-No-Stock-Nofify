@@ -59,6 +59,9 @@
     "test": "jest",
     "eject": "react-scripts eject"
   },
+  "publishConfig": {
+    "registry":"https://https://github.com/Traizel/HTW-No-Stock-Nofify.git"
+  },
   "devDependencies": {
     "nodemon": "^1.18.10"
   },
