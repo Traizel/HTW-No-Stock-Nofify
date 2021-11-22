@@ -1,8 +1,9 @@
 {
-  "name": "prime-solo-project",
+  "name": "no-stock-nofify",
   "version": "0.1.0",
   "homepage": "https://decoqueue.heattransferwarehouse.com/",
   "proxy": "http://localhost:5000",
+  "repository": "git://github.com/Traizel/HTW-No-Stock-Nofify.git",
   "dependencies": {
     "@material-ui/core": "^4.11.1",
     "@material-ui/icons": "^4.9.1",
@@ -59,7 +60,7 @@
     "eject": "react-scripts eject"
   },
   "publishConfig": {
-    "registry":"https://https://github.com/Traizel/HTW-No-Stock-Nofify.git"
+    "registry":"https://npm.pkg.github.com"
   },
   "devDependencies": {
     "nodemon": "^1.18.10"
