@@ -77,6 +77,8 @@ async function getBCItems () {
     let bcResponse26;
     let bcResponse27;
     let bcResponse28;
+    let bcResponse29;
+    let bcResponse30;
     let bcResponse = [];
 
 
@@ -429,6 +431,30 @@ await timeoutPromise(1000);
 await timeoutPromise(1000);
 
     try {
+      bcResponse29 = await axios
+        .get(
+          `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=29`,
+          config
+        )
+    } catch (err) {
+      console.log('Error on Get29: ', err);
+    }
+
+await timeoutPromise(1000);
+
+    try {
+      bcResponse30 = await axios
+        .get(
+          `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=30`,
+          config
+        )
+    } catch (err) {
+      console.log('Error on Get30: ', err);
+    }
+
+await timeoutPromise(1000);
+
+    try {
       for (item of bcResponse1.data.data) {
         bcResponse.push(item);
        }
@@ -733,6 +759,28 @@ await timeoutPromise(1000);
       console.log('Error on bcCreate: ', err);
     }
 
+await timeoutPromise(1000);
+
+    try {
+      for (item of bcResponse29.data.data) {
+        bcResponse.push(item);
+      }
+    } catch (err) {
+      console.log('Error on bcCreate: ', err);
+    }
+
+await timeoutPromise(1000);
+
+    try {
+      for (item of bcResponse30.data.data) {
+        bcResponse.push(item);
+      }
+    } catch (err) {
+      console.log('Error on bcCreate: ', err);
+    }
+
+await timeoutPromise(500);
+
 return bcResponse;
 }
 
@@ -787,7 +835,7 @@ async function addItems(bcResponse) {
       console.log('Error on getItems: ', err);
     }
 
-    await timeoutPromise(2000);
+    await timeoutPromise(1000);
 
     try {
       if (!getItems.rows[0]) {
@@ -830,7 +878,7 @@ async function addItems(bcResponse) {
       console.log('Error on productMsg: ', err);
     }
 
-    await timeoutPromise(10000);
+    await timeoutPromise(6000);
 
     try {
       varItems = await getVars(bcResponse);
@@ -897,7 +945,7 @@ async function addItems(bcResponse) {
       console.log('Error on varMsg: ', err);
     }
 
-    await timeoutPromise(12000);
+    await timeoutPromise(8000);
 
     try {
       if (msg === '') {
@@ -914,7 +962,7 @@ async function addItems(bcResponse) {
       console.log('Error on insert: ', err);
     }
 
-    await timeoutPromise(3000);
+    await timeoutPromise(2000);
 
     try {
       console.log("We are about to get the item list");
@@ -1002,44 +1050,52 @@ async function getVars(bcResponse) {
   let varItems = [];
 
     try {
-      lupus(0, bcResponse.length, async function getVariants(i) {
-        try {
-          let bcItemId = bcResponse[i].id;
-          let bcItemTrack = bcResponse[i].inventory_tracking;
-          let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
-
-          if (bcItemTrack === 'variant') {
-            let getVar = [];
-
-            getVar = await axios
-              .get(
-                `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products/${bcItemId}/variants`,
-                config
-              )
-
-            let varSku = getVar.data.data.sku;
-            let varId = getVar.data.data.id;
-            let varInv = getVar.data.data.inventory_level;
-
-            let varToPush = {
-              sku: varSku,
-              id: varId,
-              inventory_level: varInv,
-              name: bcItemName,
-              inventory_tracking: bcItemTrack,
-            }
-
-            varItems.push(varToPush);
-          }
-        } catch (err) {
-          console.log('Error on getVar: ', err);
-        }
+      lupus(0, bcResponse.length, async function getVariants(i) { 
+        let pusher = await eachVar(bcResponse, i);
+        varItems.push(pusher);
+        await timeoutPromise(100);
       })
     } catch (err) {
       console.log('Error on makeVarArray: ', err);
     }
 
     return varItems;
+}
+
+
+async function eachVar(bcResponse, i) {
+  try {
+    let bcItemId = bcResponse[i].id;
+    let bcItemTrack = bcResponse[i].inventory_tracking;
+    let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
+
+    if (bcItemTrack === 'variant') {
+      let getVar = [];
+
+      getVar = await axios
+        .get(
+          `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products/${bcItemId}/variants`,
+          config
+        )
+
+      let varSku = getVar.data.data.sku;
+      let varId = getVar.data.data.id;
+      let varInv = getVar.data.data.inventory_level;
+
+      let varToPush = {
+        sku: varSku,
+        id: varId,
+        inventory_level: varInv,
+        name: bcItemName,
+        inventory_tracking: bcItemTrack,
+      }
+
+      return varToPush;
+
+    }
+  } catch (err) {
+    console.log('Error on getVar: ', err);
+  }
 }
 
 
