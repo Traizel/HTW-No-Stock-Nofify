@@ -77,8 +77,6 @@ async function getBCItems () {
     let bcResponse26;
     let bcResponse27;
     let bcResponse28;
-    let bcResponse29;
-    let bcResponse30;
     let bcResponse = [];
 
 
@@ -102,18 +100,6 @@ await timeoutPromise(1000);
         )
     } catch (err) {
       console.log('Error on Get2: ', err);
-    }
-
-await timeoutPromise(1000);
-
-    try {
-      bcResponse3 = await axios
-        .get(
-          `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=3`,
-          config
-        )
-    } catch (err) {
-      console.log('Error on Get3: ', err);
     }
 
 await timeoutPromise(1000);
@@ -431,30 +417,6 @@ await timeoutPromise(1000);
 await timeoutPromise(1000);
 
     try {
-      bcResponse29 = await axios
-        .get(
-          `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=29`,
-          config
-        )
-    } catch (err) {
-      console.log('Error on Get29: ', err);
-    }
-
-await timeoutPromise(1000);
-
-    try {
-      bcResponse30 = await axios
-        .get(
-          `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products?limit=250&page=30`,
-          config
-        )
-    } catch (err) {
-      console.log('Error on Get30: ', err);
-    }
-
-await timeoutPromise(1000);
-
-    try {
       for (item of bcResponse1.data.data) {
         bcResponse.push(item);
        }
@@ -753,26 +715,6 @@ await timeoutPromise(1000);
 
     try {
       for (item of bcResponse28.data.data) {
-        bcResponse.push(item);
-      }
-    } catch (err) {
-      console.log('Error on bcCreate: ', err);
-    }
-
-await timeoutPromise(1000);
-
-    try {
-      for (item of bcResponse29.data.data) {
-        bcResponse.push(item);
-      }
-    } catch (err) {
-      console.log('Error on bcCreate: ', err);
-    }
-
-await timeoutPromise(1000);
-
-    try {
-      for (item of bcResponse30.data.data) {
         bcResponse.push(item);
       }
     } catch (err) {
@@ -1451,7 +1393,7 @@ try {
 // Auto No Stock Notify ALL PAGES
 setInterval(() => {
   // set this to true to activate
-  slackNotify = true;
+  slackNotify = false;
 
   if (slackNotify) {
     console.log('running Slack Notify..');
@@ -1464,7 +1406,7 @@ setInterval(() => {
 // Auto No Stock Notify Single Page
 setInterval(() => {
   // set this to true to activate
-  getSinglePage = false;
+  getSinglePage = true;
 
   if (getSinglePage) {
     pageToUse++;
@@ -1475,7 +1417,7 @@ setInterval(() => {
     getSinglePage = false;
     getItemsSinglePage(pageToUse);
   }
-}, 1000 * 60 * 4);
+}, 1000 * 60 * 5);
 
 
 router.get("/items", async function getItems(req, res) {
