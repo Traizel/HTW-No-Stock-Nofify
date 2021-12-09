@@ -1449,7 +1449,7 @@ await timeoutPromise(1000);
     return res.status(500).send();
   }
 
-  await timeoutPromise(2000);
+  await timeoutPromise(1000);
 
   try {
     if (!getItems.rows[0]) {
@@ -1491,7 +1491,7 @@ await timeoutPromise(1000);
     return res.status(500).send();
   }
 
-  await timeoutPromise(10000);
+  await timeoutPromise(6000);
 
     try {
       varItems = await getVars(bcResponse);
@@ -1537,7 +1537,7 @@ await timeoutPromise(1000);
       console.log('Error on varMsg: ', err);
     }
 
-  await timeoutPromise(12000);
+  await timeoutPromise(8000);
 
   try {
     if (msg === '') {
@@ -1555,7 +1555,7 @@ await timeoutPromise(1000);
     return res.status(500).send();
   }
 
-  await timeoutPromise(3000);
+  await timeoutPromise(2000);
 
   try {
     console.log("We are about to get the item list");

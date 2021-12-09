@@ -16,7 +16,7 @@ tr {
 }
 
 tbody tr:nth-child(even) {
-    background-color: #94f3fa;
+    background-color: #f8e161;
 }
 
 br {
@@ -26,7 +26,7 @@ br {
 .loader {
     border: 66px solid rgb(172, 172, 172);
     border-radius: 50%;
-    border-top: 66px solid #94f3fa;
+    border-top: 66px solid #f8e161;
     width: 420px;
     height: 420px;
     -webkit-animation: spin 2s linear infinite;

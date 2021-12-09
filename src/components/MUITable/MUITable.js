@@ -6,7 +6,7 @@ import MUIDataTable from "mui-datatables";
 class MUITable extends Component {
 
   state = {
-    //title: this.props.title,
+    title: "No Stock Notify",
     setResponsive: "vertical",
     setTableBodyHeight: "400px",
     setTableBodyMaxHeight: " ",
