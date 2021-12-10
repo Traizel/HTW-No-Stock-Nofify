@@ -1004,6 +1004,7 @@ async function getVars(bcResponse) {
         if (bcResponse[i].inventory_tracking === 'variant') {
         let pusher = await eachVar(bcResponse, i);
         for (item of pusher) {
+          if (item.inventory_level === 0) {
         varItems.push({
           sku: item.sku,
           id: item.id,
@@ -1012,6 +1013,7 @@ async function getVars(bcResponse) {
           inventory_tracking: item.inventory_tracking,
         });
         //await timeoutPromise(5);
+          }
          }
         }
       }
@@ -1533,6 +1535,7 @@ await timeoutPromise(500);
       console.log('Checking Variant Level..');
 
     try {
+      //console.log(varItems);
         if (!getItems.rows[0]) {
           for (let k = 0; k < varItems.length; k++) {
             if (varItems[k].inventory_level === 0) {
