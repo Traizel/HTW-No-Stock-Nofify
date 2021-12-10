@@ -793,7 +793,17 @@ console.log('Getting Products..');
           let bcItemInv = bcResponse[i].inventory_level;
           let bcItemTrack = bcResponse[i].inventory_tracking;
 
-          if (bcItemInv === 0 && bcItemTrack !== 'variant') {
+          const district = 'District®';
+          const portauth = 'Port Authority®';
+          const sporttek = 'Sport-Tek®';
+          const newera = 'New Era®';
+          const ade = 'Alternative Dodgeball Eco ™';
+          const aec = 'Alternative Eco-Fleece ™';
+          const ej = 'Eco-Jersey ™';
+          const champ = 'Champion®';
+          const nv = 'Nike Victory';
+
+          if (bcItemInv === 0 && bcItemTrack !== 'variant' && !item.name.includes(district) && !item.name.includes(portauth) && !item.name.includes(sporttek) && !item.name.includes(newera) && !item.name.includes(ade) && !item.name.includes(aec) && !item.name.includes(ej) && !item.name.includes(champ) && !item.name.includes(champ) && !item.name.includes(nv)) {
             msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
             newItems.push(bcResponse[i]);
           }
@@ -813,7 +823,17 @@ console.log('Getting Products..');
             }
           }
 
-          if (canInsert === true && bcItemInv === 0 && bcItemTrack !== 'variant') {
+          const district = 'District®';
+          const portauth = 'Port Authority®';
+          const sporttek = 'Sport-Tek®';
+          const newera = 'New Era®';
+          const ade = 'Alternative Dodgeball Eco ™';
+          const aec = 'Alternative Eco-Fleece ™';
+          const ej = 'Eco-Jersey ™';
+          const champ = 'Champion®';
+          const nv = 'Nike Victory';
+
+          if (canInsert === true && bcItemInv === 0 && bcItemTrack !== 'variant' && !item.name.includes(district) && !item.name.includes(portauth) && !item.name.includes(sporttek) && !item.name.includes(newera) && !item.name.includes(ade) && !item.name.includes(aec) && !item.name.includes(ej) && !item.name.includes(champ) && !item.name.includes(champ) && !item.name.includes(nv)) {
             msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
             newItems.push(bcResponse[i]);
           }
@@ -1000,11 +1020,21 @@ async function getVars(bcResponse) {
 
     try {
       let i = 0;
-      for (i = 0; i < bcResponse.length; i++) {
+      for (i = 0; i < 300; i++) {
         if (bcResponse[i].inventory_tracking === 'variant') {
         let pusher = await eachVar(bcResponse, i);
         for (item of pusher) {
-          if (item.inventory_level === 0) {
+          const district = 'District®';
+          const portauth = 'Port Authority®';
+          const sporttek = 'Sport-Tek®';
+          const newera = 'New Era®';
+          const ade = 'Alternative Dodgeball Eco ™';
+          const aec = 'Alternative Eco-Fleece ™';
+          const ej = 'Eco-Jersey ™';
+          const champ = 'Champion®';
+          const nv = 'Nike Victory';
+
+          if (item.inventory_level === 0 && !item.name.includes(district) && !item.name.includes(portauth) && !item.name.includes(sporttek) && !item.name.includes(newera) && !item.name.includes(ade) && !item.name.includes(aec) && !item.name.includes(ej) && !item.name.includes(champ) && !item.name.includes(champ) && !item.name.includes(nv)) {
         varItems.push({
           sku: item.sku,
           id: item.id,
@@ -1490,9 +1520,19 @@ await timeoutPromise(500);
         bcItemId = bcResponse[i].id;
         let bcItemSku = bcResponse[i].sku;
         let bcItemInv = bcResponse[i].inventory_level;
-        //let bcItemTrack = bcResponse[i].inventory_tracking;
+        let bcItemTrack = bcResponse[i].inventory_tracking;
 
-        if (bcItemInv === 0) {
+        const district = 'District®';
+        const portauth = 'Port Authority®';
+        const sporttek = 'Sport-Tek®';
+        const newera = 'New Era®';
+        const ade = 'Alternative Dodgeball Eco ™';
+        const aec = 'Alternative Eco-Fleece ™';
+        const ej = 'Eco-Jersey ™';
+        const champ = 'Champion®';
+        const nv = 'Nike Victory';
+
+        if (bcItemInv === 0 && bcItemTrack !== 'variant' && !item.name.includes(district) && !item.name.includes(portauth) && !item.name.includes(sporttek) && !item.name.includes(newera) && !item.name.includes(ade) && !item.name.includes(aec) && !item.name.includes(ej) && !item.name.includes(champ) && !item.name.includes(champ) && !item.name.includes(nv)) {
         msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
         }
       }
@@ -1502,7 +1542,7 @@ await timeoutPromise(500);
         let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
         let bcItemSku = bcResponse[i].sku;
         let bcItemInv = bcResponse[i].inventory_level;
-        //let bcItemTrack = bcResponse[i].inventory_tracking;
+        let bcItemTrack = bcResponse[i].inventory_tracking;
         let canInsert = true;
 
         for (let j = 0; j < getItems.rows.length; j++) {
@@ -1511,7 +1551,17 @@ await timeoutPromise(500);
           }
         }
 
-        if (canInsert === true && bcItemInv === 0) {
+        const district = 'District®';
+        const portauth = 'Port Authority®';
+        const sporttek = 'Sport-Tek®';
+        const newera = 'New Era®';
+        const ade = 'Alternative Dodgeball Eco ™';
+        const aec = 'Alternative Eco-Fleece ™';
+        const ej = 'Eco-Jersey ™';
+        const champ = 'Champion®';
+        const nv = 'Nike Victory';
+
+        if (canInsert === true && bcItemInv === 0 && bcItemTrack !== 'variant' && !item.name.includes(district) && !item.name.includes(portauth) && !item.name.includes(sporttek) && !item.name.includes(newera) && !item.name.includes(ade) && !item.name.includes(aec) && !item.name.includes(ej) && !item.name.includes(champ) && !item.name.includes(champ) && !item.name.includes(nv)) {
           msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
         }
       }
