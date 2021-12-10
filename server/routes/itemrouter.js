@@ -766,6 +766,8 @@ async function addItems(bcResponse) {
       let getItems = [];
       let newItems = [];
 
+console.log('Getting Products..');
+
     try {
       const queryText = `select * from "item" ORDER BY id DESC`;
       await pool
@@ -777,7 +779,9 @@ async function addItems(bcResponse) {
       console.log('Error on getItems: ', err);
     }
 
-    await timeoutPromise(1000);
+    await timeoutPromise(500);
+
+    console.log('Checking Product Level..');
 
     try {
       if (!getItems.rows[0]) {
@@ -820,7 +824,9 @@ async function addItems(bcResponse) {
       console.log('Error on productMsg: ', err);
     }
 
-    await timeoutPromise(6000);
+    await timeoutPromise(2000);
+
+    console.log('Getting Variants..');
 
     try {
       varItems = await getVars(bcResponse);
@@ -828,6 +834,7 @@ async function addItems(bcResponse) {
       console.log('Error on getVars: ', err);
     }
 
+    console.log('Checking Variant Level..');
 
     try {
 
@@ -887,7 +894,7 @@ async function addItems(bcResponse) {
       console.log('Error on varMsg: ', err);
     }
 
-    await timeoutPromise(8000);
+    await timeoutPromise(4000);
 
     try {
       if (msg === '') {
@@ -904,7 +911,7 @@ async function addItems(bcResponse) {
       console.log('Error on insert: ', err);
     }
 
-    await timeoutPromise(2000);
+    await timeoutPromise(1000);
 
     try {
       console.log("We are about to get the item list");
@@ -992,11 +999,14 @@ async function getVars(bcResponse) {
   let varItems = [];
 
     try {
-      lupus(0, bcResponse.length, async function getVariants(i) { 
+      let i = 0;
+      for (i = 0; i < bcResponse.length; i++) { 
+        if (bcResponse[i].inventory_tracking === 'variant') {
         let pusher = await eachVar(bcResponse, i);
         varItems.push(pusher);
-        await timeoutPromise(100);
-      })
+        //await timeoutPromise(5);
+        }
+      }
     } catch (err) {
       console.log('Error on makeVarArray: ', err);
     }
@@ -1020,17 +1030,25 @@ async function eachVar(bcResponse, i) {
           config
         )
 
-      let varSku = getVar.data.data.sku;
-      let varId = getVar.data.data.id;
-      let varInv = getVar.data.data.inventory_level;
+      let varToPush = [];
 
-      let varToPush = {
+     for (variant of getVar.data.data) {
+
+      let varSku = variant.sku;
+      let varId = variant.id;
+      let varInv = variant.inventory_level;
+
+      let pusher = {
         sku: varSku,
         id: varId,
         inventory_level: varInv,
         name: bcItemName,
         inventory_tracking: bcItemTrack,
       }
+
+      varToPush.push(pusher);
+
+     }
 
       return varToPush;
 
@@ -1393,7 +1411,7 @@ try {
 // Auto No Stock Notify ALL PAGES
 setInterval(() => {
   // set this to true to activate
-  slackNotify = false;
+  slackNotify = true;
 
   if (slackNotify) {
     console.log('running Slack Notify..');
@@ -1406,7 +1424,7 @@ setInterval(() => {
 // Auto No Stock Notify Single Page
 setInterval(() => {
   // set this to true to activate
-  getSinglePage = true;
+  getSinglePage = false;
 
   if (getSinglePage) {
     pageToUse++;
@@ -1435,7 +1453,9 @@ router.get("/items", async function getItems(req, res) {
     return res.status(500).send();
   }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
+
+  console.log('Getting Products..');
 
   try {
     const queryText = `select * from "item" ORDER BY id DESC`;
@@ -1449,7 +1469,8 @@ await timeoutPromise(1000);
     return res.status(500).send();
   }
 
-  await timeoutPromise(1000);
+  await timeoutPromise(500);
+  console.log('Checking Product Level..');
 
   try {
     if (!getItems.rows[0]) {
@@ -1491,13 +1512,17 @@ await timeoutPromise(1000);
     return res.status(500).send();
   }
 
-  await timeoutPromise(6000);
+  await timeoutPromise(2000);
+
+     console.log('Getting Variants..');
 
     try {
       varItems = await getVars(bcResponse);
       } catch (err) {
         console.log('Error on getVars: ', err);
       }
+
+      console.log('Checking Variant Level..');
 
     try {
         if (!getItems.rows[0]) {
@@ -1537,7 +1562,7 @@ await timeoutPromise(1000);
       console.log('Error on varMsg: ', err);
     }
 
-  await timeoutPromise(8000);
+  await timeoutPromise(3000);
 
   try {
     if (msg === '') {
@@ -1555,7 +1580,7 @@ await timeoutPromise(1000);
     return res.status(500).send();
   }
 
-  await timeoutPromise(2000);
+  await timeoutPromise(1000);
 
   try {
     console.log("We are about to get the item list");
