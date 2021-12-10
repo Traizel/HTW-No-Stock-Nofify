@@ -1020,7 +1020,7 @@ async function getVars(bcResponse) {
 
     try {
       let i = 0;
-      for (i = 0; i < 300; i++) {
+      for (i = 0; i < bcResponse.length; i++) {
         if (bcResponse[i].inventory_tracking === 'variant') {
         let pusher = await eachVar(bcResponse, i);
         for (item of pusher) {
