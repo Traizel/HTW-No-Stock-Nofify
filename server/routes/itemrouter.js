@@ -1533,7 +1533,6 @@ await timeoutPromise(500);
       console.log('Checking Variant Level..');
 
     try {
-      console.log(varItems);
         if (!getItems.rows[0]) {
           for (let k = 0; k < varItems.length; k++) {
             if (varItems[k].inventory_level === 0) {
