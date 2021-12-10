@@ -812,8 +812,11 @@ console.log('Getting Products..');
           const bc = 'BELLA+CANVAS ®';
           const cs = 'CornerStone®';
           const pac = 'Port & Company®';
+          const red = 'Red House®';
+          const rabbit = 'Rabbit Skins';
+          const uni = 'Unisex';
 
-          if (bcItemInv === 0 && bcItemTrack !== 'variant' && !item.name.includes(pac) && !item.name.includes(cs) && !item.name.includes(bc) && !item.name.includes(anvil) && !item.name.includes(fotl) && !item.name.includes(jer) && !item.name.includes(aa) && !item.name.includes(hanes) && !item.name.includes(cc) && !item.name.includes(gildan) && !item.name.includes(district) && !item.name.includes(portauth) && !item.name.includes(sporttek) && !item.name.includes(newera) && !item.name.includes(ade) && !item.name.includes(aec) && !item.name.includes(ej) && !item.name.includes(champ) && !item.name.includes(champ) && !item.name.includes(nv)) {
+          if (bcItemInv === 0 && bcItemTrack !== 'variant' && !item.name.includes(uni) && !item.name.includes(rabbit) && !item.name.includes(red) && !item.name.includes(pac) && !item.name.includes(cs) && !item.name.includes(bc) && !item.name.includes(anvil) && !item.name.includes(fotl) && !item.name.includes(jer) && !item.name.includes(aa) && !item.name.includes(hanes) && !item.name.includes(cc) && !item.name.includes(gildan) && !item.name.includes(district) && !item.name.includes(portauth) && !item.name.includes(sporttek) && !item.name.includes(newera) && !item.name.includes(ade) && !item.name.includes(aec) && !item.name.includes(ej) && !item.name.includes(champ) && !item.name.includes(champ) && !item.name.includes(nv)) {
             msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
             newItems.push(bcResponse[i]);
           }
@@ -852,8 +855,11 @@ console.log('Getting Products..');
           const bc = 'BELLA+CANVAS ®';
           const cs = 'CornerStone®';
           const pac = 'Port & Company®';
+          const red = 'Red House®';
+          const rabbit = 'Rabbit Skins';
+          const uni = 'Unisex';
 
-          if (canInsert === true && bcItemInv === 0 && bcItemTrack !== 'variant' && !item.name.includes(pac) && !item.name.includes(cs) && !item.name.includes(bc) && !item.name.includes(anvil) && !item.name.includes(fotl) && !item.name.includes(jer) && !item.name.includes(aa) && !item.name.includes(hanes) && !item.name.includes(cc) && !item.name.includes(gildan) && !item.name.includes(district) && !item.name.includes(portauth) && !item.name.includes(sporttek) && !item.name.includes(newera) && !item.name.includes(ade) && !item.name.includes(aec) && !item.name.includes(ej) && !item.name.includes(champ) && !item.name.includes(champ) && !item.name.includes(nv)) {
+          if (canInsert === true && bcItemInv === 0 && bcItemTrack !== 'variant' && !item.name.includes(uni) && !item.name.includes(rabbit) && !item.name.includes(red) && !item.name.includes(pac) && !item.name.includes(cs) && !item.name.includes(bc) && !item.name.includes(anvil) && !item.name.includes(fotl) && !item.name.includes(jer) && !item.name.includes(aa) && !item.name.includes(hanes) && !item.name.includes(cc) && !item.name.includes(gildan) && !item.name.includes(district) && !item.name.includes(portauth) && !item.name.includes(sporttek) && !item.name.includes(newera) && !item.name.includes(ade) && !item.name.includes(aec) && !item.name.includes(ej) && !item.name.includes(champ) && !item.name.includes(champ) && !item.name.includes(nv)) {
             msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
             newItems.push(bcResponse[i]);
           }
@@ -1064,8 +1070,11 @@ async function getVars(bcResponse) {
           const bc = 'BELLA+CANVAS ®';
           const cs = 'CornerStone®';
           const pac = 'Port & Company®';
+          const red = 'Red House®';
+          const rabbit = 'Rabbit Skins';
+          const uni = 'Unisex';
 
-          if (item.inventory_level === 0 && !item.name.includes(pac) && !item.name.includes(cs) && !item.name.includes(bc) && !item.name.includes(anvil) && !item.name.includes(fotl) && !item.name.includes(jer) && !item.name.includes(aa) && !item.name.includes(hanes) && !item.name.includes(cc) && !item.name.includes(gildan) && !item.name.includes(district) && !item.name.includes(portauth) && !item.name.includes(sporttek) && !item.name.includes(newera) && !item.name.includes(ade) && !item.name.includes(aec) && !item.name.includes(ej) && !item.name.includes(champ) && !item.name.includes(champ) && !item.name.includes(nv)) {
+          if (item.inventory_level === 0 && !item.name.includes(uni) && !item.name.includes(rabbit) && !item.name.includes(red) && !item.name.includes(pac) && !item.name.includes(cs) && !item.name.includes(bc) && !item.name.includes(anvil) && !item.name.includes(fotl) && !item.name.includes(jer) && !item.name.includes(aa) && !item.name.includes(hanes) && !item.name.includes(cc) && !item.name.includes(gildan) && !item.name.includes(district) && !item.name.includes(portauth) && !item.name.includes(sporttek) && !item.name.includes(newera) && !item.name.includes(ade) && !item.name.includes(aec) && !item.name.includes(ej) && !item.name.includes(champ) && !item.name.includes(champ) && !item.name.includes(nv)) {
         varItems.push({
           sku: item.sku,
           id: item.id,
@@ -1572,8 +1581,11 @@ await timeoutPromise(500);
         const bc = 'BELLA+CANVAS ®';
         const cs = 'CornerStone®';
         const pac = 'Port & Company®';
+        const red = 'Red House®';
+        const rabbit = 'Rabbit Skins';
+        const uni = 'Unisex';
 
-        if (bcItemInv === 0 && bcItemTrack !== 'variant' && !item.name.includes(pac) && !item.name.includes(cs) && !item.name.includes(bc) && !item.name.includes(anvil) && !item.name.includes(fotl) && !item.name.includes(jer) && !item.name.includes(aa) && !item.name.includes(hanes) && !item.name.includes(cc) && !item.name.includes(gildan) && !item.name.includes(district) && !item.name.includes(portauth) && !item.name.includes(sporttek) && !item.name.includes(newera) && !item.name.includes(ade) && !item.name.includes(aec) && !item.name.includes(ej) && !item.name.includes(champ) && !item.name.includes(champ) && !item.name.includes(nv)) {
+        if (bcItemInv === 0 && bcItemTrack !== 'variant' && !item.name.includes(uni) && !item.name.includes(rabbit) && !item.name.includes(red) && !item.name.includes(pac) && !item.name.includes(cs) && !item.name.includes(bc) && !item.name.includes(anvil) && !item.name.includes(fotl) && !item.name.includes(jer) && !item.name.includes(aa) && !item.name.includes(hanes) && !item.name.includes(cc) && !item.name.includes(gildan) && !item.name.includes(district) && !item.name.includes(portauth) && !item.name.includes(sporttek) && !item.name.includes(newera) && !item.name.includes(ade) && !item.name.includes(aec) && !item.name.includes(ej) && !item.name.includes(champ) && !item.name.includes(champ) && !item.name.includes(nv)) {
         msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
         }
       }
@@ -1611,8 +1623,11 @@ await timeoutPromise(500);
         const bc = 'BELLA+CANVAS ®';
         const cs = 'CornerStone®';
         const pac = 'Port & Company®';
+        const red = 'Red House®';
+        const rabbit = 'Rabbit Skins';
+        const uni = 'Unisex';
 
-        if (canInsert === true && bcItemInv === 0 && bcItemTrack !== 'variant' && !item.name.includes(pac) && !item.name.includes(cs) && !item.name.includes(bc) && !item.name.includes(anvil) && !item.name.includes(fotl) && !item.name.includes(jer) && !item.name.includes(aa) && !item.name.includes(hanes) && !item.name.includes(cc) && !item.name.includes(gildan) && !item.name.includes(district) && !item.name.includes(portauth) && !item.name.includes(sporttek) && !item.name.includes(newera) && !item.name.includes(ade) && !item.name.includes(aec) && !item.name.includes(ej) && !item.name.includes(champ) && !item.name.includes(champ) && !item.name.includes(nv)) {
+        if (canInsert === true && bcItemInv === 0 && bcItemTrack !== 'variant' && !item.name.includes(uni) && !item.name.includes(rabbit) && !item.name.includes(red) && !item.name.includes(pac) && !item.name.includes(cs) && !item.name.includes(bc) && !item.name.includes(anvil) && !item.name.includes(fotl) && !item.name.includes(jer) && !item.name.includes(aa) && !item.name.includes(hanes) && !item.name.includes(cc) && !item.name.includes(gildan) && !item.name.includes(district) && !item.name.includes(portauth) && !item.name.includes(sporttek) && !item.name.includes(newera) && !item.name.includes(ade) && !item.name.includes(aec) && !item.name.includes(ej) && !item.name.includes(champ) && !item.name.includes(champ) && !item.name.includes(nv)) {
           msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
         }
       }
