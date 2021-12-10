@@ -801,9 +801,19 @@ console.log('Getting Products..');
           const aec = 'Alternative Eco-Fleece ™';
           const ej = 'Eco-Jersey ™';
           const champ = 'Champion®';
-          const nv = 'Nike Victory';
+          const nv = 'Nike';
+          const gildan = 'Gildan®';
+          const cc = 'COMFORT COLORS ®';
+          const hanes = 'Hanes®';
+          const aa = 'American Apparel ®';
+          const jer = 'JERZEES®';
+          const fotl = 'Fruit of the Loom®';
+          const anvil = 'Anvil®';
+          const bc = 'BELLA+CANVAS ®';
+          const cs = 'CornerStone®';
+          const pac = 'Port & Company®';
 
-          if (bcItemInv === 0 && bcItemTrack !== 'variant' && !item.name.includes(district) && !item.name.includes(portauth) && !item.name.includes(sporttek) && !item.name.includes(newera) && !item.name.includes(ade) && !item.name.includes(aec) && !item.name.includes(ej) && !item.name.includes(champ) && !item.name.includes(champ) && !item.name.includes(nv)) {
+          if (bcItemInv === 0 && bcItemTrack !== 'variant' && !item.name.includes(pac) && !item.name.includes(cs) && !item.name.includes(bc) && !item.name.includes(anvil) && !item.name.includes(fotl) && !item.name.includes(jer) && !item.name.includes(aa) && !item.name.includes(hanes) && !item.name.includes(cc) && !item.name.includes(gildan) && !item.name.includes(district) && !item.name.includes(portauth) && !item.name.includes(sporttek) && !item.name.includes(newera) && !item.name.includes(ade) && !item.name.includes(aec) && !item.name.includes(ej) && !item.name.includes(champ) && !item.name.includes(champ) && !item.name.includes(nv)) {
             msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
             newItems.push(bcResponse[i]);
           }
@@ -831,9 +841,19 @@ console.log('Getting Products..');
           const aec = 'Alternative Eco-Fleece ™';
           const ej = 'Eco-Jersey ™';
           const champ = 'Champion®';
-          const nv = 'Nike Victory';
+          const nv = 'Nike';
+          const gildan = 'Gildan®';
+          const cc = 'COMFORT COLORS ®';
+          const hanes = 'Hanes®';
+          const aa = 'American Apparel ®';
+          const jer = 'JERZEES®';
+          const fotl = 'Fruit of the Loom®';
+          const anvil = 'Anvil®';
+          const bc = 'BELLA+CANVAS ®';
+          const cs = 'CornerStone®';
+          const pac = 'Port & Company®';
 
-          if (canInsert === true && bcItemInv === 0 && bcItemTrack !== 'variant' && !item.name.includes(district) && !item.name.includes(portauth) && !item.name.includes(sporttek) && !item.name.includes(newera) && !item.name.includes(ade) && !item.name.includes(aec) && !item.name.includes(ej) && !item.name.includes(champ) && !item.name.includes(champ) && !item.name.includes(nv)) {
+          if (canInsert === true && bcItemInv === 0 && bcItemTrack !== 'variant' && !item.name.includes(pac) && !item.name.includes(cs) && !item.name.includes(bc) && !item.name.includes(anvil) && !item.name.includes(fotl) && !item.name.includes(jer) && !item.name.includes(aa) && !item.name.includes(hanes) && !item.name.includes(cc) && !item.name.includes(gildan) && !item.name.includes(district) && !item.name.includes(portauth) && !item.name.includes(sporttek) && !item.name.includes(newera) && !item.name.includes(ade) && !item.name.includes(aec) && !item.name.includes(ej) && !item.name.includes(champ) && !item.name.includes(champ) && !item.name.includes(nv)) {
             msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
             newItems.push(bcResponse[i]);
           }
@@ -1024,6 +1044,7 @@ async function getVars(bcResponse) {
         if (bcResponse[i].inventory_tracking === 'variant') {
         let pusher = await eachVar(bcResponse, i);
         for (item of pusher) {
+
           const district = 'District®';
           const portauth = 'Port Authority®';
           const sporttek = 'Sport-Tek®';
@@ -1032,9 +1053,19 @@ async function getVars(bcResponse) {
           const aec = 'Alternative Eco-Fleece ™';
           const ej = 'Eco-Jersey ™';
           const champ = 'Champion®';
-          const nv = 'Nike Victory';
+          const nv = 'Nike';
+          const gildan = 'Gildan®';
+          const cc = 'COMFORT COLORS ®';
+          const hanes = 'Hanes®';
+          const aa = 'American Apparel ®';
+          const jer = 'JERZEES®';
+          const fotl = 'Fruit of the Loom®';
+          const anvil = 'Anvil®';
+          const bc = 'BELLA+CANVAS ®';
+          const cs = 'CornerStone®';
+          const pac = 'Port & Company®';
 
-          if (item.inventory_level === 0 && !item.name.includes(district) && !item.name.includes(portauth) && !item.name.includes(sporttek) && !item.name.includes(newera) && !item.name.includes(ade) && !item.name.includes(aec) && !item.name.includes(ej) && !item.name.includes(champ) && !item.name.includes(champ) && !item.name.includes(nv)) {
+          if (item.inventory_level === 0 && !item.name.includes(pac) && !item.name.includes(cs) && !item.name.includes(bc) && !item.name.includes(anvil) && !item.name.includes(fotl) && !item.name.includes(jer) && !item.name.includes(aa) && !item.name.includes(hanes) && !item.name.includes(cc) && !item.name.includes(gildan) && !item.name.includes(district) && !item.name.includes(portauth) && !item.name.includes(sporttek) && !item.name.includes(newera) && !item.name.includes(ade) && !item.name.includes(aec) && !item.name.includes(ej) && !item.name.includes(champ) && !item.name.includes(champ) && !item.name.includes(nv)) {
         varItems.push({
           sku: item.sku,
           id: item.id,
@@ -1530,9 +1561,19 @@ await timeoutPromise(500);
         const aec = 'Alternative Eco-Fleece ™';
         const ej = 'Eco-Jersey ™';
         const champ = 'Champion®';
-        const nv = 'Nike Victory';
+        const nv = 'Nike';
+        const gildan = 'Gildan®';
+        const cc = 'COMFORT COLORS ®';
+        const hanes = 'Hanes®';
+        const aa = 'American Apparel ®';
+        const jer = 'JERZEES®';
+        const fotl = 'Fruit of the Loom®';
+        const anvil = 'Anvil®';
+        const bc = 'BELLA+CANVAS ®';
+        const cs = 'CornerStone®';
+        const pac = 'Port & Company®';
 
-        if (bcItemInv === 0 && bcItemTrack !== 'variant' && !item.name.includes(district) && !item.name.includes(portauth) && !item.name.includes(sporttek) && !item.name.includes(newera) && !item.name.includes(ade) && !item.name.includes(aec) && !item.name.includes(ej) && !item.name.includes(champ) && !item.name.includes(champ) && !item.name.includes(nv)) {
+        if (bcItemInv === 0 && bcItemTrack !== 'variant' && !item.name.includes(pac) && !item.name.includes(cs) && !item.name.includes(bc) && !item.name.includes(anvil) && !item.name.includes(fotl) && !item.name.includes(jer) && !item.name.includes(aa) && !item.name.includes(hanes) && !item.name.includes(cc) && !item.name.includes(gildan) && !item.name.includes(district) && !item.name.includes(portauth) && !item.name.includes(sporttek) && !item.name.includes(newera) && !item.name.includes(ade) && !item.name.includes(aec) && !item.name.includes(ej) && !item.name.includes(champ) && !item.name.includes(champ) && !item.name.includes(nv)) {
         msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
         }
       }
@@ -1559,9 +1600,19 @@ await timeoutPromise(500);
         const aec = 'Alternative Eco-Fleece ™';
         const ej = 'Eco-Jersey ™';
         const champ = 'Champion®';
-        const nv = 'Nike Victory';
+        const nv = 'Nike';
+        const gildan = 'Gildan®';
+        const cc = 'COMFORT COLORS ®';
+        const hanes = 'Hanes®';
+        const aa = 'American Apparel ®';
+        const jer = 'JERZEES®';
+        const fotl = 'Fruit of the Loom®';
+        const anvil = 'Anvil®';
+        const bc = 'BELLA+CANVAS ®';
+        const cs = 'CornerStone®';
+        const pac = 'Port & Company®';
 
-        if (canInsert === true && bcItemInv === 0 && bcItemTrack !== 'variant' && !item.name.includes(district) && !item.name.includes(portauth) && !item.name.includes(sporttek) && !item.name.includes(newera) && !item.name.includes(ade) && !item.name.includes(aec) && !item.name.includes(ej) && !item.name.includes(champ) && !item.name.includes(champ) && !item.name.includes(nv)) {
+        if (canInsert === true && bcItemInv === 0 && bcItemTrack !== 'variant' && !item.name.includes(pac) && !item.name.includes(cs) && !item.name.includes(bc) && !item.name.includes(anvil) && !item.name.includes(fotl) && !item.name.includes(jer) && !item.name.includes(aa) && !item.name.includes(hanes) && !item.name.includes(cc) && !item.name.includes(gildan) && !item.name.includes(district) && !item.name.includes(portauth) && !item.name.includes(sporttek) && !item.name.includes(newera) && !item.name.includes(ade) && !item.name.includes(aec) && !item.name.includes(ej) && !item.name.includes(champ) && !item.name.includes(champ) && !item.name.includes(nv)) {
           msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
         }
       }
