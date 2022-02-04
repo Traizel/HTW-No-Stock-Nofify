@@ -61,25 +61,6 @@ function Main () {
 
   const addDeadInventory = (e) => {
     setReason(e.target.value);
-    e.preventDefault();
-    if (!checkedList[0]) {
-      swal("You need to select at least 1 Item!");
-    } else {
-      dispatch({
-        type: "MARK_DEAD",
-        payload: {
-          items: checkedList,
-          reason: reason,
-        },
-      });
-      for (let trackItem of trackChecked) {
-        document.getElementById(trackItem).checked = false;
-      }
-      swal("Marking Items as Dead Inventory!");
-      dispatch({
-        type: "CLEAR_TRACKING",
-      });
-    }
   }
 
 
@@ -185,6 +166,33 @@ function Main () {
           </Select>
         </FormControl>
     </Box>
+    <Button 
+      variant = "contained"
+      color = "primary"
+      onClick = {
+        (e) => {
+          e.preventDefault();
+          if (!checkedList[0]) {
+            swal("You need to select at least 1 Item!");
+          } else {
+            dispatch({
+              type: "MARK_DEAD",
+              payload: {
+                items: checkedList,
+                reason: reason,
+              },
+            });
+            for (let trackItem of trackChecked) {
+              document.getElementById(trackItem).checked = false;
+            }
+            swal("Marking Items as Dead Inventory!");
+            dispatch({
+              type: "CLEAR_TRACKING",
+            });
+        }
+      }
+    }
+    ><QueueIcon/> Dead Inventory</Button>
     <FormControl component="fieldset">
       <FormGroup aria-label="position" row>
         <FormControlLabel
