@@ -49,9 +49,8 @@ function* markStocked(action) {
 }
 
 function* markDead(action) {
-  const id = action.payload.items;
   try {
-    const response = yield axios.put(`/api/item/items/${id}`);
+    const response = yield axios.put(`/api/item/items/mark`, action.payload);
     yield put({
       type: "CLEAR_CHECKED",
     });

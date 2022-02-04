@@ -19,6 +19,10 @@ tbody tr:nth-child(even) {
     background-color: #f8e161;
 }
 
+.dead-inventory {
+    width: 150px;
+}
+
 br {
     height: 1500%;
 }

@@ -1234,7 +1234,7 @@ await timeoutPromise(1000);
     console.log('Error on getItems: ', err);
   }
 
-await timeoutPromise(2000);
+await timeoutPromise(1000);
 
 try {
   if (getItems.rows[0]) {
@@ -1258,7 +1258,7 @@ try {
   console.log('Error on getStocked: ', err);
 }
 
-  await timeoutPromise(8000);
+  await timeoutPromise(4000);
 
   try {
   varItems = await getVars(bcResponse);
@@ -1809,9 +1809,10 @@ router.delete("/items/:id", async function (req, res) {
     
 });
 
-router.put("/items/:id", async function (req, res) {
-  console.log("We are updating items as dead with id:", req.params.id);
-  const ids = req.params.id;
+router.put("/items/mark", async function (req, res) {
+  console.log("We are updating items as dead with id:", req.body.id);
+  const ids = req.body.items;
+  const reason = req.body.reason;
 
   let items = [];
   let itemToPush = '';
@@ -1835,6 +1836,18 @@ router.put("/items/:id", async function (req, res) {
     }
   } catch (err) {
     console.log('Error on update: ', err);
+    return res.status(500).send();
+  }
+
+  try {
+    for (item of items) {
+      console.log(item, reason);
+      const queryText = `UPDATE "item" SET reason = '${reason}' WHERE id = ${item}`;
+      await pool
+        .query(queryText)
+    }
+  } catch (err) {
+    console.log('Error on setReason: ', err);
     return res.status(500).send();
   }
   

@@ -1,15 +1,9 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import './Main.css'
 import MUITable from "../MUITable/MUITable";
 import Button from "react-bootstrap/Button";
-import { Paper, TextField } from "@material-ui/core";
-import Form from "react-bootstrap/Form";
-import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
-import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import Switch from '@material-ui/core/Switch';
-import Checkbox from "@material-ui/core/Checkbox";
-import DeleteIcon from "@material-ui/icons/Delete";
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormGroup from '@material-ui/core/FormGroup';
@@ -20,8 +14,11 @@ import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 import FlagIcon from "@material-ui/icons/Flag";
 import QueueIcon from "@material-ui/icons/Queue";
 import swal from "sweetalert";
+import Box from '@material-ui/core/Box';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import ItemList from './ItemList';
-//import { response } from "express";
 
 
 function Main () {
@@ -31,6 +28,7 @@ function Main () {
   const isChecked = useSelector(store => store.item.setView);
   const checkedList = useSelector(store => store.item.addChecked);
   const trackChecked = useSelector(store => store.item.trackChecked);
+  const [reason, setReason] = React.useState('temp');
   const dispatch = useDispatch();
   let checkedItems = [];
 
@@ -60,6 +58,30 @@ function Main () {
       },
     });
   }
+
+  const addDeadInventory = (e) => {
+    setReason(e.target.value);
+    e.preventDefault();
+    if (!checkedList[0]) {
+      swal("You need to select at least 1 Item!");
+    } else {
+      dispatch({
+        type: "MARK_DEAD",
+        payload: {
+          items: checkedList,
+          reason: reason,
+        },
+      });
+      for (let trackItem of trackChecked) {
+        document.getElementById(trackItem).checked = false;
+      }
+      swal("Marking Items as Dead Inventory!");
+      dispatch({
+        type: "CLEAR_TRACKING",
+      });
+    }
+  }
+
 
   const updateCheckbox = (dataIndex, checkChecked) => {
     dispatch({
@@ -107,7 +129,8 @@ function Main () {
       <br></br>
       <br></br>
       <br></br>
-      <Button 
+    <section className="nav">
+    <Button 
       variant = "contained"
       color = "primary"
       onClick = {
@@ -119,8 +142,8 @@ function Main () {
       swal("Refreshing Zero Stock..");
         }
       }
-      ><AssignmentTurnedInIcon/> Refresh</Button>
-      <Button 
+    ><AssignmentTurnedInIcon/> Refresh</Button>
+    <Button 
       variant = "contained"
       color = "primary"
       onClick = {
@@ -145,34 +168,24 @@ function Main () {
         }
       }
     }
-      ><FlagIcon/> Mark as Stocked</Button>
-      <Button 
-      variant = "contained"
-      color = "primary"
-      onClick = {
-        (event) => {
-          event.preventDefault();
-          if (!checkedList[0]) {
-            swal("You need to select at least 1 Item!");
-          } else {
-          dispatch({
-            type: "MARK_DEAD",
-            payload: {
-              items: checkedList,
-            },
-          });
-          for (let trackItem of trackChecked) {
-            document.getElementById(trackItem).checked = false;
-          }
-      swal("Marking Items as Dead Inventory!");
-          dispatch({
-            type: "CLEAR_TRACKING",
-          });
-        }
-      }
-    }
-      ><QueueIcon/> Dead Inventory</Button>
-      <FormControl component="fieldset">
+    ><FlagIcon/> Mark as Stocked</Button>
+    <Box sx={{ minWidth: 120 }}>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Dead Inventory</InputLabel>
+          <Select
+          className="dead-inventory"
+          value={reason}
+          label="Dead Inventory"
+          onChange={(e) => {addDeadInventory(e)}}
+          >
+            <MenuItem value={'temp'}>Temp</MenuItem>
+            <MenuItem value={'unused'}>Unused</MenuItem>
+            <MenuItem value={'backorder'}>Backorder</MenuItem>
+            <MenuItem value={'clothing'}>Clothing</MenuItem>
+          </Select>
+        </FormControl>
+    </Box>
+    <FormControl component="fieldset">
       <FormGroup aria-label="position" row>
         <FormControlLabel
           value="start"
@@ -184,6 +197,7 @@ function Main () {
         />
       </FormGroup>
     </FormControl>
+    </section>
       <>
       {isChecked
       ?
