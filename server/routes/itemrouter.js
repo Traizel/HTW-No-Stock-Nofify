@@ -822,7 +822,15 @@ console.log('Getting Products..');
 
           if (bcItemInv === 0 && bcItemTrack !== 'variant' && item.name.includes(am) === false && item.name.includes(nl) === false && item.name.includes(ro) === false && item.name.includes(rk) === false && item.name.includes(uni) === false && item.name.includes(rabbit) === false && item.name.includes(red) === false && item.name.includes(pac) === false && item.name.includes(cs) === false && item.name.includes(bc) === false && item.name.includes(anvil) === false && item.name.includes(fotl) === false && item.name.includes(jer) === false && item.name.includes(aa) === false && item.name.includes(hanes) === false && item.name.includes(cc) === false && item.name.includes(gildan) === false && item.name.includes(district) === false && item.name.includes(portauth) === false && item.name.includes(sporttek) === false && item.name.includes(newera) === false && item.name.includes(ade) === false && item.name.includes(aec) === false && item.name.includes(ej) === false && item.name.includes(champ) === false && item.name.includes(champ) === false && item.name.includes(nv) === false) {
             msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
-            newItems.push(bcResponse[i]);
+            let product = {
+              name: bcItemName,
+              sku: bcItemSku,
+              id: bcItemId,
+              inventory_tracking: bcItemTrack,
+              inventory_level: bcItemInv,
+              level: 'Product'
+            };
+            newItems.push(product);
           }
         }
       } else {
@@ -869,7 +877,15 @@ console.log('Getting Products..');
 
           if (canInsert === true && bcItemInv === 0 && bcItemTrack !== 'variant' && item.name.includes(am) === false && item.name.includes(nl) === false && item.name.includes(ro) === false && item.name.includes(rk) === false && item.name.includes(uni) === false && item.name.includes(rabbit) === false && item.name.includes(red) === false && item.name.includes(pac) === false && item.name.includes(cs) === false && item.name.includes(bc) === false && item.name.includes(anvil) === false && item.name.includes(fotl) === false && item.name.includes(jer) === false && item.name.includes(aa) === false && item.name.includes(hanes) === false && item.name.includes(cc) === false && item.name.includes(gildan) === false && item.name.includes(district) === false && item.name.includes(portauth) === false && item.name.includes(sporttek) === false && item.name.includes(newera) === false && item.name.includes(ade) === false && item.name.includes(aec) === false && item.name.includes(ej) === false && item.name.includes(champ) === false && item.name.includes(champ) === false && item.name.includes(nv) === false) {
             msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
-            newItems.push(bcResponse[i]);
+            let product = {
+              name: bcItemName,
+              sku: bcItemSku,
+              id: bcItemId,
+              inventory_tracking: bcItemTrack,
+              inventory_level: bcItemInv,
+              level: 'Product'
+            };
+            newItems.push(product);
           }
         }
       }
@@ -906,7 +922,9 @@ console.log('Getting Products..');
               name: bcItemName,
               sku: bcItemSku,
               id: bcItemId,
-              inventory_tracking: varItems[k].inventory_tracking
+              inventory_tracking: varItems[k].inventory_tracking,
+              inventory_level: varItems[k].inventory_level,
+              level: 'Variant',
             };
             newItems.push(variant);
           } else {
@@ -936,7 +954,9 @@ console.log('Getting Products..');
               name: bcItemName,
               sku: bcItemSku,
               id: bcItemId,
-              inventory_tracking: varItems[k].inventory_tracking
+              inventory_tracking: varItems[k].inventory_tracking,
+              inventory_level: varItems[k].inventory_level,
+              level: 'Variant',
             };
             newItems.push(variant);
           } else {
@@ -950,6 +970,8 @@ console.log('Getting Products..');
 
     await timeoutPromise(4000);
 
+    for (const item of newItems) {
+
     try {
       if (msg === '') {
         console.log('No new items!');
@@ -957,13 +979,15 @@ console.log('Getting Products..');
 
         let newMsg = msg.slice(0, -2);
 
-        const queryText = `INSERT INTO "item" (name, sku, inventory_level, id, level) VALUES ${newMsg};`;
+        const queryText = `INSERT INTO "item" (name, sku, inventory_level, id, level) VALUES ($1, $2, $3, $4, $5);`;
         await pool
-          .query(queryText)
+          .query(queryText, [item.name, item.sku, item.inventory_level, item.id, item.level])
       }
     } catch (err) {
-      console.log('Error on insert: ', err);
+      console.log('SKU: ', item.sku + 'ID: ', item.id + ' Error on insert: ', err);
     }
+
+  }
 
     await timeoutPromise(1000);
 
@@ -1537,6 +1561,7 @@ router.get("/items", async function getItems(req, res) {
   let bcItemId;
   let varItems = [];
   let getItems = [];
+  let newItems = [];
 
   try {
     bcResponse = await getBCItems();
@@ -1603,6 +1628,15 @@ await timeoutPromise(500);
 
         if (bcItemInv === 0 && bcItemTrack !== 'variant' && item.name.includes(am) === false && item.name.includes(nl) === false && item.name.includes(ro) === false && item.name.includes(rk) === false && item.name.includes(uni) === false && item.name.includes(rabbit) === false && item.name.includes(red) === false && item.name.includes(pac) === false && item.name.includes(cs) === false && item.name.includes(bc) === false && item.name.includes(anvil) === false && item.name.includes(fotl) === false && item.name.includes(jer) === false && item.name.includes(aa) === false && item.name.includes(hanes) === false && item.name.includes(cc) === false && item.name.includes(gildan) === false && item.name.includes(district) === false && item.name.includes(portauth) === false && item.name.includes(sporttek) === false && item.name.includes(newera) === false && item.name.includes(ade) === false && item.name.includes(aec) === false && item.name.includes(ej) === false && item.name.includes(champ) === false && item.name.includes(champ) === false && item.name.includes(nv) === false) {
         msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
+        let product = {
+          name: bcItemName,
+          sku: bcItemSku,
+          id: bcItemId,
+          inventory_tracking: bcItemTrack,
+          inventory_level: bcItemInv,
+          level: 'Product'
+        };
+        newItems.push(product);
         }
       }
     } else {
@@ -1649,6 +1683,15 @@ await timeoutPromise(500);
 
         if (canInsert === true && bcItemInv === 0 && bcItemTrack !== 'variant' && item.name.includes(am) === false && item.name.includes(nl) === false && item.name.includes(ro) === false && item.name.includes(rk) === false && item.name.includes(uni) === false && item.name.includes(rabbit) === false && item.name.includes(red) === false && item.name.includes(pac) === false && item.name.includes(cs) === false && item.name.includes(bc) === false && item.name.includes(anvil) === false && item.name.includes(fotl) === false && item.name.includes(jer) === false && item.name.includes(aa) === false && item.name.includes(hanes) === false && item.name.includes(cc) === false && item.name.includes(gildan) === false && item.name.includes(district) === false && item.name.includes(portauth) === false && item.name.includes(sporttek) === false && item.name.includes(newera) === false && item.name.includes(ade) === false && item.name.includes(aec) === false && item.name.includes(ej) === false && item.name.includes(champ) === false && item.name.includes(champ) === false && item.name.includes(nv) === false) {
           msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
+          let product = {
+            name: bcItemName,
+            sku: bcItemSku,
+            id: bcItemId,
+            inventory_tracking: bcItemTrack,
+            inventory_level: bcItemInv,
+            level: 'Product'
+          };
+          newItems.push(product);
         }
       }
     }
@@ -1680,6 +1723,15 @@ await timeoutPromise(500);
               bcItemId = varItems[k].id;
               let bcItemInv = varItems[k].inventory_level;
               msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Variant'), `);
+              let variant = {
+                name: bcItemName,
+                sku: bcItemSku,
+                id: bcItemId,
+                inventory_tracking: varItems[k].inventory_tracking,
+                inventory_level: varItems[k].inventory_level,
+                level: 'Variant',
+              };
+              newItems.push(variant);
             } else {
               //console.log('Variant not at 0 stock!');
             }
@@ -1700,6 +1752,15 @@ await timeoutPromise(500);
               let bcItemId = varItems[k].id;
               let bcItemName = varItems[k].name;
               msg += (`('${bcItemName}', '${bcItemSku}', ${varItems[k].inventory_level}, ${bcItemId}, 'Variant'), `);
+              let variant = {
+                name: bcItemName,
+                sku: bcItemSku,
+                id: bcItemId,
+                inventory_tracking: varItems[k].inventory_tracking,
+                inventory_level: varItems[k].inventory_level,
+                level: 'Variant',
+              };
+              newItems.push(variant);
             } else {
               //console.log('Variant not at 0 stock!');
             }
@@ -1711,6 +1772,8 @@ await timeoutPromise(500);
 
   await timeoutPromise(3000);
 
+  for (const item of newItems) {
+
   try {
     if (msg === '') {
       console.log('No new items!');
@@ -1718,14 +1781,16 @@ await timeoutPromise(500);
 
       let newMsg = msg.slice(0, -2);
 
-      const queryText = `INSERT INTO "item" (name, sku, inventory_level, id, level) VALUES ${newMsg};`;
+      const queryText = `INSERT INTO "item" (name, sku, inventory_level, id, level) VALUES ($1, $2, $3, $4, $5);`;
       await pool
-        .query(queryText)
+        .query(queryText, [item.name, item.sku, item.inventory_level, item.id, item.level])
     }
   } catch (err) {
-    console.log('Error on insert: ', err);
+    console.log('SKU: ', item.sku + 'ID: ', item.id + ' Error on insert: ', err);
     return res.status(500).send();
   }
+
+}
 
   await timeoutPromise(1000);
 
