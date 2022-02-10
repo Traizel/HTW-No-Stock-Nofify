@@ -64,9 +64,8 @@ function* markDead(action) {
 }
 
 function* unmarkDead(action) {
-  const id = action.payload.id;
   try {
-    const response = yield axios.put(`/api/item/deadItems/${id}`);
+    const response = yield axios.put(`/api/item/deadItems`, action.payload);
     yield put({
       type: "SET_ITEM",
       payload: response.data,
@@ -89,6 +88,21 @@ function* changeReason(action) {
   }
 }
 
+function* updateNotes(action) {
+  try {
+    const response = yield axios.put(`/api/item/items/notes`, action.payload);
+    yield put({
+      type: "CLEAR_CHECKED",
+    });
+    yield put({
+      type: "SET_ITEM",
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log("Error with getting the list of items:", error);
+  }
+}
+
 //this takes all of the Saga functions and dispatches them
 function* itemSaga() {
     yield takeLatest('GET_ITEM_LIST', getitemlist);
@@ -97,6 +111,7 @@ function* itemSaga() {
     yield takeLatest('MARK_DEAD', markDead);
     yield takeLatest('UNMARK_DEAD', unmarkDead);
     yield takeLatest('CHANGE_REASON', changeReason);
+    yield takeLatest('UPDATE_NOTES', updateNotes);
 }
 
 export default itemSaga;

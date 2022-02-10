@@ -1844,7 +1844,7 @@ router.delete("/items/:id", async function (req, res) {
   itemToPush = '';
   
   try {
-    for (item of items) {
+    for (const item of items) {
       const queryText = `delete from "item" WHERE id = ${item}`;
       await pool
         .query(queryText)
@@ -1876,24 +1876,11 @@ router.delete("/items/:id", async function (req, res) {
 
 router.put("/items/mark", async function (req, res) {
   console.log("We are updating items as dead with id:", req.body.id);
-  const ids = req.body.items;
+  const items = req.body.items;
   const reason = req.body.reason;
 
-  let items = [];
-  let itemToPush = '';
-  for (let i = 0; i < ids.length; i++) {
-    if (ids[i] !== ',') {
-      itemToPush += (ids[i]);
-    } if (ids[i] === ',') {
-      items.push(itemToPush);
-      itemToPush = '';
-    }
-  }
-  items.push(itemToPush);
-  itemToPush = '';
-
   try {
-    for (item of items) {
+    for (const item of items) {
       console.log(item);
     const queryText = `UPDATE "item" SET dead = true WHERE id = ${item}`;
     await pool
@@ -1905,7 +1892,7 @@ router.put("/items/mark", async function (req, res) {
   }
 
   try {
-    for (item of items) {
+    for (const item of items) {
       console.log(item, reason);
       const queryText = `UPDATE "item" SET reason = '${reason}' WHERE id = ${item}`;
       await pool
@@ -1936,16 +1923,63 @@ router.put("/items/mark", async function (req, res) {
     
 });
 
-router.put("/deadItems/:id", (req, res) => {
-  console.log("We are updating an item as not dead with id:", req.params.id);
-  const id = req.params.id;
+router.put("/items/notes", async function (req, res) {
+  console.log("We are updating notes..");
+  const items = req.body.items;
+  const note = req.body.note;
 
-  const queryText = `UPDATE "item" SET dead = false WHERE id = $1`;
-  pool
-    .query(queryText, [id])
-    .then((updateResult) => {
+  for (const item of items) {    
+  try {
+          const queryText = `UPDATE "item" SET notes = '${note}' WHERE id = ${item}`;
+          await pool
+            .query(queryText)
+      } catch (err) {
+        console.log('Error on update: ', err);
+        return res.status(500).send();
+      }
+    }
+
+  try {
+    console.log("We are about to get the item list");
+
+    const queryText = `select * from "item" ORDER BY id DESC`;
+    await pool
+      .query(queryText)
+      .then((selectResult) => {
+        res.send(selectResult.rows);
+      })
+      .catch((error) => {
+        console.log(`Error on item query ${error}`);
+        res.sendStatus(500);
+      });
+  } catch (err) {
+    console.log('Error on Get: ', err);
+    return res.status(500).send();
+  }
+
+});
+
+router.put("/deadItems", async function (req, res) {
+  console.log("We are updating items as not dead");
+  const items = req.body.items;
+
+    try {
+      for (const item of items) {
+        console.log(item);
+        const queryText = `UPDATE "item" SET dead = false WHERE id = $1`;
+        await pool
+          .query(queryText, [item])
+      }
+    } catch (err) {
+      console.log('Error on update: ', err);
+      return res.status(500).send();
+    }
+
+    try {
+      console.log("We are about to get the item list");
+
       const queryText = `select * from "item" ORDER BY id DESC`;
-      pool
+      await pool
         .query(queryText)
         .then((selectResult) => {
           res.send(selectResult.rows);
@@ -1954,11 +1988,10 @@ router.put("/deadItems/:id", (req, res) => {
           console.log(`Error on item query ${error}`);
           res.sendStatus(500);
         });
-    })
-    .catch((error) => {
-      console.log(`Error on item query ${error}`);
-      res.sendStatus(500);
-    });
+    } catch (err) {
+      console.log('Error on Get: ', err);
+      return res.status(500).send();
+    }
 });
                                             
 router.put("/updateReason", (req, res) => {

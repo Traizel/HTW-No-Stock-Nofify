@@ -15,10 +15,12 @@ import FlagIcon from "@material-ui/icons/Flag";
 import QueueIcon from "@material-ui/icons/Queue";
 import swal from "sweetalert";
 import Box from '@material-ui/core/Box';
+import DeleteIcon from "@material-ui/icons/Delete";
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import ItemList from './ItemList';
+import TextField from '@material-ui/core/TextField';
+import moment from 'moment';
 
 
 function Main () {
@@ -29,8 +31,8 @@ function Main () {
   const checkedList = useSelector(store => store.item.addChecked);
   const trackChecked = useSelector(store => store.item.trackChecked);
   const [reason, setReason] = React.useState('temp');
+  const [note, setNote] = React.useState('');
   const dispatch = useDispatch();
-  let checkedItems = [];
 
   useEffect(() => {
     dispatch({
@@ -89,17 +91,21 @@ function Main () {
 
   const ni = newItems.map((item) => [
     item.name,
+    item.notes,
     item.sku,
     item.id,
     item.level,
+    moment(item.date).format("MMM Do YY"),
   ]);
 
   const di = deadItems.map((item) => [
     item.name,
+    item.notes,
     item.sku,
     item.id,
     item.level,
     item.reason,
+    moment(item.date).format("MMM Do YY"),
   ]);
     //defines the dataselector to know which items to preform actions on
     return (
@@ -150,6 +156,35 @@ function Main () {
       }
     }
     ><FlagIcon/> Mark as Stocked</Button>
+    <Button 
+      variant = "contained"
+      color = "primary"
+      onClick = {
+        (event) => {
+          event.preventDefault();
+          if (!checkedList[0]) {
+            swal("You need to select at least 1 Item!");
+          } else {
+          dispatch({
+            type: "MARK_STOCKED",
+            payload: {
+              items: checkedList,
+            },
+          });
+          for (let trackItem of trackChecked) {
+            document.getElementById(trackItem).checked = false;
+          }
+      swal("Deleting Items!");
+      dispatch({
+        type: "CLEAR_TRACKING",
+          });
+        }
+      }
+    }
+    ><DeleteIcon/> Delete</Button>
+    {isChecked
+    ?
+    <>
     <Box sx={{ minWidth: 120 }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Dead Inventory</InputLabel>
@@ -194,6 +229,59 @@ function Main () {
       }
     }
     ><QueueIcon/> Dead Inventory</Button>
+    </>
+    :
+    <>
+    <Button
+      variant="contained"
+      color="primary"
+      onClick={(event) => {
+        event.preventDefault();
+        dispatch({
+        type: "UNMARK_DEAD",
+        payload: {
+         items: checkedList,
+        },
+        });
+        swal("Okay! These are now unmarked as dead inventory!");
+        for (let trackItem of trackChecked) {
+            document.getElementById(trackItem).checked = false;
+          }
+        }}
+      >
+     <QueueIcon /> Unmark Dead
+     </Button>
+    </>
+    }
+    <FormControl component="fieldset">
+      <FormLabel component="legend"></FormLabel>
+      <TextField value={note} onChange={(e) => {setNote(e.target.value)}}/>
+    </FormControl>
+    <Button
+      variant="contained"
+      color="primary"
+      onClick={(event) => {
+        event.preventDefault();
+        if (checkedList[0]) {
+        dispatch({
+         type: "UPDATE_NOTES",
+         payload: {
+           items: checkedList,
+           note: note,
+         },
+        });
+          swal("Notes Updated!");
+          setNote('');
+          for (let trackItem of trackChecked) {
+            document.getElementById(trackItem).checked = false;
+          }
+        } else {
+          swal('Select at least 1 item!');
+        }
+        }}
+    >
+     <QueueIcon /> Add Note
+    </Button>
     <FormControl component="fieldset">
       <FormGroup aria-label="position" row>
         <FormControlLabel
@@ -240,10 +328,28 @@ function Main () {
                     },
                   },
                 },
-                { name: "Item Name" },
-                { name: "Item SKU" },
-                { name: "Item ID" },
+                { name: "Name",
+                  options: {
+                    filter: false,
+                  }
+                },
+                { name: "Notes",
+                  options: {
+                    filter: false,
+                  }
+                },
+                { name: "SKU", 
+                  options: {
+                    filter: false,
+                  }
+                },
+                { name: "ID",
+                  options: {
+                    filter: false,
+                  }
+                },
                 { name: "Level" },
+                { name: "Date" },
               ]}
               title={""} //give the table a name
               />
@@ -253,15 +359,59 @@ function Main () {
               data={di} //brings in data as an array, in this case, list of items
               columns={[
                 //names the columns found on MUI table
-                { name: "Item Name" },
-                { name: "Item SKU" },
-                { name: "Item ID" },
+                {
+                  name: "",
+                  options: {
+                    filter: false,
+                    sort: false,
+                    empty: true,
+                    customBodyRenderLite: (dataIndex, rowIndex) => {
+                      return (
+                        <input
+                          type="checkbox"
+                          id={dataIndex}
+                          style={{ cursor: "pointer", width: 50, height: 50 }}
+                          name=""
+                          value=""
+                          onClick = {(event) => {
+                            let checkChecked = document.getElementById(dataIndex)
+                              .checked;
+                            updateCheckbox(dataIndex, checkChecked);
+                          }
+                        }
+                        >
+                        </input>
+                      );
+                    },
+                  },
+                },
+                { name: "Name",
+                  options: {
+                    filter: false,
+                  }
+                },
+                { name: "Notes",
+                  options: {
+                    filter: false,
+                  }
+                },
+                { name: "SKU",
+                  options: {
+                    filter: false,
+                  }
+                },
+                { name: "ID",
+                  options: {
+                    filter: false,
+                  }
+                },
                 { name: "Level" },
                 { name: "Reason", 
                   options: {
                     display: false,
                   },
                 },
+                { name: "Date" },
                 {
                   name: "Reason",
                   options: {
@@ -291,35 +441,6 @@ function Main () {
                           <FormControlLabel value="unused" control={<Radio />} label="Unused" />
                         </RadioGroup>
                         </FormControl>
-                      );
-                    },
-                  },
-                },
-                {
-                  name: "",
-                  options: {
-                    filter: false,
-                    sort: false,
-                    empty: true,
-                    customBodyRenderLite: (dataIndex, rowIndex) => {
-                      return (
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={(event) => {
-                            event.preventDefault();
-                            const id = deadItems[dataIndex].id;
-                            dispatch({
-                              type: "UNMARK_DEAD",
-                              payload: {
-                                id: id,
-                              },
-                            });
-                            swal("Okay! This one is now unmarked as dead inventory!");
-                          }}
-                        >
-                          <QueueIcon /> Unmark Dead
-                        </Button>
                       );
                     },
                   },
