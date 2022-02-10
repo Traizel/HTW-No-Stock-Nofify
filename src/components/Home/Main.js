@@ -159,6 +159,7 @@ function Main () {
           label="Dead Inventory"
           onChange={(e) => {addDeadInventory(e)}}
           >
+            <MenuItem value={'new'}>New</MenuItem>
             <MenuItem value={'temp'}>Temp</MenuItem>
             <MenuItem value={'unused'}>Unused</MenuItem>
             <MenuItem value={'backorder'}>Backorder</MenuItem>
@@ -283,6 +284,7 @@ function Main () {
                             changeReason(dataIndex, click);
                           }}
                         >
+                          <FormControlLabel value="new" control={<Radio />} label="New" />
                           <FormControlLabel value="backorder" control={<Radio />} label="Backorder" />
                           <FormControlLabel value="clothing" control={<Radio />} label="Clothing" />
                           <FormControlLabel value="temp" control={<Radio />} label="Temp" />
