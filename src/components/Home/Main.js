@@ -83,12 +83,34 @@ function Main () {
         payload: { data: dataIndex, checked: checkChecked}
       });
   };
+  const updateCheckboxDead = (dataIndex, checkChecked) => {
+    dispatch({
+      type: "SET_CHECKED",
+      payload: checkChecked,
+    });
+    dispatch({
+        type: "ADD_TO_CHECKED",
+        payload: { item: deadItems[dataIndex].id, checked: checkChecked}
+      });
+    dispatch({
+        type: "ADD_TO_TRACKED",
+        payload: { data: dataIndex, checked: checkChecked}
+      });
+  };
 
-  //Handler for updating and tracking checked items
+  //Handler switching inventories
   const handleChange = (event) => {
     event.preventDefault();
     dispatch({
       type: "SET_VIEW",
+      payload: event.target.checked,
+    });
+    dispatch({
+      type: "CLEAR_CHECKED",
+      payload: event.target.checked,
+    });
+    dispatch({
+      type: "CLEAR_TRACKING",
       payload: event.target.checked,
     });
   };
@@ -387,7 +409,7 @@ function Main () {
                           onClick = {(event) => {
                             let checkChecked = document.getElementById(dataIndex)
                               .checked;
-                            updateCheckbox(dataIndex, checkChecked);
+                            updateCheckboxDead(dataIndex, checkChecked);
                           }
                         }
                         >

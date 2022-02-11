@@ -70,7 +70,6 @@ const trackChecked = (state = [], action) => {
         return state.slice(0, spot)
           .concat(state.slice(spot + 1));
       }
-      console.log(state);
       case "CLEAR_TRACKING":
         return [];
       default:
