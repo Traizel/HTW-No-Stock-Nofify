@@ -1109,7 +1109,6 @@ async function getVars(bcResponse) {
           name: item.name,
           inventory_tracking: item.inventory_tracking,
         });
-        console.log('this happened');
         //await timeoutPromise(5);
           }
          }
