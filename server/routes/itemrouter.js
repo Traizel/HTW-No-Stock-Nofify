@@ -24,6 +24,7 @@ let slackNotify = false;
 let stockNotify = false;
 let resetNoStock = false;
 let getSinglePage = false;
+let stockNotifyTest = false;
 let update = false;
 let pageToUse = 0;
 
@@ -49,6 +50,9 @@ function timeoutPromise(interval) {
 
 //Get All BC Items Function
 async function getBCItems () {
+
+  console.log('Getting Products..');
+
     let bcResponse1;
     let bcResponse2;
     let bcResponse3;
@@ -90,7 +94,7 @@ async function getBCItems () {
       console.log('Error on Get1: ', err);
     }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       bcResponse2 = await axios
@@ -102,7 +106,7 @@ await timeoutPromise(1000);
       console.log('Error on Get2: ', err);
     }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       bcResponse3 = await axios
@@ -114,7 +118,7 @@ await timeoutPromise(1000);
       console.log('Error on Get3: ', err);
     }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       bcResponse4 = await axios
@@ -126,7 +130,7 @@ await timeoutPromise(1000);
       console.log('Error on Get4: ', err);
     }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       bcResponse5 = await axios
@@ -138,7 +142,7 @@ await timeoutPromise(1000);
       console.log('Error on Get5: ', err);
     }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       bcResponse6 = await axios
@@ -150,7 +154,7 @@ await timeoutPromise(1000);
       console.log('Error on Get6: ', err);
     }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       bcResponse7 = await axios
@@ -162,7 +166,7 @@ await timeoutPromise(1000);
       console.log('Error on Get7: ', err);
     }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       bcResponse8 = await axios
@@ -174,7 +178,7 @@ await timeoutPromise(1000);
       console.log('Error on Get8: ', err);
     }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       bcResponse9 = await axios
@@ -186,7 +190,7 @@ await timeoutPromise(1000);
       console.log('Error on Get9: ', err);
     }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       bcResponse10 = await axios
@@ -198,7 +202,7 @@ await timeoutPromise(1000);
       console.log('Error on Get10: ', err);
     }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       bcResponse11 = await axios
@@ -210,7 +214,7 @@ await timeoutPromise(1000);
       console.log('Error on Get11: ', err);
     }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       bcResponse12 = await axios
@@ -222,7 +226,7 @@ await timeoutPromise(1000);
       console.log('Error on Get12: ', err);
     }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       bcResponse13 = await axios
@@ -234,7 +238,7 @@ await timeoutPromise(1000);
       console.log('Error on Get13: ', err);
     }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       bcResponse14 = await axios
@@ -246,7 +250,7 @@ await timeoutPromise(1000);
       console.log('Error on Get14: ', err);
     }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       bcResponse15 = await axios
@@ -258,7 +262,7 @@ await timeoutPromise(1000);
       console.log('Error on Get15: ', err);
     }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       bcResponse16 = await axios
@@ -270,7 +274,7 @@ await timeoutPromise(1000);
       console.log('Error on Get16: ', err);
     }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       bcResponse17 = await axios
@@ -282,7 +286,7 @@ await timeoutPromise(1000);
       console.log('Error on Get17: ', err);
     }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       bcResponse18 = await axios
@@ -294,7 +298,7 @@ await timeoutPromise(1000);
       console.log('Error on Get18: ', err);
     }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       bcResponse19 = await axios
@@ -306,7 +310,7 @@ await timeoutPromise(1000);
       console.log('Error on Get19: ', err);
     }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       bcResponse20 = await axios
@@ -318,7 +322,7 @@ await timeoutPromise(1000);
       console.log('Error on Get20: ', err);
     }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       bcResponse21 = await axios
@@ -330,7 +334,7 @@ await timeoutPromise(1000);
       console.log('Error on Get21: ', err);
     }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       bcResponse22 = await axios
@@ -342,7 +346,7 @@ await timeoutPromise(1000);
       console.log('Error on Get22: ', err);
     }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       bcResponse23 = await axios
@@ -354,7 +358,7 @@ await timeoutPromise(1000);
       console.log('Error on Get23: ', err);
     }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
   
     try {
       bcResponse24 = await axios
@@ -366,7 +370,7 @@ await timeoutPromise(1000);
       console.log('Error on Get24: ', err);
     }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       bcResponse25 = await axios
@@ -378,7 +382,7 @@ await timeoutPromise(1000);
       console.log('Error on Get25: ', err);
     }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       bcResponse26 = await axios
@@ -390,7 +394,7 @@ await timeoutPromise(1000);
       console.log('Error on Get26: ', err);
     }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       bcResponse27 = await axios
@@ -402,7 +406,7 @@ await timeoutPromise(1000);
       console.log('Error on Get27: ', err);
     }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       bcResponse28 = await axios
@@ -414,7 +418,7 @@ await timeoutPromise(1000);
       console.log('Error on Get28: ', err);
     }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       for (item of bcResponse1.data.data) {
@@ -425,7 +429,7 @@ await timeoutPromise(1000);
 
       }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       for (item of bcResponse2.data.data) {
@@ -436,7 +440,7 @@ await timeoutPromise(1000);
 
       }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       for (item of bcResponse3.data.data) {
@@ -447,7 +451,7 @@ await timeoutPromise(1000);
 
       }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       for (item of bcResponse4.data.data) {
@@ -458,7 +462,7 @@ await timeoutPromise(1000);
 
       }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       for (item of bcResponse5.data.data) {
@@ -469,7 +473,7 @@ await timeoutPromise(1000);
 
       }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       for (item of bcResponse6.data.data) {
@@ -480,7 +484,7 @@ await timeoutPromise(1000);
 
       }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       for (item of bcResponse7.data.data) {
@@ -491,7 +495,7 @@ await timeoutPromise(1000);
 
       }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       for (item of bcResponse8.data.data) {
@@ -502,7 +506,7 @@ await timeoutPromise(1000);
 
       }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       for (item of bcResponse9.data.data) {
@@ -513,7 +517,7 @@ await timeoutPromise(1000);
 
       }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       for (item of bcResponse10.data.data) {
@@ -524,7 +528,7 @@ await timeoutPromise(1000);
 
       }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       for (item of bcResponse11.data.data) {
@@ -535,7 +539,7 @@ await timeoutPromise(1000);
 
       }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       for (item of bcResponse12.data.data) {
@@ -546,7 +550,7 @@ await timeoutPromise(1000);
 
       }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       for (item of bcResponse13.data.data) {
@@ -557,7 +561,7 @@ await timeoutPromise(1000);
 
       }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       for (item of bcResponse14.data.data) {
@@ -568,7 +572,7 @@ await timeoutPromise(1000);
 
       }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       for (item of bcResponse15.data.data) {
@@ -579,7 +583,7 @@ await timeoutPromise(1000);
 
       }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       for (item of bcResponse16.data.data) {
@@ -590,7 +594,7 @@ await timeoutPromise(1000);
 
       }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       for (item of bcResponse17.data.data) {
@@ -601,7 +605,7 @@ await timeoutPromise(1000);
 
       }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       for (item of bcResponse18.data.data) {
@@ -612,7 +616,7 @@ await timeoutPromise(1000);
 
       }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       for (item of bcResponse19.data.data) {
@@ -623,7 +627,7 @@ await timeoutPromise(1000);
 
       }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       for (item of bcResponse20.data.data) {
@@ -634,7 +638,7 @@ await timeoutPromise(1000);
 
       }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       for (item of bcResponse21.data.data) {
@@ -645,7 +649,7 @@ await timeoutPromise(1000);
 
       }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       for (item of bcResponse22.data.data) {
@@ -656,7 +660,7 @@ await timeoutPromise(1000);
 
       }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       for (item of bcResponse23.data.data) {
@@ -667,7 +671,7 @@ await timeoutPromise(1000);
 
       }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       for (item of bcResponse24.data.data) {
@@ -678,7 +682,7 @@ await timeoutPromise(1000);
 
       }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       for (item of bcResponse25.data.data) {
@@ -689,7 +693,7 @@ await timeoutPromise(1000);
 
       }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       for (item of bcResponse26.data.data) {
@@ -700,7 +704,7 @@ await timeoutPromise(1000);
 
       }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       for (item of bcResponse27.data.data) {
@@ -711,7 +715,7 @@ await timeoutPromise(1000);
 
       }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
     try {
       for (item of bcResponse28.data.data) {
@@ -721,7 +725,7 @@ await timeoutPromise(1000);
       console.log('Error on bcCreate: ', err);
     }
 
-await timeoutPromise(500);
+await timeoutPromise(200);
 
 return bcResponse;
 }
@@ -760,13 +764,10 @@ let bcResponse = [];
 //Add Items to Slack Notify and Database
 async function addItems(bcResponse) {
 
-      let msg = '';
       let bcItemId;
       let varItems = [];
       let getItems = [];
       let newItems = [];
-
-console.log('Getting Products..');
 
     try {
       const queryText = `select * from "item" ORDER BY id DESC`;
@@ -821,7 +822,6 @@ console.log('Getting Products..');
           const am = 'Allmade';
 
           if (bcItemInv === 0 && bcItemTrack !== 'variant' && item.name.includes(am) === false && item.name.includes(nl) === false && item.name.includes(ro) === false && item.name.includes(rk) === false && item.name.includes(uni) === false && item.name.includes(rabbit) === false && item.name.includes(red) === false && item.name.includes(pac) === false && item.name.includes(cs) === false && item.name.includes(bc) === false && item.name.includes(anvil) === false && item.name.includes(fotl) === false && item.name.includes(jer) === false && item.name.includes(aa) === false && item.name.includes(hanes) === false && item.name.includes(cc) === false && item.name.includes(gildan) === false && item.name.includes(district) === false && item.name.includes(portauth) === false && item.name.includes(sporttek) === false && item.name.includes(newera) === false && item.name.includes(ade) === false && item.name.includes(aec) === false && item.name.includes(ej) === false && item.name.includes(champ) === false && item.name.includes(champ) === false && item.name.includes(nv) === false) {
-            msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
             let product = {
               name: bcItemName,
               sku: bcItemSku,
@@ -876,7 +876,6 @@ console.log('Getting Products..');
           const am = 'Allmade';
 
           if (canInsert === true && bcItemInv === 0 && bcItemTrack !== 'variant' && item.name.includes(am) === false && item.name.includes(nl) === false && item.name.includes(ro) === false && item.name.includes(rk) === false && item.name.includes(uni) === false && item.name.includes(rabbit) === false && item.name.includes(red) === false && item.name.includes(pac) === false && item.name.includes(cs) === false && item.name.includes(bc) === false && item.name.includes(anvil) === false && item.name.includes(fotl) === false && item.name.includes(jer) === false && item.name.includes(aa) === false && item.name.includes(hanes) === false && item.name.includes(cc) === false && item.name.includes(gildan) === false && item.name.includes(district) === false && item.name.includes(portauth) === false && item.name.includes(sporttek) === false && item.name.includes(newera) === false && item.name.includes(ade) === false && item.name.includes(aec) === false && item.name.includes(ej) === false && item.name.includes(champ) === false && item.name.includes(champ) === false && item.name.includes(nv) === false) {
-            msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
             let product = {
               name: bcItemName,
               sku: bcItemSku,
@@ -896,8 +895,6 @@ console.log('Getting Products..');
 
     await timeoutPromise(2000);
 
-    console.log('Getting Variants..');
-
     try {
       varItems = await getVars(bcResponse);
     } catch (err) {
@@ -916,8 +913,6 @@ console.log('Getting Products..');
             let bcItemName = varItems[k].name;
             let bcItemSku = varItems[k].sku;
             bcItemId = varItems[k].id;
-            let bcItemInv = varItems[k].inventory_level;
-            msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Variant'), `);
             let variant = {
               name: bcItemName,
               sku: bcItemSku,
@@ -949,7 +944,6 @@ console.log('Getting Products..');
             let bcItemSku = varItems[k].sku;
             let bcItemId = varItems[k].id;
             let bcItemName = varItems[k].name;
-            msg += (`('${bcItemName}', '${bcItemSku}', ${varItems[k].inventory_level}, ${bcItemId}, 'Variant'), `);
             let variant = {
               name: bcItemName,
               sku: bcItemSku,
@@ -968,25 +962,21 @@ console.log('Getting Products..');
       console.log('Error on varMsg: ', err);
     }
 
-    await timeoutPromise(4000);
+    await timeoutPromise(1000);
 
-    for (const item of newItems) {
-
+  
+  if (newItems[0]) {
+   for (const item of newItems) {
     try {
-      if (msg === '') {
-        console.log('No new items!');
-      } else {
-
-        let newMsg = msg.slice(0, -2);
-
         const queryText = `INSERT INTO "item" (name, sku, inventory_level, id, level) VALUES ($1, $2, $3, $4, $5);`;
         await pool
           .query(queryText, [item.name, item.sku, item.inventory_level, item.id, item.level])
-      }
     } catch (err) {
       console.log('SKU: ', item.sku + 'ID: ', item.id + ' Error on insert: ', err);
     }
-
+   }
+  } else {
+   console.log('No new items!');
   }
 
     await timeoutPromise(1000);
@@ -1074,14 +1064,18 @@ async function getItemsSinglePage(pageToUse) {
 //Get All Variants of All Products
 async function getVars(bcResponse) {
 
+  console.log('Getting Variants..');
+
   let varItems = [];
 
     try {
       let i = 0;
       for (i = 0; i < bcResponse.length; i++) {
         if (bcResponse[i].inventory_tracking === 'variant') {
-        let pusher = await eachVar(bcResponse, i);
-        for (item of pusher) {
+        let pusher = [];
+        pusher = await eachVar(bcResponse, i);
+        if (pusher[0]) {
+         for (item of pusher) {
 
           const district = 'District';
           const portauth = 'Port Authority';
@@ -1122,6 +1116,7 @@ async function getVars(bcResponse) {
           }
          }
         }
+       }
       }
     } catch (err) {
       console.log('Error on makeVarArray: ', err);
@@ -1231,7 +1226,7 @@ setInterval(() => {
     stockNotify = false;
     checkItems();
 
-    async function checkItems(req, res) {
+  async function checkItems(req, res) {
       
   let bcResponse = [];
   let varItems = [];
@@ -1263,7 +1258,7 @@ await timeoutPromise(1000);
 try {
   if (getItems.rows[0]) {
     for (let i = 0; i < bcResponse.length; i++) {
-      let bcItemId = bcResponse[i].id;
+      bcItemId = bcResponse[i].id;
       let bcItemSku = bcResponse[i].sku;
       let bcItemInv = bcResponse[i].inventory_level;
       for (let j = 0; j < getItems.rows.length; j++) {
@@ -1326,6 +1321,126 @@ try {
     }
   }
 }, 1000 * 60 * 13);
+
+
+// Auto Restock Notify TEST
+setInterval(() => {
+  // set this to true to activate
+  stockNotifyTest = false;
+
+  if (stockNotifyTest) {
+    console.log('Checking for Stocked Items.. (TEST)');
+    stockNotify = false;
+    checkItemsTest();
+
+    async function checkItemsTest(req, res) {
+
+      let bcResponse = [];
+      let varItems = [];
+      let getItems = [];
+      let stockedItems = [];
+      let bcItemId;
+
+      try {
+        bcResponse = await getBCItems();
+      } catch (err) {
+        console.log('Error on getBCItems: ', err);
+      }
+
+      await timeoutPromise(500);
+
+      try {
+        const queryText = `select * from "item" WHERE reason <> 'clothing' ORDER BY id DESC`;
+        await pool
+          .query(queryText)
+          .then((getResult) => {
+            getItems = getResult;
+          })
+      } catch (err) {
+        console.log('Error on getItems: ', err);
+      }
+
+      await timeoutPromise(500);
+
+      console.log('Checking Product Level..');
+
+      try {
+        if (getItems.rows[0]) {
+          for (let i = 0; i < bcResponse.length; i++) {
+            bcItemId = bcResponse[i].id;
+            let bcItemSku = bcResponse[i].sku;
+            let bcItemInv = bcResponse[i].inventory_level;
+            for (let j = 0; j < getItems.rows.length; j++) {
+              let itemId = getItems.rows[j].id;
+              let itemSku = getItems.rows[j].sku;
+              if (bcItemId === itemId && bcItemSku === itemSku && bcItemInv !== 0) {
+                console.log(`BCId: ${bcItemId}, ItemId: ${itemId}`);
+                console.log(`BCSku: ${bcItemSku}, ItemSku: ${itemSku}`);
+                console.log('Stock: ', bcItemInv);
+                let itemToPush = {
+                  id: itemId,
+                }
+                stockedItems.push(itemToPush);
+              }
+            }
+          }
+        }
+
+      } catch (err) {
+        console.log('Error on getStocked: ', err);
+      }
+
+      await timeoutPromise(500);
+
+      try {
+        varItems = await getVars(bcResponse);
+      } catch (err) {
+        console.log('Error on getVars: ', err);
+      }
+
+      console.log('Checking Variant Level..');
+
+      try {
+        if (getItems.rows[0]) {
+          for (let k = 0; k < varItems.length; k++) {
+            bcItemId = varItems[k].id;
+            let bcItemSku = varItems[k].sku;
+            let bcItemInv = varItems[k].inventory_level;
+            for (let j = 0; j < getItems.rows.length; j++) {
+              let itemId = getItems.rows[j].id;
+              let itemSku = getItems.rows[j].sku;
+              if (bcItemId === itemId && bcItemSku === itemSku && bcItemInv !== 0) {
+                console.log(`BCId: ${bcItemId}, ItemId: ${itemId}`);
+                console.log(`BCSku: ${bcItemSku}, ItemSku: ${itemSku}`);
+                console.log('Stock: ', bcItemInv);
+                let itemToPush = {
+                  id: itemId,
+                }
+                stockedItems.push(itemToPush);
+              }
+            }
+          }
+        }
+      } catch (err) {
+        console.log('Error on get Var Stocked: ', err);
+      }
+
+      await timeoutPromise(1000);
+
+      try {
+        for (item of stockedItems) {
+          console.log(item);
+          const queryText = `delete from "item" WHERE id = '${item.id}'`;
+          await pool
+            .query(queryText)
+        }
+      } catch (err) {
+        console.log('Error on delete: ', err);
+      }
+
+    }
+  }
+}, 1000 * 60 * 480);
 
 
 // Auto Reset Database (Not Dead Inventory)
@@ -1551,13 +1666,12 @@ setInterval(() => {
     getSinglePage = false;
     getItemsSinglePage(pageToUse);
   }
-}, 1000 * 60 * 5);
+}, 1000 * 60 * 480);
 
 
 router.get("/items", async function getItems(req, res) {
 
   let bcResponse = [];
-  let msg = '';
   let bcItemId;
   let varItems = [];
   let getItems = [];
@@ -1572,8 +1686,6 @@ router.get("/items", async function getItems(req, res) {
 
 await timeoutPromise(500);
 
-  console.log('Getting Products..');
-
   try {
     const queryText = `select * from "item" ORDER BY id DESC`;
     await pool
@@ -1587,6 +1699,7 @@ await timeoutPromise(500);
   }
 
   await timeoutPromise(500);
+
   console.log('Checking Product Level..');
 
   try {
@@ -1627,7 +1740,6 @@ await timeoutPromise(500);
         const am = 'Allmade';
 
         if (bcItemInv === 0 && bcItemTrack !== 'variant' && item.name.includes(am) === false && item.name.includes(nl) === false && item.name.includes(ro) === false && item.name.includes(rk) === false && item.name.includes(uni) === false && item.name.includes(rabbit) === false && item.name.includes(red) === false && item.name.includes(pac) === false && item.name.includes(cs) === false && item.name.includes(bc) === false && item.name.includes(anvil) === false && item.name.includes(fotl) === false && item.name.includes(jer) === false && item.name.includes(aa) === false && item.name.includes(hanes) === false && item.name.includes(cc) === false && item.name.includes(gildan) === false && item.name.includes(district) === false && item.name.includes(portauth) === false && item.name.includes(sporttek) === false && item.name.includes(newera) === false && item.name.includes(ade) === false && item.name.includes(aec) === false && item.name.includes(ej) === false && item.name.includes(champ) === false && item.name.includes(champ) === false && item.name.includes(nv) === false) {
-        msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
         let product = {
           name: bcItemName,
           sku: bcItemSku,
@@ -1682,7 +1794,6 @@ await timeoutPromise(500);
         const am = 'Allmade';
 
         if (canInsert === true && bcItemInv === 0 && bcItemTrack !== 'variant' && item.name.includes(am) === false && item.name.includes(nl) === false && item.name.includes(ro) === false && item.name.includes(rk) === false && item.name.includes(uni) === false && item.name.includes(rabbit) === false && item.name.includes(red) === false && item.name.includes(pac) === false && item.name.includes(cs) === false && item.name.includes(bc) === false && item.name.includes(anvil) === false && item.name.includes(fotl) === false && item.name.includes(jer) === false && item.name.includes(aa) === false && item.name.includes(hanes) === false && item.name.includes(cc) === false && item.name.includes(gildan) === false && item.name.includes(district) === false && item.name.includes(portauth) === false && item.name.includes(sporttek) === false && item.name.includes(newera) === false && item.name.includes(ade) === false && item.name.includes(aec) === false && item.name.includes(ej) === false && item.name.includes(champ) === false && item.name.includes(champ) === false && item.name.includes(nv) === false) {
-          msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Product'), `);
           let product = {
             name: bcItemName,
             sku: bcItemSku,
@@ -1703,8 +1814,6 @@ await timeoutPromise(500);
 
   await timeoutPromise(2000);
 
-     console.log('Getting Variants..');
-
     try {
       varItems = await getVars(bcResponse);
       } catch (err) {
@@ -1721,8 +1830,6 @@ await timeoutPromise(500);
               let bcItemName = varItems[k].name;
               let bcItemSku = varItems[k].sku;
               bcItemId = varItems[k].id;
-              let bcItemInv = varItems[k].inventory_level;
-              msg += (`('${bcItemName}', '${bcItemSku}', ${bcItemInv}, ${bcItemId}, 'Variant'), `);
               let variant = {
                 name: bcItemName,
                 sku: bcItemSku,
@@ -1749,9 +1856,8 @@ await timeoutPromise(500);
 
             if (varItems[k].inventory_level === 0 && canInsert === true) {
               let bcItemSku = varItems[k].sku;
-              let bcItemId = varItems[k].id;
+              bcItemId = varItems[k].id;
               let bcItemName = varItems[k].name;
-              msg += (`('${bcItemName}', '${bcItemSku}', ${varItems[k].inventory_level}, ${bcItemId}, 'Variant'), `);
               let variant = {
                 name: bcItemName,
                 sku: bcItemSku,
@@ -1770,26 +1876,21 @@ await timeoutPromise(500);
       console.log('Error on varMsg: ', err);
     }
 
-  await timeoutPromise(3000);
+  await timeoutPromise(1000);
 
-  for (const item of newItems) {
-
+if (newItems[0]) {
+ for (const item of newItems) {
   try {
-    if (msg === '') {
-      console.log('No new items!');
-    } else {
-
-      let newMsg = msg.slice(0, -2);
-
       const queryText = `INSERT INTO "item" (name, sku, inventory_level, id, level) VALUES ($1, $2, $3, $4, $5);`;
       await pool
         .query(queryText, [item.name, item.sku, item.inventory_level, item.id, item.level])
-    }
   } catch (err) {
     console.log('SKU: ', item.sku + 'ID: ', item.id + ' Error on insert: ', err);
     return res.status(500).send();
   }
-
+ }
+} else {
+  console.log('No new items!');
 }
 
   await timeoutPromise(1000);
@@ -1875,7 +1976,7 @@ router.delete("/items/:id", async function (req, res) {
 });
 
 router.put("/items/mark", async function (req, res) {
-  console.log("We are updating items as dead with id:", req.body.id);
+  console.log("We are updating items as dead..");
   const items = req.body.items;
   const reason = req.body.reason;
 

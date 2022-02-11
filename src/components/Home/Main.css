@@ -16,7 +16,7 @@ tr {
 }
 
 tbody tr:nth-child(even) {
-    background-color: #f8e161;
+    background-color: #5ff0a7;
 }
 
 .dead-inventory {
@@ -30,7 +30,7 @@ br {
 .loader {
     border: 66px solid rgb(172, 172, 172);
     border-radius: 50%;
-    border-top: 66px solid #f8e161;
+    border-top: 66px solid #5ff0a7;
     width: 420px;
     height: 420px;
     -webkit-animation: spin 2s linear infinite;
