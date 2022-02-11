@@ -774,7 +774,7 @@ async function addItems(bcResponse) {
       await pool
         .query(queryText)
         .then((getResult) => {
-          getItems = getResult;
+          getItems = getResult.rows;
         })
     } catch (err) {
       console.log('Error on getItems: ', err);
@@ -785,14 +785,14 @@ async function addItems(bcResponse) {
     console.log('Checking Product Level..');
 
     try {
-      if (!getItems.rows[0]) {
+      if (!getItems[0]) {
         console.log('Item DB Empty!');
-        for (let i = 0; i < bcResponse.length; i++) {
-          let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
-          bcItemId = bcResponse[i].id;
-          let bcItemSku = bcResponse[i].sku;
-          let bcItemInv = bcResponse[i].inventory_level;
-          let bcItemTrack = bcResponse[i].inventory_tracking;
+        for (const bc of bcResponse) {
+          let bcItemName = bc.name.replace(/"|`|'/g, ' ');
+          bcItemId = bc.id;
+          let bcItemSku = bc.sku;
+          let bcItemInv = bc.inventory_level;
+          let bcItemTrack = bc.inventory_tracking;
 
           const district = 'District';
           const portauth = 'Port Authority';
@@ -821,7 +821,7 @@ async function addItems(bcResponse) {
           const nl = 'Next Level';
           const am = 'Allmade';
 
-          if (bcItemInv === 0 && bcItemTrack !== 'variant' && item.name.includes(am) === false && item.name.includes(nl) === false && item.name.includes(ro) === false && item.name.includes(rk) === false && item.name.includes(uni) === false && item.name.includes(rabbit) === false && item.name.includes(red) === false && item.name.includes(pac) === false && item.name.includes(cs) === false && item.name.includes(bc) === false && item.name.includes(anvil) === false && item.name.includes(fotl) === false && item.name.includes(jer) === false && item.name.includes(aa) === false && item.name.includes(hanes) === false && item.name.includes(cc) === false && item.name.includes(gildan) === false && item.name.includes(district) === false && item.name.includes(portauth) === false && item.name.includes(sporttek) === false && item.name.includes(newera) === false && item.name.includes(ade) === false && item.name.includes(aec) === false && item.name.includes(ej) === false && item.name.includes(champ) === false && item.name.includes(champ) === false && item.name.includes(nv) === false) {
+          if (bcItemInv === 0 && bcItemTrack !== 'variant' && bcItemName.includes(am) === false && bcItemName.includes(nl) === false && bcItemName.includes(ro) === false && bcItemName.includes(rk) === false && bcItemName.includes(uni) === false && bcItemName.includes(rabbit) === false && bcItemName.includes(red) === false && bcItemName.includes(pac) === false && bcItemName.includes(cs) === false && bcItemName.includes(bc) === false && bcItemName.includes(anvil) === false && bcItemName.includes(fotl) === false && bcItemName.includes(jer) === false && bcItemName.includes(aa) === false && bcItemName.includes(hanes) === false && bcItemName.includes(cc) === false && bcItemName.includes(gildan) === false && bcItemName.includes(district) === false && bcItemName.includes(portauth) === false && bcItemName.includes(sporttek) === false && bcItemName.includes(newera) === false && bcItemName.includes(ade) === false && bcItemName.includes(aec) === false && bcItemName.includes(ej) === false && bcItemName.includes(champ) === false && bcItemName.includes(champ) === false && bcItemName.includes(nv) === false) {
             let product = {
               name: bcItemName,
               sku: bcItemSku,
@@ -842,8 +842,8 @@ async function addItems(bcResponse) {
           let bcItemTrack = bcResponse[i].inventory_tracking;
           let canInsert = true;
 
-          for (let j = 0; j < getItems.rows.length; j++) {
-            if (bcItemId === getItems.rows[j].id) {
+          for (const item of getItems) {
+            if (bcItemId === item.id) {
               canInsert = false;
             }
           }
@@ -875,7 +875,7 @@ async function addItems(bcResponse) {
           const nl = 'Next Level';
           const am = 'Allmade';
 
-          if (canInsert === true && bcItemInv === 0 && bcItemTrack !== 'variant' && item.name.includes(am) === false && item.name.includes(nl) === false && item.name.includes(ro) === false && item.name.includes(rk) === false && item.name.includes(uni) === false && item.name.includes(rabbit) === false && item.name.includes(red) === false && item.name.includes(pac) === false && item.name.includes(cs) === false && item.name.includes(bc) === false && item.name.includes(anvil) === false && item.name.includes(fotl) === false && item.name.includes(jer) === false && item.name.includes(aa) === false && item.name.includes(hanes) === false && item.name.includes(cc) === false && item.name.includes(gildan) === false && item.name.includes(district) === false && item.name.includes(portauth) === false && item.name.includes(sporttek) === false && item.name.includes(newera) === false && item.name.includes(ade) === false && item.name.includes(aec) === false && item.name.includes(ej) === false && item.name.includes(champ) === false && item.name.includes(champ) === false && item.name.includes(nv) === false) {
+          if (canInsert === true && bcItemInv === 0 && bcItemTrack !== 'variant' && bcItemName.includes(am) === false && bcItemName.includes(nl) === false && bcItemName.includes(ro) === false && bcItemName.includes(rk) === false && bcItemName.includes(uni) === false && bcItemName.includes(rabbit) === false && bcItemName.includes(red) === false && bcItemName.includes(pac) === false && bcItemName.includes(cs) === false && bcItemName.includes(bc) === false && bcItemName.includes(anvil) === false && bcItemName.includes(fotl) === false && bcItemName.includes(jer) === false && bcItemName.includes(aa) === false && bcItemName.includes(hanes) === false && bcItemName.includes(cc) === false && bcItemName.includes(gildan) === false && bcItemName.includes(district) === false && bcItemName.includes(portauth) === false && bcItemName.includes(sporttek) === false && bcItemName.includes(newera) === false && bcItemName.includes(ade) === false && bcItemName.includes(aec) === false && bcItemName.includes(ej) === false && bcItemName.includes(champ) === false && bcItemName.includes(champ) === false && bcItemName.includes(nv) === false) {
             let product = {
               name: bcItemName,
               sku: bcItemSku,
@@ -893,7 +893,7 @@ async function addItems(bcResponse) {
       console.log('Error on productMsg: ', err);
     }
 
-    await timeoutPromise(2000);
+    await timeoutPromise(500);
 
     try {
       varItems = await getVars(bcResponse);
@@ -905,20 +905,20 @@ async function addItems(bcResponse) {
 
     try {
 
-      if (!getItems.rows[0]) {
+      if (!getItems[0]) {
         //console.log('Item DB Empty!');
-        for (let k = 0; k < varItems.length; k++) {
+        for (const v of varItems) {
 
-          if (varItems[k].inventory_level === 0) {
-            let bcItemName = varItems[k].name;
-            let bcItemSku = varItems[k].sku;
-            bcItemId = varItems[k].id;
+          if (v.inventory_level === 0) {
+            let bcItemName = v.name;
+            let bcItemSku = v.sku;
+            bcItemId = v.id;
             let variant = {
               name: bcItemName,
               sku: bcItemSku,
               id: bcItemId,
-              inventory_tracking: varItems[k].inventory_tracking,
-              inventory_level: varItems[k].inventory_level,
+              inventory_tracking: v.inventory_tracking,
+              inventory_level: v.inventory_level,
               level: 'Variant',
             };
             newItems.push(variant);
@@ -928,28 +928,26 @@ async function addItems(bcResponse) {
         }
       } else {
 
-        for (let k = 0; k < varItems.length; k++) {
-
-
-          bcItemId = varItems[k].id;
+        for (const v of varItems) {
+          bcItemId = v.id;
           let canInsert = true;
 
-          for (let j = 0; j < getItems.rows.length; j++) {
-            if (bcItemId === getItems.rows[j].id) {
+          for (const item of getItems) {
+            if (bcItemId === item.id) {
               canInsert = false;
             }
           }
 
-          if (varItems[k].inventory_level === 0 && canInsert === true) {
-            let bcItemSku = varItems[k].sku;
-            let bcItemId = varItems[k].id;
-            let bcItemName = varItems[k].name;
+          if (v.inventory_level === 0 && canInsert === true) {
+            let bcItemSku = v.sku;
+            let bcItemId = v.id;
+            let bcItemName = v.name;
             let variant = {
               name: bcItemName,
               sku: bcItemSku,
               id: bcItemId,
-              inventory_tracking: varItems[k].inventory_tracking,
-              inventory_level: varItems[k].inventory_level,
+              inventory_tracking: v.inventory_tracking,
+              inventory_level: v.inventory_level,
               level: 'Variant',
             };
             newItems.push(variant);
@@ -962,7 +960,7 @@ async function addItems(bcResponse) {
       console.log('Error on varMsg: ', err);
     }
 
-    await timeoutPromise(1000);
+    await timeoutPromise(500);
 
   
   if (newItems[0]) {
@@ -979,7 +977,7 @@ async function addItems(bcResponse) {
    console.log('No new items!');
   }
 
-    await timeoutPromise(1000);
+    await timeoutPromise(500);
 
     try {
       console.log("We are about to get the item list");
@@ -1069,13 +1067,12 @@ async function getVars(bcResponse) {
   let varItems = [];
 
     try {
-      let i = 0;
-      for (i = 0; i < bcResponse.length; i++) {
-        if (bcResponse[i].inventory_tracking === 'variant') {
+      for (const bc of bcResponse) {
+        if (bc.inventory_tracking === 'variant') {
         let pusher = [];
-        pusher = await eachVar(bcResponse, i);
+        pusher = await eachVar(bc);
         if (pusher[0]) {
-         for (item of pusher) {
+         for (const item of pusher) {
 
           const district = 'District';
           const portauth = 'Port Authority';
@@ -1104,7 +1101,7 @@ async function getVars(bcResponse) {
           const nl = 'Next Level';
           const am = 'Allmade';
 
-          if (item.inventory_level === 0 && item.name.includes(am) === false && item.name.includes(ro) === false && item.name.includes(nl) === false && item.name.includes(rk) === false && item.name.includes(uni) === false && item.name.includes(rabbit) === false && item.name.includes(red) === false && item.name.includes(pac) === false && item.name.includes(cs) === false && item.name.includes(bc) === false && item.name.includes(anvil) === false && item.name.includes(fotl) === false && item.name.includes(jer) === false && item.name.includes(aa) === false && item.name.includes(hanes) === false && item.name.includes(cc) === false && item.name.includes(gildan) === false && item.name.includes(district) === false && item.name.includes(portauth) === false && item.name.includes(sporttek) === false && item.name.includes(newera) === false && item.name.includes(ade) === false && item.name.includes(aec) === false && item.name.includes(ej) === false && item.name.includes(champ) === false && item.name.includes(champ) === false && item.name.includes(nv) === false) {
+          if (item.name.includes(am) === false && item.name.includes(ro) === false && item.name.includes(nl) === false && item.name.includes(rk) === false && item.name.includes(uni) === false && item.name.includes(rabbit) === false && item.name.includes(red) === false && item.name.includes(pac) === false && item.name.includes(cs) === false && item.name.includes(bc) === false && item.name.includes(anvil) === false && item.name.includes(fotl) === false && item.name.includes(jer) === false && item.name.includes(aa) === false && item.name.includes(hanes) === false && item.name.includes(cc) === false && item.name.includes(gildan) === false && item.name.includes(district) === false && item.name.includes(portauth) === false && item.name.includes(sporttek) === false && item.name.includes(newera) === false && item.name.includes(ade) === false && item.name.includes(aec) === false && item.name.includes(ej) === false && item.name.includes(champ) === false && item.name.includes(champ) === false && item.name.includes(nv) === false) {
         varItems.push({
           sku: item.sku,
           id: item.id,
@@ -1112,6 +1109,7 @@ async function getVars(bcResponse) {
           name: item.name,
           inventory_tracking: item.inventory_tracking,
         });
+        console.log('this happened');
         //await timeoutPromise(5);
           }
          }
@@ -1126,11 +1124,12 @@ async function getVars(bcResponse) {
 }
 
 
-async function eachVar(bcResponse, i) {
+//Get Each Variant of a specific Product
+async function eachVar(bc) {
   try {
-    let bcItemId = bcResponse[i].id;
-    let bcItemTrack = bcResponse[i].inventory_tracking;
-    let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
+    let bcItemId = bc.id;
+    let bcItemTrack = bc.inventory_tracking;
+    let bcItemName = bc.name.replace(/"|`|'/g, ' ');
 
     if (bcItemTrack === 'variant') {
       let getVar = [];
@@ -1143,7 +1142,7 @@ async function eachVar(bcResponse, i) {
 
       let varToPush = [];
 
-     for (variant of getVar.data.data) {
+     for (const variant of getVar.data.data) {
 
       let varSku = variant.sku;
       let varId = variant.id;
@@ -1170,6 +1169,7 @@ async function eachVar(bcResponse, i) {
 }
 
 
+//Update Products with body of the config
 async function updateProducts(page) {
 
   let bcItems = [];
@@ -1195,6 +1195,85 @@ async function updateProducts(page) {
      xhr.send(data);
      console.log('yUH');
   }
+}
+
+
+// TEST
+//test();
+async function test(req, res) {
+
+  console.log('(TEST)');
+
+  let bcResponse = [];
+  let getItems = [];
+  let varItems = [];
+
+  try {
+    bcResponse = await getBCItems();
+  } catch (err) {
+    console.log('Error on getBCItems: ', err);
+  }
+
+  await timeoutPromise(500);
+
+  try {
+    const queryText = `select * from "item" WHERE reason <> 'clothing' ORDER BY id DESC`;
+    await pool
+      .query(queryText)
+      .then((getResult) => {
+        getItems = getResult.rows;
+      })
+  } catch (err) {
+    console.log('Error on getItems: ', err);
+  }
+
+  for (const item of bcResponse) {
+    if (item.name === 'Hotmark RevolutionPrint') {
+      console.log('BC Found!');
+      try {
+        let checkedItem = [];
+        checkedItem.push(item);
+        varItems = await getVars(checkedItem);
+        console.log(varItems);
+      } catch (err) {
+        console.log('Error on getVar: ', err);
+      }
+    }
+  }
+
+  for (const item of getItems) {
+    if (item.name === 'Hotmark RevolutionPrint') {
+      console.log('DB Found!');
+     }
+  }
+
+      try {
+        if (getItems[0]) {
+          for (const v of varItems) {
+            bcItemId = v.id;
+            let bcItemSku = v.sku;
+            let bcItemInv = v.inventory_level;
+            for (const item of getItems) {
+              let itemId = item.id;
+              let itemSku = item.sku;
+              if (bcItemId === itemId && bcItemSku === itemSku && bcItemInv !== 0) {
+                console.log(`BCId: ${bcItemId}, ItemId: ${itemId}`);
+                console.log(`BCSku: ${bcItemSku}, ItemSku: ${itemSku}`);
+                console.log('Stock: ', bcItemInv);
+                let itemToPush = {
+                  id: itemId,
+                }
+                console.log('Found this id: ', itemToPush);
+              }
+            }
+          }
+        }
+      } catch (err) {
+        console.log('Error on get Var Stocked: ', err);
+      }
+
+  console.log('Test Done');
+
 }
 
 
@@ -1247,7 +1326,7 @@ await timeoutPromise(500);
     await pool
       .query(queryText)
       .then((getResult) => {
-        getItems = getResult;
+        getItems = getResult.rows;
       })
   } catch (err) {
     console.log('Error on getItems: ', err);
@@ -1258,18 +1337,15 @@ await timeoutPromise(500);
 console.log('Checking Product Level..');
 
       try {
-        if (getItems.rows[0]) {
-          for (let i = 0; i < bcResponse.length; i++) {
-            bcItemId = bcResponse[i].id;
-            let bcItemSku = bcResponse[i].sku;
-            let bcItemInv = bcResponse[i].inventory_level;
-            for (let j = 0; j < getItems.rows.length; j++) {
-              let itemId = getItems.rows[j].id;
-              let itemSku = getItems.rows[j].sku;
+        if (getItems[0]) {
+          for (const bc of bcResponse) {
+            bcItemId = bc.id;
+            let bcItemSku = bc.sku;
+            let bcItemInv = bc.inventory_level;
+            for (const item of getItems) {
+              let itemId = item.id;
+              let itemSku = item.sku;
               if (bcItemId === itemId && bcItemSku === itemSku && bcItemInv !== 0) {
-                console.log(`BCId: ${bcItemId}, ItemId: ${itemId}`);
-                console.log(`BCSku: ${bcItemSku}, ItemSku: ${itemSku}`);
-                console.log('Stock: ', bcItemInv);
                 let itemToPush = {
                   id: itemId,
                 }
@@ -1278,7 +1354,6 @@ console.log('Checking Product Level..');
             }
           }
         }
-
       } catch (err) {
         console.log('Error on getStocked: ', err);
       }
@@ -1294,18 +1369,15 @@ console.log('Checking Product Level..');
 console.log('Checking Variant Level..');
 
       try {
-        if (getItems.rows[0]) {
-          for (let k = 0; k < varItems.length; k++) {
-            bcItemId = varItems[k].id;
-            let bcItemSku = varItems[k].sku;
-            let bcItemInv = varItems[k].inventory_level;
-            for (let j = 0; j < getItems.rows.length; j++) {
-              let itemId = getItems.rows[j].id;
-              let itemSku = getItems.rows[j].sku;
+        if (getItems[0]) {
+          for (const v of varItems) {
+            bcItemId = v.id;
+            let bcItemSku = v.sku;
+            let bcItemInv = v.inventory_level;
+            for (const item of getItems) {
+              let itemId = item.id;
+              let itemSku = item.sku;
               if (bcItemId === itemId && bcItemSku === itemSku && bcItemInv !== 0) {
-                console.log(`BCId: ${bcItemId}, ItemId: ${itemId}`);
-                console.log(`BCSku: ${bcItemSku}, ItemSku: ${itemSku}`);
-                console.log('Stock: ', bcItemInv);
                 let itemToPush = {
                   id: itemId,
                 }
@@ -1371,7 +1443,7 @@ setInterval(() => {
         await pool
           .query(queryText)
           .then((getResult) => {
-            getItems = getResult;
+            getItems = getResult.rows;
           })
       } catch (err) {
         console.log('Error on getItems: ', err);
@@ -1382,14 +1454,14 @@ setInterval(() => {
       console.log('Checking Product Level..');
 
       try {
-        if (getItems.rows[0]) {
-          for (let i = 0; i < bcResponse.length; i++) {
-            bcItemId = bcResponse[i].id;
-            let bcItemSku = bcResponse[i].sku;
-            let bcItemInv = bcResponse[i].inventory_level;
-            for (let j = 0; j < getItems.rows.length; j++) {
-              let itemId = getItems.rows[j].id;
-              let itemSku = getItems.rows[j].sku;
+        if (getItems[0]) {
+          for (const bc of bcResponse) {
+            bcItemId = bc.id;
+            let bcItemSku = bc.sku;
+            let bcItemInv = bc.inventory_level;
+            for (const item of getItems) {
+              let itemId = item.id;
+              let itemSku = item.sku;
               if (bcItemId === itemId && bcItemSku === itemSku && bcItemInv !== 0) {
                 console.log(`BCId: ${bcItemId}, ItemId: ${itemId}`);
                 console.log(`BCSku: ${bcItemSku}, ItemSku: ${itemSku}`);
@@ -1418,14 +1490,14 @@ setInterval(() => {
       console.log('Checking Variant Level..');
 
       try {
-        if (getItems.rows[0]) {
-          for (let k = 0; k < varItems.length; k++) {
-            bcItemId = varItems[k].id;
-            let bcItemSku = varItems[k].sku;
-            let bcItemInv = varItems[k].inventory_level;
-            for (let j = 0; j < getItems.rows.length; j++) {
-              let itemId = getItems.rows[j].id;
-              let itemSku = getItems.rows[j].sku;
+        if (getItems[0]) {
+          for (const v of varItems) {
+            bcItemId = v.id;
+            let bcItemSku = v.sku;
+            let bcItemInv = v.inventory_level;
+            for (const item of getItems) {
+              let itemId = item.id;
+              let itemSku = item.sku;
               if (bcItemId === itemId && bcItemSku === itemSku && bcItemInv !== 0) {
                 console.log(`BCId: ${bcItemId}, ItemId: ${itemId}`);
                 console.log(`BCSku: ${bcItemSku}, ItemSku: ${itemSku}`);
@@ -1713,7 +1785,7 @@ await timeoutPromise(500);
     await pool
       .query(queryText)
       .then((getResult) => {
-        getItems = getResult;
+        getItems = getResult.rows;
       })
   } catch (err) {
     console.log('Error on getItems: ', err);
@@ -1725,7 +1797,7 @@ await timeoutPromise(500);
   console.log('Checking Product Level..');
 
   try {
-    if (!getItems.rows[0]) {
+    if (!getItems[0]) {
       console.log('Item DB Empty!');
       for (let i = 0; i < bcResponse.length; i++) {
         let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
@@ -1774,16 +1846,16 @@ await timeoutPromise(500);
         }
       }
     } else {
-      for (let i = 0; i < bcResponse.length; i++) {
-        bcItemId = bcResponse[i].id;
-        let bcItemName = bcResponse[i].name.replace(/"|`|'/g, ' ');
-        let bcItemSku = bcResponse[i].sku;
-        let bcItemInv = bcResponse[i].inventory_level;
-        let bcItemTrack = bcResponse[i].inventory_tracking;
+      for (const bc of bcResponse) {
+        bcItemId = bc.id;
+        let bcItemName = bc.name.replace(/"|`|'/g, ' ');
+        let bcItemSku = bc.sku;
+        let bcItemInv = bc.inventory_level;
+        let bcItemTrack = bc.inventory_tracking;
         let canInsert = true;
 
-        for (let j = 0; j < getItems.rows.length; j++) {
-          if (bcItemId === getItems.rows[j].id) {
+        for (const item of getItems) {
+          if (bcItemId === item.id) {
             canInsert = false;
           }
         }
@@ -1815,7 +1887,7 @@ await timeoutPromise(500);
         const nl = 'Next Level';
         const am = 'Allmade';
 
-        if (canInsert === true && bcItemInv === 0 && bcItemTrack !== 'variant' && item.name.includes(am) === false && item.name.includes(nl) === false && item.name.includes(ro) === false && item.name.includes(rk) === false && item.name.includes(uni) === false && item.name.includes(rabbit) === false && item.name.includes(red) === false && item.name.includes(pac) === false && item.name.includes(cs) === false && item.name.includes(bc) === false && item.name.includes(anvil) === false && item.name.includes(fotl) === false && item.name.includes(jer) === false && item.name.includes(aa) === false && item.name.includes(hanes) === false && item.name.includes(cc) === false && item.name.includes(gildan) === false && item.name.includes(district) === false && item.name.includes(portauth) === false && item.name.includes(sporttek) === false && item.name.includes(newera) === false && item.name.includes(ade) === false && item.name.includes(aec) === false && item.name.includes(ej) === false && item.name.includes(champ) === false && item.name.includes(champ) === false && item.name.includes(nv) === false) {
+        if (canInsert === true && bcItemInv === 0 && bcItemTrack !== 'variant' && bcItemName.includes(am) === false && bcItemName.includes(nl) === false && bcItemName.includes(ro) === false && bcItemName.includes(rk) === false && bcItemName.includes(uni) === false && bcItemName.includes(rabbit) === false && bcItemName.includes(red) === false && bcItemName.includes(pac) === false && bcItemName.includes(cs) === false && bcItemName.includes(bc) === false && bcItemName.includes(anvil) === false && bcItemName.includes(fotl) === false && bcItemName.includes(jer) === false && bcItemName.includes(aa) === false && bcItemName.includes(hanes) === false && bcItemName.includes(cc) === false && bcItemName.includes(gildan) === false && bcItemName.includes(district) === false && bcItemName.includes(portauth) === false && bcItemName.includes(sporttek) === false && bcItemName.includes(newera) === false && bcItemName.includes(ade) === false && bcItemName.includes(aec) === false && bcItemName.includes(ej) === false && bcItemName.includes(champ) === false && bcItemName.includes(champ) === false && bcItemName.includes(nv) === false) {
           let product = {
             name: bcItemName,
             sku: bcItemSku,
@@ -1846,18 +1918,18 @@ await timeoutPromise(500);
 
     try {
       //console.log(varItems);
-        if (!getItems.rows[0]) {
-          for (let k = 0; k < varItems.length; k++) {
-            if (varItems[k].inventory_level === 0) {
-              let bcItemName = varItems[k].name;
-              let bcItemSku = varItems[k].sku;
-              bcItemId = varItems[k].id;
+        if (!getItems[0]) {
+          for (const v of varItems) {
+            if (v.inventory_level === 0) {
+              let bcItemName = v.name;
+              let bcItemSku = v.sku;
+              bcItemId = v.id;
               let variant = {
                 name: bcItemName,
                 sku: bcItemSku,
                 id: bcItemId,
-                inventory_tracking: varItems[k].inventory_tracking,
-                inventory_level: varItems[k].inventory_level,
+                inventory_tracking: v.inventory_tracking,
+                inventory_level: v.inventory_level,
                 level: 'Variant',
               };
               newItems.push(variant);
@@ -1866,26 +1938,26 @@ await timeoutPromise(500);
             }
           }
         } else {
-          for (let k = 0; k < varItems.length; k++) {
-            bcItemId = varItems[k].id;
+          for (const v of varItems) {
+            bcItemId = v.id;
             let canInsert = true;
 
-            for (let j = 0; j < getItems.rows.length; j++) {
-              if (bcItemId === getItems.rows[j].id) {
+            for (const item of getItems) {
+              if (bcItemId === item.id) {
                 canInsert = false;
               }
             }
 
-            if (varItems[k].inventory_level === 0 && canInsert === true) {
-              let bcItemSku = varItems[k].sku;
-              bcItemId = varItems[k].id;
-              let bcItemName = varItems[k].name;
+            if (v.inventory_level === 0 && canInsert === true) {
+              let bcItemSku = v.sku;
+              bcItemId = v.id;
+              let bcItemName = v.name;
               let variant = {
                 name: bcItemName,
                 sku: bcItemSku,
                 id: bcItemId,
-                inventory_tracking: varItems[k].inventory_tracking,
-                inventory_level: varItems[k].inventory_level,
+                inventory_tracking: v.inventory_tracking,
+                inventory_level: v.inventory_level,
                 level: 'Variant',
               };
               newItems.push(variant);
@@ -1898,7 +1970,7 @@ await timeoutPromise(500);
       console.log('Error on varMsg: ', err);
     }
 
-  await timeoutPromise(1000);
+  await timeoutPromise(500);
 
 if (newItems[0]) {
  for (const item of newItems) {
@@ -1915,7 +1987,7 @@ if (newItems[0]) {
   console.log('No new items!');
 }
 
-  await timeoutPromise(1000);
+  await timeoutPromise(500);
 
   try {
     console.log("We are about to get the item list");

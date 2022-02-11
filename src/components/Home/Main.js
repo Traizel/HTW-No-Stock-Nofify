@@ -34,15 +34,16 @@ function Main () {
   const [note, setNote] = React.useState('');
   const dispatch = useDispatch();
 
+  //Get all new stock items with 0 stock
   useEffect(() => {
     dispatch({
       type: "GET_ITEM_LIST",
     });
   }, [])
-    //get all new stock items with 0 stock
+
+  //Seperate new items and dead inventory for data tables
   let newItems = [];
   let deadItems = [];
-
   for (let item of items) {
     if (item.dead) {
       deadItems.push(item);
@@ -51,6 +52,7 @@ function Main () {
     }
   }
 
+  //Change Item Reason
   const changeReason = (dataIndex, check) => {
     dispatch({
       type: "CHANGE_REASON",
@@ -61,11 +63,12 @@ function Main () {
     });
   }
 
+  //Mark Checked Items as Dead Inventory
   const addDeadInventory = (e) => {
     setReason(e.target.value);
   }
 
-
+  //Update Checkboxes when a checkbox is clicked
   const updateCheckbox = (dataIndex, checkChecked) => {
     dispatch({
       type: "SET_CHECKED",
@@ -81,6 +84,7 @@ function Main () {
       });
   };
 
+  //Handler for updating and tracking checked items
   const handleChange = (event) => {
     event.preventDefault();
     dispatch({
@@ -89,6 +93,7 @@ function Main () {
     });
   };
 
+  //New Items data
   const ni = newItems.map((item) => [
     item.name,
     item.notes,
@@ -98,6 +103,7 @@ function Main () {
     moment(item.date).format("MMM Do YY"),
   ]);
 
+  //Dead Items Data
   const di = deadItems.map((item) => [
     item.name,
     item.notes,
@@ -107,7 +113,7 @@ function Main () {
     item.reason,
     moment(item.date).format("MMM Do YY"),
   ]);
-    //defines the dataselector to know which items to preform actions on
+
     return (
       <>
       {display
@@ -237,6 +243,9 @@ function Main () {
       color="primary"
       onClick={(event) => {
         event.preventDefault();
+        if (!checkedList[0]) {
+          swal("You need to select at least 1 Item!");
+        } else {
         dispatch({
         type: "UNMARK_DEAD",
         payload: {
@@ -247,7 +256,9 @@ function Main () {
         for (let trackItem of trackChecked) {
             document.getElementById(trackItem).checked = false;
           }
-        }}
+        }
+       }
+      }
       >
      <QueueIcon /> Unmark Dead
      </Button>
