@@ -1240,7 +1240,7 @@ setInterval(() => {
     console.log('Error on getBCItems: ', err);
   }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
   try {
     const queryText = `select * from "item" WHERE reason <> 'clothing' ORDER BY id DESC`;
@@ -1253,31 +1253,37 @@ await timeoutPromise(1000);
     console.log('Error on getItems: ', err);
   }
 
-await timeoutPromise(1000);
+await timeoutPromise(500);
 
-try {
-  if (getItems.rows[0]) {
-    for (let i = 0; i < bcResponse.length; i++) {
-      bcItemId = bcResponse[i].id;
-      let bcItemSku = bcResponse[i].sku;
-      let bcItemInv = bcResponse[i].inventory_level;
-      for (let j = 0; j < getItems.rows.length; j++) {
-        let itemId = getItems.rows[j].id;
-        let itemSku = getItems.rows[j].sku;
-        // console.log('BC: ', bcItemId);
-        // console.log('Item: ', itemId);
-        if (bcItemId === itemId && bcItemSku === itemSku && bcItemInv !== 0) {
-          stockedItems.push(getItems.rows[j]);
-       }
-     }
-   }
- }
+console.log('Checking Product Level..');
 
-} catch (err) {
-  console.log('Error on getStocked: ', err);
-}
+      try {
+        if (getItems.rows[0]) {
+          for (let i = 0; i < bcResponse.length; i++) {
+            bcItemId = bcResponse[i].id;
+            let bcItemSku = bcResponse[i].sku;
+            let bcItemInv = bcResponse[i].inventory_level;
+            for (let j = 0; j < getItems.rows.length; j++) {
+              let itemId = getItems.rows[j].id;
+              let itemSku = getItems.rows[j].sku;
+              if (bcItemId === itemId && bcItemSku === itemSku && bcItemInv !== 0) {
+                console.log(`BCId: ${bcItemId}, ItemId: ${itemId}`);
+                console.log(`BCSku: ${bcItemSku}, ItemSku: ${itemSku}`);
+                console.log('Stock: ', bcItemInv);
+                let itemToPush = {
+                  id: itemId,
+                }
+                stockedItems.push(itemToPush);
+              }
+            }
+          }
+        }
 
-  await timeoutPromise(4000);
+      } catch (err) {
+        console.log('Error on getStocked: ', err);
+      }
+
+  await timeoutPromise(500);
 
   try {
   varItems = await getVars(bcResponse);
@@ -1285,39 +1291,50 @@ try {
     console.log('Error on getVars: ', err);
   }
 
-  try {
-      if (getItems.rows[0]) {
-        for (let k = 0; k < varItems.length; k++) {
+console.log('Checking Variant Level..');
 
-          bcItemId = varItems[k].id;
-          let bcItemSku = varItems[k].sku;
-
-          for (let j = 0; j < getItems.rows.length; j++) {
-            let itemId = getItems.rows[j].id;
-            let itemSku = getItems.rows[j].sku;
-
-            if (bcItemId === itemId && bcItemSku === itemSku && varItems[k].inventory_level !== 0) {
-              stockedItems.push(getItems.rows[j]);
+      try {
+        if (getItems.rows[0]) {
+          for (let k = 0; k < varItems.length; k++) {
+            bcItemId = varItems[k].id;
+            let bcItemSku = varItems[k].sku;
+            let bcItemInv = varItems[k].inventory_level;
+            for (let j = 0; j < getItems.rows.length; j++) {
+              let itemId = getItems.rows[j].id;
+              let itemSku = getItems.rows[j].sku;
+              if (bcItemId === itemId && bcItemSku === itemSku && bcItemInv !== 0) {
+                console.log(`BCId: ${bcItemId}, ItemId: ${itemId}`);
+                console.log(`BCSku: ${bcItemSku}, ItemSku: ${itemSku}`);
+                console.log('Stock: ', bcItemInv);
+                let itemToPush = {
+                  id: itemId,
+                }
+                stockedItems.push(itemToPush);
+              }
             }
           }
         }
+      } catch (err) {
+        console.log('Error on get Var Stocked: ', err);
       }
-  } catch (err) {
-    console.log('Error on varMsg: ', err);
-  }
 
-  await timeoutPromise(12000);
+  await timeoutPromise(500);
 
-try {
-  for (item of stockedItems) {
-    const queryText = `delete from "item" WHERE id = '${item.id}'`;
-    await pool
-      .query(queryText)
-  }
-} catch (err) {
-  console.log('Error on delete: ', err);
-}
-
+      if (stockedItems[0]) {
+        console.log('Deleting Items..');
+              try {
+                for (item of stockedItems) {
+                  console.log(item);
+                  const queryText = `delete from "item" WHERE id = '${item.id}'`;
+                  await pool
+                    .query(queryText)
+                }
+              } catch (err) {
+                console.log('Error on delete: ', err);
+              }
+      } else {
+        console.log('No Items to Delete..');
+      }
     }
   }
 }, 1000 * 60 * 13);
@@ -1425,17 +1442,22 @@ setInterval(() => {
         console.log('Error on get Var Stocked: ', err);
       }
 
-      await timeoutPromise(1000);
+      await timeoutPromise(500);
 
-      try {
-        for (item of stockedItems) {
-          console.log(item);
-          const queryText = `delete from "item" WHERE id = '${item.id}'`;
-          await pool
-            .query(queryText)
+      if (stockedItems[0]) {
+        console.log('Deleting Items..');
+        try {
+          for (item of stockedItems) {
+            console.log(item);
+            const queryText = `delete from "item" WHERE id = '${item.id}'`;
+            await pool
+              .query(queryText)
+          }
+        } catch (err) {
+          console.log('Error on delete: ', err);
         }
-      } catch (err) {
-        console.log('Error on delete: ', err);
+      } else {
+        console.log('No Items to Delete..');
       }
 
     }
