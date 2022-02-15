@@ -209,7 +209,7 @@ function Main () {
         }
       }
     }
-    ><DeleteIcon/> Delete</Button>
+    ><DeleteIcon/> Mark as Deleted</Button>
     {isChecked
     ?
     <>
