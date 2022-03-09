@@ -2193,7 +2193,7 @@ router.put("/updateReason", (req, res) => {
   const payload = req.body.payload;
   const id = payload.id
   const reason = payload.reason;
-  console.log("We are updating a reason on item with id:", id);
+  console.log("We are updating a reason of " + reason + " on item with id: ", id);
 
   const queryText = `UPDATE "item" SET reason = $1 WHERE id = $2`;
   pool

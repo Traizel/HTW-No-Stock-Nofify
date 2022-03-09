@@ -157,7 +157,7 @@ function Main () {
       swal("Refreshing Zero Stock..");
         }
       }
-    ><AssignmentTurnedInIcon/> Refresh</Button>
+    ><FlagIcon/> Check BC</Button>
     <Button 
       variant = "contained"
       color = "primary"
@@ -183,7 +183,7 @@ function Main () {
         }
       }
     }
-    ><FlagIcon/> Mark as Stocked</Button>
+    ><AssignmentTurnedInIcon/> Mark as Stocked</Button>
     <Button 
       variant = "contained"
       color = "primary"
@@ -215,7 +215,7 @@ function Main () {
     <>
     <Box sx={{ minWidth: 120 }}>
         <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Dead Inventory</InputLabel>
+          <InputLabel id="demo-simple-select-label">Reason</InputLabel>
           <Select
           className="dead-inventory"
           value={reason}
@@ -224,7 +224,7 @@ function Main () {
           >
             <MenuItem value={'new'}>New</MenuItem>
             <MenuItem value={'temp'}>Temp</MenuItem>
-            <MenuItem value={'unused'}>Unused</MenuItem>
+            <MenuItem value={'dead'}>Dead</MenuItem>
             <MenuItem value={'backorder'}>Backorder</MenuItem>
             <MenuItem value={'clothing'}>Clothing</MenuItem>
           </Select>
@@ -256,7 +256,7 @@ function Main () {
         }
       }
     }
-    ><QueueIcon/> Dead Inventory</Button>
+    ><QueueIcon/> Transfer</Button>
     </>
     :
     <>
@@ -282,7 +282,7 @@ function Main () {
        }
       }
       >
-     <QueueIcon /> Unmark Dead
+     <QueueIcon /> Transfer
      </Button>
     </>
     }
@@ -471,7 +471,7 @@ function Main () {
                           <FormControlLabel value="backorder" control={<Radio />} label="Backorder" />
                           <FormControlLabel value="clothing" control={<Radio />} label="Clothing" />
                           <FormControlLabel value="temp" control={<Radio />} label="Temp" />
-                          <FormControlLabel value="unused" control={<Radio />} label="Unused" />
+                          <FormControlLabel value="dead" control={<Radio />} label="Dead" />
                         </RadioGroup>
                         </FormControl>
                       );
