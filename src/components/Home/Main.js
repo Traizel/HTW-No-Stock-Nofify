@@ -145,19 +145,20 @@ function Main () {
       <br></br>
       <br></br>
     <section className="nav">
-    <Button 
+    <Button
+      className="invis"
       variant = "contained"
       color = "primary"
       onClick = {
         (event) => {
           event.preventDefault();
           dispatch({
-            type: "UPDATE_ITEMS",
+            type: "PYTHON",
           });
-      swal("Refreshing Zero Stock..");
+      swal("Syncing SanMar Inventory!");
         }
       }
-    ><FlagIcon/> Check BC</Button>
+    ><FlagIcon/> SanMar Inventory Sync</Button>
     <Button 
       variant = "contained"
       color = "primary"

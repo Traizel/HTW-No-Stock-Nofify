@@ -25,6 +25,7 @@ let stockNotify = false;
 let resetNoStock = false;
 let getSinglePage = false;
 let stockNotifyTest = false;
+let python = false;
 let update = false;
 let pageToUse = 0;
 
@@ -1276,6 +1277,23 @@ async function test(req, res) {
 }
 
 
+// Run Python Files
+setInterval(() => {
+  // set this to true to activate
+  python = true;
+
+  if (python) {
+    const { spawn } = require('child_process');
+    const pyprog = spawn('python', ['../SanMar/Inventory Sync/main.py']);
+
+    pyprog.stdout.on('data', function(data) {
+
+        success(data);
+    });
+  }
+}, 1000 * 60 * 1440);
+
+
 // Auto Update Product
 setInterval(() => {
   // set this to true to activate
@@ -1761,6 +1779,23 @@ setInterval(() => {
   }
 }, 1000 * 60 * 480);
 
+
+router.post("/python", (req, res) => {
+
+  try {
+    const { spawn } = require('child_process');
+    const pyprog = spawn('python', ['../SanMar/Inventory Sync/main.py']);
+
+    pyprog.stdout.on('data', function(data) {
+
+        success(data);
+    });
+    res.sendStatus(200);
+  } catch (err) {
+    console.log('Error on Run Python Files: ', err);
+    res.sendStatus(500);
+  }
+});
 
 router.get("/items", async function getItems(req, res) {
 

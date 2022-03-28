@@ -103,6 +103,15 @@ function* updateNotes(action) {
   }
 }
 
+function* python() {
+  try {
+    yield axios.post(`/api/item/python`);
+  } catch (error) {
+    console.log("Error with running python files:", error);
+  }
+}
+
+
 //this takes all of the Saga functions and dispatches them
 function* itemSaga() {
     yield takeLatest('GET_ITEM_LIST', getitemlist);
@@ -112,6 +121,7 @@ function* itemSaga() {
     yield takeLatest('UNMARK_DEAD', unmarkDead);
     yield takeLatest('CHANGE_REASON', changeReason);
     yield takeLatest('UPDATE_NOTES', updateNotes);
+    yield takeLatest('PYTHON', python);
 }
 
 export default itemSaga;
