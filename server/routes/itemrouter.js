@@ -1781,6 +1781,7 @@ setInterval(() => {
 
 
 router.post("/python", (req, res) => {
+  console.log('Running Python Files..');
 
   try {
     const { spawn } = require('child_process');

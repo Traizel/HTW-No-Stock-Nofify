@@ -165,6 +165,19 @@ function Main () {
       onClick = {
         (event) => {
           event.preventDefault();
+          dispatch({
+            type: "UPDATE_ITEMS",
+          });
+      swal("Refreshing Zero Stock..");
+        }
+      }
+    ><FlagIcon/> Check BC</Button>
+    <Button 
+      variant = "contained"
+      color = "primary"
+      onClick = {
+        (event) => {
+          event.preventDefault();
           if (!checkedList[0]) {
             swal("You need to select at least 1 Item!");
           } else {
