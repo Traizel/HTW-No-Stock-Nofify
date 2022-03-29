@@ -1284,10 +1284,9 @@ setInterval(() => {
 
   if (python) {
     const { spawn } = require('child_process');
-    const pyprog = spawn('python', ['../SanMar/Inventory Sync/main.py']);
+    const pyprog = spawn('python', ['../SanMar/Inventory-Sync/main.py']);
 
     pyprog.stdout.on('data', function(data) {
-
         success(data);
     });
   }
@@ -1785,10 +1784,9 @@ router.post("/python", (req, res) => {
 
   try {
     const { spawn } = require('child_process');
-    const pyprog = spawn('python', ['../SanMar/Inventory Sync/main.py']);
+    const pyprog = spawn('python', ['../SanMar/Inventory-Sync/main.py']);
 
     pyprog.stdout.on('data', function(data) {
-
         success(data);
     });
     res.sendStatus(200);
