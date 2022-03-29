@@ -145,20 +145,6 @@ function Main () {
       <br></br>
       <br></br>
     <section className="nav">
-    <Button
-      className="invis"
-      variant = "contained"
-      color = "primary"
-      onClick = {
-        (event) => {
-          event.preventDefault();
-          dispatch({
-            type: "PYTHON",
-          });
-      swal("Syncing SanMar Inventory!");
-        }
-      }
-    ><FlagIcon/> SanMar Inventory Sync</Button>
     <Button 
       variant = "contained"
       color = "primary"

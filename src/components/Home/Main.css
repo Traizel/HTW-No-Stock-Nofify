@@ -58,7 +58,3 @@ br {
         transform: rotate(360deg);
     }
 }
-
-.invis {
-    display: none;
-}
