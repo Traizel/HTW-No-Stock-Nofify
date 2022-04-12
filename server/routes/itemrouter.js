@@ -1189,7 +1189,7 @@ async function updateProducts(page) {
 
      xhr.open("PUT", `https://api.bigcommerce.com/stores/et4qthkygq/v3/catalog/products/${bcItems[i].id}`);
      xhr.setRequestHeader("accept", "application/json");
-     xhr.setRequestHeader("x-auth-token", "13n6uxj2je2wbnc0vggmz8sqjl93d1d");
+     xhr.setRequestHeader("x-auth-token", process.env.BG_AUTH_TOKEN);
 
      xhr.send(data);
      console.log('yUH');
