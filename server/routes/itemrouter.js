@@ -803,6 +803,7 @@ async function addItems(bcResponse) {
           const ej = 'Eco-Jersey';
           const champ = 'Champion';
           const vo = 'Volunteer';
+          const mm = 'MERCER+METTLE';
           const nv = 'Nike';
           const tm = 'TravisMathew';
           const gildan = 'Gildan';
@@ -823,7 +824,7 @@ async function addItems(bcResponse) {
           const nl = 'Next Level';
           const am = 'Allmade';
 
-          if (bcItemInv === 0 && bcItemTrack !== 'variant' && bcItemName.includes(vo) === false && bcItemName.includes(tm) === false && bcItemName.includes(am) === false && bcItemName.includes(nl) === false && bcItemName.includes(ro) === false && bcItemName.includes(rk) === false && bcItemName.includes(uni) === false && bcItemName.includes(rabbit) === false && bcItemName.includes(red) === false && bcItemName.includes(pac) === false && bcItemName.includes(cs) === false && bcItemName.includes(bc) === false && bcItemName.includes(anvil) === false && bcItemName.includes(fotl) === false && bcItemName.includes(jer) === false && bcItemName.includes(aa) === false && bcItemName.includes(hanes) === false && bcItemName.includes(cc) === false && bcItemName.includes(gildan) === false && bcItemName.includes(district) === false && bcItemName.includes(portauth) === false && bcItemName.includes(sporttek) === false && bcItemName.includes(newera) === false && bcItemName.includes(ade) === false && bcItemName.includes(aec) === false && bcItemName.includes(ej) === false && bcItemName.includes(champ) === false && bcItemName.includes(champ) === false && bcItemName.includes(nv) === false) {
+          if (bcItemInv === 0 && bcItemTrack !== 'variant' && bcItemName.includes(mm) === false && bcItemName.includes(vo) === false && bcItemName.includes(tm) === false && bcItemName.includes(am) === false && bcItemName.includes(nl) === false && bcItemName.includes(ro) === false && bcItemName.includes(rk) === false && bcItemName.includes(uni) === false && bcItemName.includes(rabbit) === false && bcItemName.includes(red) === false && bcItemName.includes(pac) === false && bcItemName.includes(cs) === false && bcItemName.includes(bc) === false && bcItemName.includes(anvil) === false && bcItemName.includes(fotl) === false && bcItemName.includes(jer) === false && bcItemName.includes(aa) === false && bcItemName.includes(hanes) === false && bcItemName.includes(cc) === false && bcItemName.includes(gildan) === false && bcItemName.includes(district) === false && bcItemName.includes(portauth) === false && bcItemName.includes(sporttek) === false && bcItemName.includes(newera) === false && bcItemName.includes(ade) === false && bcItemName.includes(aec) === false && bcItemName.includes(ej) === false && bcItemName.includes(champ) === false && bcItemName.includes(champ) === false && bcItemName.includes(nv) === false) {
             let product = {
               name: bcItemName,
               sku: bcItemSku,
@@ -859,6 +860,7 @@ async function addItems(bcResponse) {
           const ej = 'Eco-Jersey';
           const champ = 'Champion';
           const vo = 'Volunteer';
+          const mm = 'MERCER+METTLE';
           const nv = 'Nike';
           const gildan = 'Gildan';
           const cc = 'COMFORT COLORS';
@@ -879,7 +881,7 @@ async function addItems(bcResponse) {
           const nl = 'Next Level';
           const am = 'Allmade';
 
-          if (canInsert === true && bcItemInv === 0 && bcItemTrack !== 'variant' && bcItemName.includes(vo) === false && bcItemName.includes(tm) === false && bcItemName.includes(am) === false && bcItemName.includes(nl) === false && bcItemName.includes(ro) === false && bcItemName.includes(rk) === false && bcItemName.includes(uni) === false && bcItemName.includes(rabbit) === false && bcItemName.includes(red) === false && bcItemName.includes(pac) === false && bcItemName.includes(cs) === false && bcItemName.includes(bc) === false && bcItemName.includes(anvil) === false && bcItemName.includes(fotl) === false && bcItemName.includes(jer) === false && bcItemName.includes(aa) === false && bcItemName.includes(hanes) === false && bcItemName.includes(cc) === false && bcItemName.includes(gildan) === false && bcItemName.includes(district) === false && bcItemName.includes(portauth) === false && bcItemName.includes(sporttek) === false && bcItemName.includes(newera) === false && bcItemName.includes(ade) === false && bcItemName.includes(aec) === false && bcItemName.includes(ej) === false && bcItemName.includes(champ) === false && bcItemName.includes(champ) === false && bcItemName.includes(nv) === false) {
+          if (canInsert === true && bcItemInv === 0 && bcItemTrack !== 'variant' && bcItemName.includes(mm) === false && bcItemName.includes(vo) === false && bcItemName.includes(tm) === false && bcItemName.includes(am) === false && bcItemName.includes(nl) === false && bcItemName.includes(ro) === false && bcItemName.includes(rk) === false && bcItemName.includes(uni) === false && bcItemName.includes(rabbit) === false && bcItemName.includes(red) === false && bcItemName.includes(pac) === false && bcItemName.includes(cs) === false && bcItemName.includes(bc) === false && bcItemName.includes(anvil) === false && bcItemName.includes(fotl) === false && bcItemName.includes(jer) === false && bcItemName.includes(aa) === false && bcItemName.includes(hanes) === false && bcItemName.includes(cc) === false && bcItemName.includes(gildan) === false && bcItemName.includes(district) === false && bcItemName.includes(portauth) === false && bcItemName.includes(sporttek) === false && bcItemName.includes(newera) === false && bcItemName.includes(ade) === false && bcItemName.includes(aec) === false && bcItemName.includes(ej) === false && bcItemName.includes(champ) === false && bcItemName.includes(champ) === false && bcItemName.includes(nv) === false) {
             let product = {
               name: bcItemName,
               sku: bcItemSku,
@@ -1087,6 +1089,7 @@ async function getVars(bcResponse) {
           const ej = 'Eco-Jersey';
           const champ = 'Champion';
           const vo = 'Volunteer';
+          const mm = 'MERCER+METTLE';
           const nv = 'Nike';
           const tm = 'TravisMathew';
           const gildan = 'Gildan';
@@ -1107,7 +1110,7 @@ async function getVars(bcResponse) {
           const nl = 'Next Level';
           const am = 'Allmade';
 
-          if (item.name.includes(am) === false && item.name.includes(vo) === false && item.name.includes(tm) === false && item.name.includes(ro) === false && item.name.includes(nl) === false && item.name.includes(rk) === false && item.name.includes(uni) === false && item.name.includes(rabbit) === false && item.name.includes(red) === false && item.name.includes(pac) === false && item.name.includes(cs) === false && item.name.includes(bc) === false && item.name.includes(anvil) === false && item.name.includes(fotl) === false && item.name.includes(jer) === false && item.name.includes(aa) === false && item.name.includes(hanes) === false && item.name.includes(cc) === false && item.name.includes(gildan) === false && item.name.includes(district) === false && item.name.includes(portauth) === false && item.name.includes(sporttek) === false && item.name.includes(newera) === false && item.name.includes(ade) === false && item.name.includes(aec) === false && item.name.includes(ej) === false && item.name.includes(champ) === false && item.name.includes(champ) === false && item.name.includes(nv) === false) {
+          if (item.name.includes(am) === false && item.name.includes(mm) === false && item.name.includes(vo) === false && item.name.includes(tm) === false && item.name.includes(ro) === false && item.name.includes(nl) === false && item.name.includes(rk) === false && item.name.includes(uni) === false && item.name.includes(rabbit) === false && item.name.includes(red) === false && item.name.includes(pac) === false && item.name.includes(cs) === false && item.name.includes(bc) === false && item.name.includes(anvil) === false && item.name.includes(fotl) === false && item.name.includes(jer) === false && item.name.includes(aa) === false && item.name.includes(hanes) === false && item.name.includes(cc) === false && item.name.includes(gildan) === false && item.name.includes(district) === false && item.name.includes(portauth) === false && item.name.includes(sporttek) === false && item.name.includes(newera) === false && item.name.includes(ade) === false && item.name.includes(aec) === false && item.name.includes(ej) === false && item.name.includes(champ) === false && item.name.includes(champ) === false && item.name.includes(nv) === false) {
         varItems.push({
           sku: item.sku,
           id: item.id,
@@ -1820,6 +1823,7 @@ await timeoutPromise(500);
         const ej = 'Eco-Jersey';
         const champ = 'Champion';
         const vo = 'Volunteer';
+        const mm = 'MERCER+METTLE';
         const nv = 'Nike';
         const gildan = 'Gildan';
         const cc = 'COMFORT COLORS';
@@ -1840,7 +1844,7 @@ await timeoutPromise(500);
         const nl = 'Next Level';
         const am = 'Allmade';
 
-        if (bcItemInv === 0 && bcItemTrack !== 'variant' && bcItemName.includes(vo) === false && bcItemName.includes(tm) === false && bcItemName.includes(am) === false && bcItemName.includes(nl) === false && bcItemName.includes(ro) === false && bcItemName.includes(rk) === false && bcItemName.includes(uni) === false && bcItemName.includes(rabbit) === false && bcItemName.includes(red) === false && bcItemName.includes(pac) === false && bcItemName.includes(cs) === false && bcItemName.includes(bc) === false && bcItemName.includes(anvil) === false && bcItemName.includes(fotl) === false && bcItemName.includes(jer) === false && bcItemName.includes(aa) === false && bcItemName.includes(hanes) === false && bcItemName.includes(cc) === false && bcItemName.includes(gildan) === false && bcItemName.includes(district) === false && bcItemName.includes(portauth) === false && bcItemName.includes(sporttek) === false && bcItemName.includes(newera) === false && bcItemName.includes(ade) === false && bcItemName.includes(aec) === false && bcItemName.includes(ej) === false && bcItemName.includes(champ) === false && bcItemName.includes(champ) === false && bcItemName.includes(nv) === false) {
+        if (bcItemInv === 0 && bcItemTrack !== 'variant' && bcItemName.includes(mm) === false && bcItemName.includes(vo) === false && bcItemName.includes(tm) === false && bcItemName.includes(am) === false && bcItemName.includes(nl) === false && bcItemName.includes(ro) === false && bcItemName.includes(rk) === false && bcItemName.includes(uni) === false && bcItemName.includes(rabbit) === false && bcItemName.includes(red) === false && bcItemName.includes(pac) === false && bcItemName.includes(cs) === false && bcItemName.includes(bc) === false && bcItemName.includes(anvil) === false && bcItemName.includes(fotl) === false && bcItemName.includes(jer) === false && bcItemName.includes(aa) === false && bcItemName.includes(hanes) === false && bcItemName.includes(cc) === false && bcItemName.includes(gildan) === false && bcItemName.includes(district) === false && bcItemName.includes(portauth) === false && bcItemName.includes(sporttek) === false && bcItemName.includes(newera) === false && bcItemName.includes(ade) === false && bcItemName.includes(aec) === false && bcItemName.includes(ej) === false && bcItemName.includes(champ) === false && bcItemName.includes(champ) === false && bcItemName.includes(nv) === false) {
         let product = {
           name: bcItemName,
           sku: bcItemSku,
@@ -1876,6 +1880,7 @@ await timeoutPromise(500);
         const ej = 'Eco-Jersey';
         const champ = 'Champion';
         const vo = 'Volunteer';
+        const mm = 'MERCER+METTLE';
         const nv = 'Nike';
         const gildan = 'Gildan';
         const cc = 'COMFORT COLORS';
@@ -1896,7 +1901,7 @@ await timeoutPromise(500);
         const nl = 'Next Level';
         const am = 'Allmade';
 
-        if (canInsert === true && bcItemInv === 0 && bcItemName.includes(vo) === false && bcItemName.includes(tm) === false && bcItemTrack !== 'variant' && bcItemName.includes(am) === false && bcItemName.includes(nl) === false && bcItemName.includes(ro) === false && bcItemName.includes(rk) === false && bcItemName.includes(uni) === false && bcItemName.includes(rabbit) === false && bcItemName.includes(red) === false && bcItemName.includes(pac) === false && bcItemName.includes(cs) === false && bcItemName.includes(bc) === false && bcItemName.includes(anvil) === false && bcItemName.includes(fotl) === false && bcItemName.includes(jer) === false && bcItemName.includes(aa) === false && bcItemName.includes(hanes) === false && bcItemName.includes(cc) === false && bcItemName.includes(gildan) === false && bcItemName.includes(district) === false && bcItemName.includes(portauth) === false && bcItemName.includes(sporttek) === false && bcItemName.includes(newera) === false && bcItemName.includes(ade) === false && bcItemName.includes(aec) === false && bcItemName.includes(ej) === false && bcItemName.includes(champ) === false && bcItemName.includes(champ) === false && bcItemName.includes(nv) === false) {
+        if (canInsert === true && bcItemInv === 0 && bcItemName.includes(mm) === false && bcItemName.includes(vo) === false && bcItemName.includes(tm) === false && bcItemTrack !== 'variant' && bcItemName.includes(am) === false && bcItemName.includes(nl) === false && bcItemName.includes(ro) === false && bcItemName.includes(rk) === false && bcItemName.includes(uni) === false && bcItemName.includes(rabbit) === false && bcItemName.includes(red) === false && bcItemName.includes(pac) === false && bcItemName.includes(cs) === false && bcItemName.includes(bc) === false && bcItemName.includes(anvil) === false && bcItemName.includes(fotl) === false && bcItemName.includes(jer) === false && bcItemName.includes(aa) === false && bcItemName.includes(hanes) === false && bcItemName.includes(cc) === false && bcItemName.includes(gildan) === false && bcItemName.includes(district) === false && bcItemName.includes(portauth) === false && bcItemName.includes(sporttek) === false && bcItemName.includes(newera) === false && bcItemName.includes(ade) === false && bcItemName.includes(aec) === false && bcItemName.includes(ej) === false && bcItemName.includes(champ) === false && bcItemName.includes(champ) === false && bcItemName.includes(nv) === false) {
           let product = {
             name: bcItemName,
             sku: bcItemSku,
