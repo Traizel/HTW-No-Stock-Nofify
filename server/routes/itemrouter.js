@@ -1307,7 +1307,7 @@ setInterval(() => {
 // Auto Restock Notify
 setInterval(() => {
   // set this to true to activate
-  stockNotify = true;
+  stockNotify = false;
 
   if (stockNotify) {
     console.log('Checking for Stocked Items..');
@@ -1745,7 +1745,7 @@ try {
 // Auto No Stock Notify ALL PAGES
 setInterval(() => {
   // set this to true to activate
-  slackNotify = true;
+  slackNotify = false;
 
   if (slackNotify) {
     console.log('running Slack Notify..');
